@@ -1,0 +1,150 @@
+/* HomeTrendingProducts CSS */
+
+.trending-products-section {
+  position: relative;
+  width: 100%;
+}
+
+/* Trending Navigation Arrows */
+.trending-product-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .trending-product-arrows {
+    justify-content: flex-start;
+    margin-bottom: 25px;
+  }
+}
+
+/* Circular Arrow Buttons matching reference image */
+.trending-nav-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #1a1b20;
+  background: transparent;
+  color: #1a1b20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  outline: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* Dot indicators placed on the circle circumference */
+.trending-nav-btn .dot-indicator {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #1a1b20;
+  pointer-events: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Prev button: Dot at bottom-left rim (~225deg) */
+.trending-nav-btn.prev-btn .dot-indicator {
+  bottom: 3px;
+  left: 3px;
+}
+
+/* Next button: Dot at top-right rim (~45deg) */
+.trending-nav-btn.next-btn .dot-indicator {
+  top: 3px;
+  right: 3px;
+}
+
+/* Arrow icon */
+.trending-nav-btn .arrow-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.trending-nav-btn .arrow-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+/* Hover effects */
+.trending-nav-btn:hover {
+  background-color: #1a1b20;
+  color: #ffffff;
+  border-color: #1a1b20;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(26, 27, 32, 0.18);
+}
+
+.trending-nav-btn:hover .dot-indicator {
+  background-color: #ffffff;
+  transform: scale(1.15);
+}
+
+.trending-nav-btn:hover.prev-btn .arrow-icon {
+  transform: translateX(-2px);
+}
+
+.trending-nav-btn:hover.next-btn .arrow-icon {
+  transform: translateX(2px);
+}
+
+.trending-nav-btn:active {
+  transform: scale(0.94);
+}
+
+/* Trending Slider Track & Wrapper */
+.trending-slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 140px 0 30px 0;
+  touch-action: pan-y;
+}
+
+.trending-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.trending-slide-item {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+@media (max-width: 991px) {
+  .trending-slide-item {
+    padding: 0 10px;
+  }
+}
+
+.trending-slide-item .product-item.style-two {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.trending-slide-item .product-item.style-two:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.trending-slide-item .product-item.style-two .product-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

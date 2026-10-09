@@ -1,0 +1,246 @@
+/* Responsive enhancements for Hero Section without changing original layout or font design */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero-wrapper-one {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Fluid Slick Track & Sliders */
+.hero-slider-one {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-slider-one .slick-list {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slider-one .slick-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.hero-slider-one .single-hero-slider {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fluid Hero Content Typography & Alignment */
+.hero-content.style-one {
+  width: 100%;
+}
+
+.hero-content.style-one h1 {
+  font-size: clamp(28px, 4.2vw, 55px);
+  line-height: 1.18;
+  word-break: break-word;
+}
+
+.hero-content.style-one p {
+  max-width: 540px;
+}
+
+.hero-content.style-one ul {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.hero-content.style-one ul li {
+  list-style: none;
+}
+
+/* Fluid Hero Image Box */
+.hero-wrapper-one .hero-image-box {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.hero-wrapper-one .hero-image-box .hero-image {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.hero-wrapper-one .hero-image-box .hero-image img {
+  width: 100%;
+  height: auto;
+  max-height: 580px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dots Navigation (Desktop: Vertical Right Side | Mobile: Bottom Below Image) */
+.hero-wrapper-one .hero-dots {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  transform: translateY(-50%) !important;
+  z-index: 10;
+}
+
+.hero-wrapper-one .hero-dots .slick-dots {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  transform: none !important; /* override template 90deg rotate */
+}
+
+.hero-wrapper-one .hero-dots .slick-dots li {
+  width: auto !important;
+  height: auto !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+
+.hero-wrapper-one .hero-dots .slick-dots li button {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #CC0D39 !important;
+  background-color: #ffffff !important;
+  color: #CC0D39 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  transform: none !important;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.hero-wrapper-one .hero-dots .slick-dots li.slick-active button {
+  background-color: #CC0D39 !important;
+  color: #ffffff !important;
+  border-color: #CC0D39 !important;
+  box-shadow: 0 4px 14px rgba(204, 13, 57, 0.35) !important;
+  transform: scale(1.08) !important;
+}
+
+.hero-wrapper-one .hero-dots .slick-dots li button:hover {
+  background-color: #CC0D39 !important;
+  color: #ffffff !important;
+}
+
+/* Tablet & Mobile Media Queries (<= 991px) */
+@media (max-width: 991px) {
+  .hero-content.style-one {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .hero-content.style-one p {
+    margin: 0 auto 25px;
+  }
+
+  .hero-content.style-one ul {
+    justify-content: center;
+  }
+
+  .hero-wrapper-one .hero-image-box {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* Force dots to the very bottom below the image in mobile & tablet */
+  .hero-wrapper-one .hero-dots {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 35px auto 10px !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    clear: both !important;
+  }
+
+  .hero-wrapper-one .hero-dots .slick-dots {
+    flex-direction: row !important;
+    gap: 12px !important;
+    transform: none !important;
+  }
+
+  .hero-wrapper-one .hero-dots .slick-dots li button {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-wrapper-one {
+    padding: 40px 0 50px;
+  }
+
+  .hero-content.style-one h1 {
+    font-size: clamp(24px, 6vw, 36px);
+    line-height: 1.25;
+  }
+
+  .hero-content.style-one p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+  }
+
+  .hero-content.style-one ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-content.style-one ul li:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .hero-content.style-one .price-box {
+    justify-content: center;
+  }
+
+  .hero-wrapper-one .hero-image-box {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .hero-wrapper-one .hero-dots {
+    margin-top: 25px !important;
+    margin-bottom: 5px !important;
+  }
+}

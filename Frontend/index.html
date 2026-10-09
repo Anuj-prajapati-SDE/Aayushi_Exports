@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!--====== Required meta tags ======-->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="eCommerce,shop,fashion">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--====== Title ======-->
+        <title>Pesco - eCommerce HTML Template</title>
+        <!--====== Favicon Icon ======-->
+        <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+        <!--====== Google Fonts ======-->
+        <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+        <!--====== Flaticon css ======-->
+        <link rel="stylesheet" href="assets/fonts/flaticon/flaticon_pesco.css">
+        <!--====== FontAwesome css ======-->
+        <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+        <!--====== Bootstrap css ======-->
+        <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+        <!--====== Slick-popup css ======-->  
+        <link rel="stylesheet" href="assets/vendor/slick/slick.css">
+        <!--====== Nice Select css ======-->
+        <link rel="stylesheet" href="assets/vendor/nice-select/css/nice-select.css">
+        <!--====== Magnific-popup css ======-->
+        <link rel="stylesheet" href="assets/vendor/magnific-popup/dist/magnific-popup.css">
+        <!--====== Jquery UI css ======-->
+        <link rel="stylesheet" href="assets/vendor/jquery-ui/jquery-ui.min.css">
+        <!--====== Animate css ======-->
+        <link rel="stylesheet" href="assets/vendor/aos/aos.css">
+        <!--====== Default css ======-->
+        <link rel="stylesheet" href="assets/css/default.css">
+        <!--====== Style css ======-->
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+<body>
+      <div id="root"></div>
+        <!--====== Back To Top  ======-->
+        <!-- <div class="back-to-top" style=""><i class="far fa-angle-up"></i></div> -->
+        <!--====== Jquery js ======-->
+        <script src="assets/vendor/jquery-3.7.1.min.js"></script>
+        <!--====== Bootstrap js ======-->
+        <script src="assets/vendor/popper/popper.min.js"></script>
+        <!--====== Bootstrap js ======-->
+        <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--====== Slick js ======-->
+        <script src="assets/vendor/slick/slick.min.js"></script>
+        <!--====== Magnific js ======-->
+        <script src="assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+        <!--====== Nice-select js ======-->
+        <script src="assets/vendor/nice-select/js/jquery.nice-select.min.js"></script>
+        <!--====== Jquery Ui js ======-->
+        <script src="assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+        <!--====== SimplyCountdown js ======-->
+        <script src="assets/vendor/simplyCountdown.min.js"></script>
+        <!--====== Aos js ======-->
+        <script src="assets/vendor/aos/aos.js"></script>
+        <!--====== Main js ======-->
+        <script src="assets/js/theme.js"></script>
+    <!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+ <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

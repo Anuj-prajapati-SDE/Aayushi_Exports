@@ -1,0 +1,223 @@
+/* HomeCategory CSS */
+
+.category-section {
+  position: relative;
+  width: 100%;
+}
+
+/* Category Navigation Arrows */
+.category-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .category-arrows {
+    justify-content: flex-end;
+  }
+}
+
+/* Circular Arrow Buttons matching reference image */
+.category-nav-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #1a1b20;
+  background: transparent;
+  color: #1a1b20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  outline: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* Dot indicators placed on the circle circumference */
+.category-nav-btn .dot-indicator {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #1a1b20;
+  pointer-events: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Left button: Dot at bottom-left rim */
+.category-nav-btn.prev-btn .dot-indicator {
+  bottom: 3px;
+  left: 3px;
+}
+
+/* Right button: Dot at top-right rim */
+.category-nav-btn.next-btn .dot-indicator {
+  top: 3px;
+  right: 3px;
+}
+
+/* Arrow icon container */
+.category-nav-btn .arrow-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.category-nav-btn .arrow-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+/* Hover State */
+.category-nav-btn:hover {
+  background-color: #1a1b20;
+  color: #ffffff;
+  border-color: #1a1b20;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(26, 27, 32, 0.18);
+}
+
+.category-nav-btn:hover .dot-indicator {
+  background-color: #ffffff;
+  transform: scale(1.15);
+}
+
+.category-nav-btn:hover.prev-btn .arrow-icon {
+  transform: translateX(-2px);
+}
+
+.category-nav-btn:hover.next-btn .arrow-icon {
+  transform: translateX(2px);
+}
+
+.category-nav-btn:active {
+  transform: scale(0.94);
+}
+
+/* Slider Track & Wrapper */
+.category-slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0 35px 0;
+  touch-action: pan-y;
+}
+
+.category-track {
+  display: flex;
+  align-items: stretch;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.category-slide-item {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Category Card Styling */
+.category-item.style-one {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.category-item.style-one:hover {
+  transform: translateY(-6px);
+}
+
+/* Card image container with consistent aspect-ratio */
+.category-item.style-one .category-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  height: auto;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid var(--primary-dark-color, #1a1b20);
+  background-color: #f7f5f0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.category-item.style-one:hover .category-img {
+  box-shadow: 0 14px 32px rgba(26, 27, 32, 0.14);
+  border-color: #000000;
+}
+
+.category-item.style-one .category-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: none;
+  border-radius: 0;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.category-item.style-one:hover .category-img img {
+  transform: scale(1.06);
+}
+
+/* Centered Pill Button container floating on bottom edge */
+.category-item.style-one .category-content {
+  margin-top: -24px;
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 8px;
+}
+
+.category-item.style-one .category-content .category-btn {
+  font-family: var(--heading-font, 'DM Sans', sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  padding: 12px 22px;
+  border-radius: 100px;
+  border: 1.5px solid var(--light-gray, #e5e5e5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white-color, #ffffff);
+  color: var(--primary-dark-color, #1a1b20);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  white-space: nowrap;
+  max-width: 92%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-item.style-one:hover .category-content .category-btn {
+  background-color: var(--primary-color, #CC0D39);
+  color: #ffffff;
+  border-color: var(--primary-color, #CC0D39);
+  box-shadow: 0 6px 20px rgba(204, 13, 57, 0.28);
+  transform: translateY(-2px);
+}
