@@ -57,6 +57,7 @@ function CartPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccessData, setOrderSuccessData] = useState(null);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   // Sync cart and currency state
   const syncCartState = () => {
@@ -66,7 +67,7 @@ function CartPage() {
 
   const fetchCartSettings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/content/cart_page");
+      const res = await fetch(`${API_URL}/api/website/content/cart_page`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && result.data) {
@@ -270,7 +271,7 @@ function CartPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/website/orders", {
+      const response = await fetch(`${API_URL}/api/website/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

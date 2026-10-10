@@ -274,12 +274,13 @@ function HomeCollection() {
   const [activeTab, setActiveTab] = useState("cat1");
   const [productsMap, setProductsMap] = useState(collectionProducts);
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
-
+  const API_BASE = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "http://localhost:5000";
+  
   React.useEffect(() => {
     let isMounted = true;
     const fetchCollections = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/website/content/collections");
+        const res = await fetch(`${API_BASE}/api/website/content/collections`);
         if (res.ok) {
           const result = await res.json();
           if (isMounted && result.success && result.data) {

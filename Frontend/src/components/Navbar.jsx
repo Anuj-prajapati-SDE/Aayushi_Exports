@@ -4,6 +4,8 @@ import CartDrawer from './CartDrawer'
 import WishlistDrawer from './WishlistDrawer'
 import { getCartTotalCount } from '../utils/cartUtils'
 import { getWishlistCount } from '../utils/wishlistUtils'
+import './Navbar.css'
+
 
 const Navbar = () => {
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
@@ -54,13 +56,66 @@ const Navbar = () => {
           <div className="container">
             {/*===  Search Header Inner  ===*/}
             <div className="search-header-inner">
-              {/*=== Site Branding  ===*/}
-              <div className="site-branding">
-                <Link to="/" className="brand-logo">
-                  <img src="assets/images/logo/logo-main.png" alt="Pesco Logo" />
-                </Link>
+              {/*=== Social Media Links ===*/}
+              <div className="header-social-wrap">
+                <ul className="header-social-list">
+                  <li>
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                      title="Follow us on Facebook"
+                    >
+                      <i className="fab fa-facebook-f" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                      title="Follow us on Instagram"
+                    >
+                      <i className="fab fa-instagram" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Twitter"
+                      title="Follow us on Twitter / X"
+                    >
+                      <i className="fab fa-twitter" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      title="Follow us on LinkedIn"
+                    >
+                      <i className="fab fa-linkedin-in" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://youtube.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="YouTube"
+                      title="Subscribe on YouTube"
+                    >
+                      <i className="fab fa-youtube" />
+                    </a>
+                  </li>
+                </ul>
               </div>
-
               {/*===  Product Search Category  ===*/}
               <div className="product-search-category">
                 <form action="#" onSubmit={(e) => e.preventDefault()}>
@@ -103,50 +158,11 @@ const Navbar = () => {
               {/*=== Nav Inner Menu ===*/}
               <div className="nav-inner-menu">
                 {/*=== Main Category ===*/}
-                <div className="main-categories-wrap d-none d-lg-block">
-                  <Link className="categories-btn-active" to="/shops">
-                    <span className="fas fa-list" />
-                    <span className="text">
-                      Products Category
-                      <i className="fas fa-angle-down" />
-                    </span>
+                {/*=== Site Branding  ===*/}
+                <div className="site-branding">
+                  <Link to="/" className="brand-logo">
+                    <img src="assets/images/logo/logo-main.png" alt="Pesco Logo" />
                   </Link>
-                  <div className="categories-dropdown-wrap categories-dropdown-active">
-                    <div className="categori-dropdown-item">
-                      <ul>
-                        <li>
-                          <Link to="/shops">
-                            <i className="fas fa-vase me-2 text-warning" />
-                            Brass Vases & Urns
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/shops">
-                            <i className="fas fa-lightbulb me-2 text-warning" />
-                            Decorative Lanterns
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/shops">
-                            <i className="fas fa-crown me-2 text-warning" />
-                            Handcrafted Brass Decor
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/shops">
-                            <i className="fas fa-gem me-2 text-warning" />
-                            Tabletop Urli Bowls
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/shops">
-                            <i className="fas fa-om me-2 text-warning" />
-                            Pooja & Peacock Diyas
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
 
                 {/*=== Pesco Nav Main ===*/}

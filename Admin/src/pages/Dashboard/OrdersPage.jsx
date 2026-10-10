@@ -130,11 +130,12 @@ const OrdersPage = () => {
   const [paymentDraft, setPaymentDraft] = useState('');
   const [customEmailNote, setCustomEmailNote] = useState('');
   const [emailSuccessToast, setEmailSuccessToast] = useState('');
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   // Fetch dynamic orders from MongoDB
   const fetchOrders = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/website/orders');
+      const res = await fetch(`${API_BASE_URL}/api/website/orders`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && Array.isArray(result.data) && result.data.length > 0) {
@@ -200,7 +201,7 @@ const OrdersPage = () => {
     setIsUpdating(true);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/website/orders/${selectedOrder.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/website/orders/${selectedOrder.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -241,7 +242,7 @@ const OrdersPage = () => {
     const targetPayment = paymentDraft || orderToNotify.paymentStatus || 'Pending';
 
     try {
-      const res = await fetch(`http://localhost:5000/api/website/orders/${orderToNotify.id}/send-email`, {
+      const res = await fetch(`${API_BASE_URL}/api/website/orders/${orderToNotify.id}/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -290,7 +291,7 @@ const OrdersPage = () => {
     }
 
     try {
-      await fetch(`http://localhost:5000/api/website/orders/${orderId}`, {
+      await fetch(`${API_BASE_URL}/api/website/orders/${orderId}`, {
         method: 'DELETE',
       });
       setOrders((prev) => prev.filter((o) => o.id !== orderId));

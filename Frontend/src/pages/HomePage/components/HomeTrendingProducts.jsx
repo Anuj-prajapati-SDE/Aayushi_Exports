@@ -97,9 +97,11 @@ function HomeTrendingProducts() {
 
   useEffect(() => {
     let isMounted = true;
+    const API_BASE = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "http://localhost:5000";
+
     const fetchTrending = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/website/content/trending_products");
+        const res = await fetch(`${API_BASE}/api/website/content/trending_products`);
         if (res.ok) {
           const result = await res.json();
           if (isMounted && result.success && Array.isArray(result.data) && result.data.length > 0) {
@@ -111,6 +113,7 @@ function HomeTrendingProducts() {
               rating: item.rating || 5,
               reviews: item.reviews || 80,
               img: item.image || item.img || "assets/images/products/brass-cylinder-vase-1.jpg",
+              tag: item.tag || item.badge || "",
               link: "/shops",
             }));
             setProductsList(mapped);
@@ -296,13 +299,19 @@ function HomeTrendingProducts() {
                 >
                   <div className="product-item style-two">
                     <div className="product-thumbnail">
-                      <img
-                        src={getImageUrl(product.img, "/assets/images/products/brass-cylinder-vase-1.jpg")}
-                        alt={product.title}
-                        onError={(e) => {
-                          e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
-                        }}
-                      />
+                      {product.tag && (
+                        <span className="trending-badge">{product.tag}</span>
+                      )}
+                      <Link to={product.link} className="thumbnail-link" aria-label={product.title}>
+                        <img
+                          src={getImageUrl(product.img, "/assets/images/products/brass-cylinder-vase-1.jpg")}
+                          alt={product.title}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
+                          }}
+                        />
+                      </Link>
                     </div>
                     <div className="product-info-wrap">
                       <div className="product-info">
@@ -317,7 +326,7 @@ function HomeTrendingProducts() {
                           </li>
                         </ul>
                         <h4 className="title">
-                          <Link to={product.link}>{product.title}</Link>
+                          <Link to={product.link} title={product.title}>{product.title}</Link>
                         </h4>
                       </div>
                       <div className="product-price">

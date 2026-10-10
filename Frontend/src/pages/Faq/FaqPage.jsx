@@ -65,11 +65,12 @@ function FaqPage() {
   const [faqData, setFaqData] = useState(defaultFaqData);
   const [activeAccordion, setActiveAccordion] = useState(0); // 1st item open by default like screenshot
   const [searchTerm, setSearchTerm] = useState("");
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   // Fetch dynamic CMS data from Backend API
   const fetchFaqData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/content/faq_page");
+      const res = await fetch(`${API_URL}/api/website/content/faq_page`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && result.data) {

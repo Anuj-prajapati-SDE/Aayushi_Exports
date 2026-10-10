@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../../utils/imageUrl";
+import "./HeroBanner.css";
 
 const defaultBanners = [
   {
@@ -32,9 +33,11 @@ function HomeBanner() {
 
   useEffect(() => {
     let isMounted = true;
+    const API_BASE = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "http://localhost:5000";
+
     const fetchBanners = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/website/hero-banners");
+        const res = await fetch(`${API_BASE}/api/website/hero-banners`);
         if (res.ok) {
           const result = await res.json();
           if (isMounted && result.success && Array.isArray(result.data) && result.data.length > 0) {
@@ -62,7 +65,7 @@ function HomeBanner() {
   return (
     <section className="banner-section pt-130">
       <div className="container">
-        <div className="row">
+        <div className="row banner-row">
           {banners.map((banner, index) => {
             const bgClass = banner.badgeBg || (index % 2 === 0 ? "bg-one" : "bg-two");
             const discount = banner.discountTag || "SPECIAL OFFER";
@@ -70,7 +73,7 @@ function HomeBanner() {
             const shape2 = banner.shape2 || "assets/images/banner/line.png";
 
             return (
-              <div key={banner._id || banner.id || index} className="col-lg-6">
+              <div key={banner._id || banner.id || index} className="col-lg-6 banner-col">
                 {/*=== Banner Item ===*/}
                 <div
                   className={`banner-item style-one ${bgClass} mb-40 aos-init aos-animate`}
@@ -89,14 +92,16 @@ function HomeBanner() {
                     </span>
                   </div>
                   <div className="banner-img">
-                    <img
-                      src={getImageUrl(banner.image, "/assets/images/products/brass-cylinder-vase-1.jpg")}
-                      alt={banner.title}
-                      style={{ maxHeight: "280px", objectFit: "cover", borderRadius: "12px" }}
-                      onError={(e) => {
-                        e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
-                      }}
-                    />
+                    <div className="banner-img-frame">
+                      <img
+                        src={getImageUrl(banner.image, "/assets/images/products/brass-cylinder-vase-1.jpg")}
+                        alt={banner.title}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
+                        }}
+                      />
+                    </div>
                   </div>
                   <div className="banner-content">
                     <span>
@@ -108,7 +113,7 @@ function HomeBanner() {
                         <span>{discount}</span>
                       )}
                     </span>
-                    <h4>{banner.title}</h4>
+                    <h4 title={banner.title}>{banner.title}</h4>
                     <Link to={banner.buttonLink || "/shops"} className="theme-btn style-one">
                       {banner.buttonText || "Shop Now"}
                     </Link>

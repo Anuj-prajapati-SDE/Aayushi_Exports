@@ -147,13 +147,13 @@ function HomeCategory() {
   const [itemsToShow, setItemsToShow] = useState(6);
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef(null);
-
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Fetch live dynamic categories from backend API
   useEffect(() => {
     let isMounted = true;
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/website/categories");
+        const res = await fetch(`${API_URL}/api/website/categories`);
         if (res.ok) {
           const result = await res.json();
           if (isMounted && result.success && Array.isArray(result.data) && result.data.length > 0) {

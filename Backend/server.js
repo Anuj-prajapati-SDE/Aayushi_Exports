@@ -46,6 +46,7 @@ app.use((req, res, next) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes); // Fallback alias for direct /auth requests
 app.use('/api/website', websiteRoutes);
 app.use('/api', websiteRoutes);
 app.use('/api/upload', uploadRoutes);

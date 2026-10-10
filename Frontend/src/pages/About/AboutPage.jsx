@@ -73,11 +73,12 @@ const defaultAboutData = {
 function AboutusPage() {
   const [aboutData, setAboutData] = useState(defaultAboutData);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const  API_URL = import.meta.env.VITE_BACKEND_URL;
 
   // Fetch live CMS configuration from backend API
   const fetchAboutData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/content/about_page");
+      const res = await fetch(`${API_URL}/api/website/content/about_page`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && result.data) {

@@ -500,12 +500,13 @@ const WebsiteManagementPage = () => {
     setTimeout(() => setToastMessage(''), 3500);
   };
 
+  const API_BASE_URL = `${import.meta.env.VITE_BACKEND_URL}`;
   // Fetch all live data from backend API on mount
   useEffect(() => {
     const fetchWebsiteData = async () => {
       try {
         // 1. Fetch Hero Slides from Backend
-        const slidesRes = await fetch('http://localhost:5000/api/website/hero-slides/all');
+        const slidesRes = await fetch(`${API_BASE_URL}/api/website/hero-slides/all`);
         if (slidesRes.ok) {
           const slidesData = await slidesRes.json();
           if (slidesData.success && Array.isArray(slidesData.data) && slidesData.data.length > 0) {
@@ -514,7 +515,7 @@ const WebsiteManagementPage = () => {
         }
 
         // 2. Fetch CMS Sections from Backend
-        const contentRes = await fetch('http://localhost:5000/api/website/content');
+        const contentRes = await fetch(`${API_BASE_URL}/api/website/content`);
         if (contentRes.ok) {
           const contentData = await contentRes.json();
           if (contentData.success && contentData.data) {
@@ -560,28 +561,28 @@ const WebsiteManagementPage = () => {
 
     try {
       // 1. Save Hero Slides to Backend MongoDB
-      const slidesPromise = fetch('http://localhost:5000/api/website/hero-slides/bulk', {
+      const slidesPromise = fetch(`${API_BASE_URL}/api/website/hero-slides/bulk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slides: heroSlides }),
       });
 
       // 2. Save Categories to Backend MongoDB
-      const categoriesPromise = fetch('http://localhost:5000/api/website/categories/bulk', {
+      const categoriesPromise = fetch(`${API_BASE_URL}/api/website/categories/bulk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ categories }),
       });
 
       // 3. Save Hero Banners to Backend MongoDB
-      const bannersPromise = fetch('http://localhost:5000/api/website/hero-banners/bulk', {
+      const bannersPromise = fetch(`${API_BASE_URL}/api/website/hero-banners/bulk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ banners: heroBanners }),
       });
 
       // 4. Save Universal CMS Sections to Backend MongoDB
-      const contentPromise = fetch('http://localhost:5000/api/website/content/save-all', {
+      const contentPromise = fetch(`${API_BASE_URL}/api/website/content/save-all`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

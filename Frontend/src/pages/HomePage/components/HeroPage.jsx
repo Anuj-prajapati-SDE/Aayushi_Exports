@@ -86,13 +86,13 @@ const HeroPage = () => {
   const [slides, setSlides] = useState(defaultSlides);
   const [activeSlide, setActiveSlide] = useState(0);
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
-
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Fetch dynamic hero slides from backend API
   useEffect(() => {
     let isMounted = true;
     const fetchHeroSlides = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/website/hero-slides');
+        const response = await fetch(`${API_URL}/api/website/hero-slides`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

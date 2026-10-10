@@ -1,4 +1,11 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Normalize backend base URL to ensure it points to the '/api' prefix
+const getApiBaseUrl = () => {
+  const envUrl = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || 'http://localhost:5000';
+  const cleanUrl = envUrl.replace(/\/+$/, '');
+  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 /**
  * Universal API Request Fetch Helper
@@ -19,8 +26,13 @@ async function request(endpoint, options = {}) {
     },
   };
 
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const requestUrl = cleanEndpoint.startsWith('/api/')
+    ? `${API_BASE_URL.replace(/\/api$/, '')}${cleanEndpoint}`
+    : `${API_BASE_URL}${cleanEndpoint}`;
+
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const response = await fetch(requestUrl, config);
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {

@@ -99,16 +99,16 @@ const productsData = [
 function HomeProducts() {
   const [productsList, setProductsList] = useState(productsData);
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
-  const [itemsToShow, setItemsToShow] = useState(4);
+  const [itemsToShow, setItemsToShow] = useState(4); 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const touchStartX = useRef(null);
-
+ const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     let isMounted = true;
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/website/content/collections");
+        const res = await fetch(`${API_BASE_URL}/api/website/content/collections`);
         if (res.ok) {
           const result = await res.json();
           if (isMounted && result.success && result.data && result.data.bestSellers && result.data.bestSellers.length > 0) {

@@ -51,7 +51,7 @@ html{
 .product-search-category form input {
     border-radius: 5px 0 0 5px;
     margin-left: auto;
-    margin-right: 30px;
+    margin-right: 0px;
     border-right: 1px solid var(--light-gray);
     border-left: none;
 }

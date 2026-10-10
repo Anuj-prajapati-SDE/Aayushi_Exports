@@ -183,7 +183,7 @@ function ShopPage() {
       if (cached) {
         try {
           setProducts(JSON.parse(cached));
-        } catch (e) {}
+        } catch (e) { }
       }
     }
   };
@@ -207,7 +207,7 @@ function ShopPage() {
       if (cached) {
         try {
           setShopSettings(JSON.parse(cached));
-        } catch (e) {}
+        } catch (e) { }
       }
     }
   };

@@ -451,7 +451,6 @@ const AdminLogin = () => {
             )}
           </button>
         </form>
-
         {/* Footer Info */}
         <div
           style={{

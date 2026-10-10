@@ -43,10 +43,11 @@ const defaultContactData = {
 function ContactPages() {
   const [contactData, setContactData] = useState(defaultContactData);
   const [formStatus, setFormStatus] = useState("");
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   const fetchContactData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/content/contact_page");
+      const res = await fetch(`${API_URL}/api/website/content/contact_page`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && result.data) {
