@@ -1078,6 +1078,22 @@ const createProduct = async (req, res) => {
       productData.sku = `${productData.sku}-${Date.now().toString().slice(-4)}`;
     }
 
+    // Sanitize productData
+    if (!productData._id) delete productData._id;
+    if (!productData.id) delete productData.id;
+    if (!productData.image || !productData.image.trim()) {
+      productData.image = 'assets/images/products/brass-cylinder-vase-1.jpg';
+    }
+    if (productData.price !== undefined) {
+      productData.price = Number(productData.price) || 0;
+    }
+    if (productData.salePrice !== undefined) {
+      productData.salePrice = Number(productData.salePrice) || productData.price || 0;
+    }
+    if (productData.stock !== undefined) {
+      productData.stock = Number(productData.stock) || 0;
+    }
+
     const newProduct = new Product(productData);
     await newProduct.save();
 
@@ -1215,12 +1231,13 @@ const createOrder = async (req, res) => {
 
     const updatedOrders = [newOrder, ...existingOrders];
 
-    if (content) {
-      content.data = updatedOrders;
-      await content.save();
+    if (!content) {
+      content = new WebsiteContent({ key: 'customer_orders', data: updatedOrders });
     } else {
-      await WebsiteContent.create({ key: 'customer_orders', data: updatedOrders });
+      content.data = updatedOrders;
     }
+    content.markModified('data');
+    await content.save();
 
     return res.status(201).json({ success: true, message: 'Order placed successfully!', data: newOrder });
   } catch (error) {
@@ -1233,11 +1250,14 @@ const updateOrderStatus = async (req, res) => {
     const { id } = req.params;
     const { status, paymentStatus } = req.body;
     let content = await WebsiteContent.findOne({ key: 'customer_orders' });
-    const orders = content && Array.isArray(content.data) ? content.data : [];
+    if (!content) {
+      content = new WebsiteContent({ key: 'customer_orders', data: [] });
+    }
+    const orders = Array.isArray(content.data) ? content.data : [];
 
     let updatedOrder = null;
     const updatedOrders = orders.map((ord) => {
-      if (ord.id === id) {
+      if (ord.id === id || ord._id === id || String(ord.id) === String(id)) {
         updatedOrder = {
           ...ord,
           status: status || ord.status,
@@ -1254,6 +1274,7 @@ const updateOrderStatus = async (req, res) => {
     }
 
     content.data = updatedOrders;
+    content.markModified('data');
     await content.save();
 
     return res.status(200).json({ success: true, message: 'Order updated successfully', data: updatedOrder });
@@ -1266,10 +1287,14 @@ const deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
     let content = await WebsiteContent.findOne({ key: 'customer_orders' });
-    const orders = content && Array.isArray(content.data) ? content.data : [];
+    if (!content) {
+      return res.status(200).json({ success: true, message: 'Order already deleted or does not exist' });
+    }
+    const orders = Array.isArray(content.data) ? content.data : [];
 
-    const updatedOrders = orders.filter((ord) => ord.id !== id);
+    const updatedOrders = orders.filter((ord) => ord.id !== id && ord._id !== id && String(ord.id) !== String(id));
     content.data = updatedOrders;
+    content.markModified('data');
     await content.save();
 
     return res.status(200).json({ success: true, message: 'Order deleted successfully' });
@@ -1283,9 +1308,12 @@ const sendOrderEmailNotification = async (req, res) => {
     const { id } = req.params;
     const { status, paymentStatus, customMessage, trackingNumber } = req.body;
     let content = await WebsiteContent.findOne({ key: 'customer_orders' });
-    const orders = content && Array.isArray(content.data) ? content.data : [];
+    if (!content) {
+      return res.status(404).json({ success: false, message: 'No orders found' });
+    }
+    const orders = Array.isArray(content.data) ? content.data : [];
 
-    const order = orders.find((o) => o.id === id);
+    const order = orders.find((o) => o.id === id || o._id === id || String(o.id) === String(id));
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
@@ -1312,7 +1340,7 @@ const sendOrderEmailNotification = async (req, res) => {
 
     // Update order with new status and email log
     const updatedOrders = orders.map((ord) => {
-      if (ord.id === id) {
+      if (ord.id === id || ord._id === id || String(ord.id) === String(id)) {
         const history = Array.isArray(ord.emailHistory) ? ord.emailHistory : [];
         return {
           ...ord,
@@ -1327,6 +1355,7 @@ const sendOrderEmailNotification = async (req, res) => {
     });
 
     content.data = updatedOrders;
+    content.markModified('data');
     await content.save();
 
     console.log(`[Email Dispatch] Status email successfully sent to ${recipientEmail} for Order #${id} [Status: ${currentStatus}]`);

@@ -163,7 +163,9 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  width: 100%;
+  width: calc(100% - 270px);
+  margin-left: 270px;
+  min-height: 100vh;
   transition: all 0.3s ease;
 }
 
@@ -184,8 +186,10 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  bottom: 0;
   z-index: 50;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
   flex-shrink: 0;
@@ -281,6 +285,11 @@ input, select, textarea {
 
 /* Tablet & Mobile Screens (<= 1024px) */
 @media (max-width: 1024px) {
+  .admin-main-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
   .admin-sidebar {
     position: fixed !important;
     top: 0 !important;

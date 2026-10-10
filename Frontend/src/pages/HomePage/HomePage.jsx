@@ -5,6 +5,7 @@ import HeroBanner from "./components/HeroBanner";
 import HomeCollection from "./components/HomeCollection";
 import HomeTrendingProducts from "./components/HomeTrendingProducts";
 import HomeProducts from "./components/HomeProducts";
+import TrustCertifications from "../../components/TrustCertifications/TrustCertifications";
 
 function HomePage() {
 
@@ -846,12 +847,17 @@ function HomePage() {
       </div>
     </section>
     {/*====== End Testimonial Sections  ======*/}
+
+    {/*====== Start Legal Trust & Certifications Section ======*/}
+    <TrustCertifications />
+    {/*====== End Legal Trust & Certifications Section ======*/}
+
     {/*====== Start Blog Sections  ======*/}
-    <section className="blogs-section pt-125 pb-95">
+    {/* <section className="blogs-section pt-125 pb-95">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {/*=== Section Title  ===*/}
+          
             <div
               className="section-title text-center mb-60 aos-init aos-animate"
               data-aos="fade-up"
@@ -868,7 +874,7 @@ function HomePage() {
         </div>
         <div className="row">
           <div className="col-lg-6">
-            {/*=== Blog Post Item  ===*/}
+           
             <div
               className="blog-post-item style-one mb-25 aos-init aos-animate"
               data-aos="fade-up"
@@ -900,7 +906,7 @@ function HomePage() {
           <div className="col-lg-6">
             <div className="row">
               <div className="col-sm-6">
-                {/*=== Blog Post Item  ===*/}
+               
                 <div
                   className="blog-post-item style-two mb-25 aos-init aos-animate"
                   data-aos="fade-up"
@@ -931,7 +937,7 @@ function HomePage() {
                 </div>
               </div>
               <div className="col-sm-6">
-                {/*=== Blog Post Item  ===*/}
+             
                 <div
                   className="blog-post-item style-two mb-25 aos-init aos-animate"
                   data-aos="fade-up"
@@ -961,7 +967,7 @@ function HomePage() {
                 </div>
               </div>
               <div className="col-sm-6">
-                {/*=== Blog Post Item  ===*/}
+               
                 <div
                   className="blog-post-item style-two mb-25 aos-init aos-animate"
                   data-aos="fade-up"
@@ -1024,7 +1030,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-    </section>
+    </section> */}
     {/*====== End Blog Sections  ======*/}
     {/*====== Start Newsletter Sections  ======*/}
     <section className="newsletter-section pb-95">

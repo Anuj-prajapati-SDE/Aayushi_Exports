@@ -159,7 +159,9 @@ productSchema.pre('save', function (next) {
   if (this.material && !this.fabricType) {
     this.fabricType = this.material;
   }
-  next();
+  if (typeof next === 'function') {
+    next();
+  }
 });
 
 const Product = mongoose.model('Product', productSchema);

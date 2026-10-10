@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./TrustCertifications/TrustCertifications.css";
 
 function Footer() {
   return (
@@ -255,6 +256,51 @@ function Footer() {
               </div>
             </div>
           </div>
+          {/*=== Government & Export Verification Strip ===*/}
+          <div className="footer-trust-strip">
+            <div className="container">
+              <div className="footer-trust-content">
+                <div className="footer-trust-left">
+                  <span className="footer-trust-badge">
+                    <i className="fas fa-shield-alt"></i> Govt. Recognized
+                  </span>
+                  <p className="footer-trust-text">
+                    Official Entity: <strong>AAYUSHI EXPORTS</strong> • Chandausi, Sambhal (U.P.)
+                  </p>
+                </div>
+                <div className="footer-trust-chips">
+                  <a
+                    href="/assets/certificates/gst-certificate.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-trust-chip-item"
+                    title="View GST Certificate"
+                  >
+                    <i className="fas fa-landmark text-warning"></i> GSTIN: <code>09BQUPY9133K1ZM</code>
+                  </a>
+                  <a
+                    href="/assets/certificates/iec-certificate.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-trust-chip-item"
+                    title="View DGFT IEC License"
+                  >
+                    <i className="fas fa-globe-americas text-warning"></i> DGFT IEC: <code>BQUPY9133K</code>
+                  </a>
+                  <a
+                    href="/assets/certificates/gst-certificate.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-trust-chip-item"
+                    style={{ borderColor: "rgba(212, 175, 55, 0.5)", color: "#facc15" }}
+                  >
+                    <i className="fas fa-certificate"></i> View Certificates
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/*=== Footer Copyright  ===*/}
           <div className="copyright-area">
             <div className="container">

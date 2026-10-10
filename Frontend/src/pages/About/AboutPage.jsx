@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../utils/imageUrl";
+import TrustCertifications from "../../components/TrustCertifications/TrustCertifications";
 
 const defaultAboutData = {
   bannerTitle: "About Us",
@@ -473,6 +474,10 @@ function AboutusPage() {
         </div>
       </section>
       {/*====== End Team Section ======*/}
+
+      {/*====== Start Legal Trust & Certifications Section ======*/}
+      <TrustCertifications />
+      {/*====== End Legal Trust & Certifications Section ======*/}
     </main>
   );
 }

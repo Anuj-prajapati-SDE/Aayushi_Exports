@@ -54,105 +54,9 @@ const resolveImageUrl = (url) => {
   return `/${clean}`;
 };
 
-const mockFallbackOrders = [
-  {
-    id: 'ORD-9842',
-    customer: 'Sarah Jenkins',
-    email: 'sarah.j@example.com',
-    phone: '+91 98765 43210',
-    address: 'Flat 402, Royal Palms, MG Road, Mumbai, Maharashtra - 400001, India',
-    shippingAddress: {
-      address: 'Flat 402, Royal Palms, MG Road',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      postalCode: '400001',
-      country: 'India',
-    },
-    orderNotes: 'Please ensure extra protective bubble wrapping for fragile brass neck.',
-    itemsCount: 2,
-    items: [
-      {
-        id: 'prod-1',
-        title: 'Handcrafted Antique Brass Cylindrical Jali Pillar Vase',
-        sku: 'RB-VS-101',
-        finish: 'Antique Brushed Gold',
-        size: '18 Inch',
-        price: 145.0,
-        quantity: 1,
-        image: 'assets/images/products/brass-cylinder-vase-1.jpg',
-      },
-      {
-        id: 'prod-2',
-        title: 'Traditional Royal Brass Floral Urli Bowl',
-        sku: 'RB-UR-202',
-        finish: 'Patina Brass',
-        size: '14 Inch',
-        price: 35.0,
-        quantity: 1,
-        image: 'assets/images/products/brass-urli-bowl.jpg',
-      },
-    ],
-    date: 'Oct 09, 2026, 02:30 PM',
-    pricing: {
-      subtotal: 180.0,
-      discount: 0,
-      shippingFee: 0,
-      shippingType: 'Standard Free',
-      taxAmount: 9.0,
-      totalAmount: 189.0,
-    },
-    total: 189.0,
-    paymentMethod: 'Cash on Delivery',
-    paymentStatus: 'Pending',
-    status: 'Processing',
-    emailHistory: [],
-  },
-  {
-    id: 'ORD-9841',
-    customer: 'Alexander Wright',
-    email: 'alex.wright@example.com',
-    phone: '+1 (555) 234-5678',
-    address: '742 Evergreen Terrace, Springfield, OR - 97477, United States',
-    shippingAddress: {
-      address: '742 Evergreen Terrace',
-      city: 'Springfield',
-      state: 'OR',
-      postalCode: '97477',
-      country: 'United States',
-    },
-    orderNotes: 'Deliver on Saturday afternoon.',
-    itemsCount: 1,
-    items: [
-      {
-        id: 'prod-3',
-        title: 'Vintage Moroccan Glass & Metal Fairy Lanterns (Set of 3)',
-        sku: 'RB-LT-303',
-        finish: 'Pearl White',
-        size: 'Set of 3',
-        price: 89.0,
-        quantity: 2,
-        image: 'assets/images/products/white-moroccan-lanterns.jpg',
-      },
-    ],
-    date: 'Oct 08, 2026, 11:15 AM',
-    pricing: {
-      subtotal: 178.0,
-      discount: 15.0,
-      shippingFee: 15.0,
-      shippingType: 'Standard Ground',
-      taxAmount: 8.9,
-      totalAmount: 186.9,
-    },
-    total: 186.9,
-    paymentMethod: 'Credit Card',
-    paymentStatus: 'Paid',
-    status: 'Shipped',
-    emailHistory: [],
-  },
-];
-
 const OrdersPage = () => {
-  const [orders, setOrders] = useState(mockFallbackOrders);
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('All');
   const [search, setSearch] = useState('');
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
@@ -366,7 +270,7 @@ const OrdersPage = () => {
       const res = await fetch(`${API_BASE_URL}/api/website/orders`);
       if (res.ok) {
         const result = await res.json();
-        if (result.success && Array.isArray(result.data) && result.data.length > 0) {
+        if (result.success && Array.isArray(result.data)) {
           const formatted = result.data.map((o) => {
             const shipAddr = o.shippingAddress || {};
             const fullAddress = shipAddr.address
@@ -374,7 +278,7 @@ const OrdersPage = () => {
               : o.address || 'N/A';
 
             return {
-              id: o.id || `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+              id: o.id || o._id || `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
               customer: o.customer || shipAddr.fullName || 'Customer',
               email: o.email || shipAddr.email || 'N/A',
               phone: o.phone || shipAddr.phone || 'N/A',
@@ -404,6 +308,7 @@ const OrdersPage = () => {
     } catch (err) {
       console.warn('Orders fetch error:', err);
     } finally {
+      setIsLoading(false);
       setTimeout(() => setIsRefreshing(false), 300);
     }
   };
@@ -521,14 +426,24 @@ const OrdersPage = () => {
     }
 
     try {
-      await fetch(`${API_BASE_URL}/api/website/orders/${orderId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/website/orders/${orderId}`, {
         method: 'DELETE',
       });
-      setOrders((prev) => prev.filter((o) => o.id !== orderId));
-      if (selectedOrder?.id === orderId) {
-        setSelectedOrder(null);
+      if (res.ok) {
+        setOrders((prev) => prev.filter((o) => o.id !== orderId && o._id !== orderId));
+        if (selectedOrder?.id === orderId) {
+          setSelectedOrder(null);
+        }
+        setEmailSuccessToast(`Order #${orderId} has been deleted successfully.`);
+        setTimeout(() => setEmailSuccessToast(''), 3500);
+        window.dispatchEvent(new Event('pesco_website_updated'));
+      } else {
+        const errData = await res.json().catch(() => null);
+        alert(errData?.message || 'Failed to delete order from server');
       }
     } catch (e) {
+      console.error('Delete order error:', e);
+      // Local optimistic fallback
       setOrders((prev) => prev.filter((o) => o.id !== orderId));
       if (selectedOrder?.id === orderId) {
         setSelectedOrder(null);
@@ -963,11 +878,49 @@ const OrdersPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredOrders.length === 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={8} style={{ textAlign: 'center', padding: '50px 20px', color: '#64748B' }}>
+                    <RefreshCw size={26} className="animate-spin" style={{ color: '#0F172A', marginBottom: '10px' }} />
+                    <div style={{ fontWeight: 600 }}>Loading live orders from database...</div>
+                  </td>
+                </tr>
+              ) : orders.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{ textAlign: 'center', padding: '60px 20px', color: '#64748B' }}>
+                    <Package size={44} style={{ color: '#CBD5E1', marginBottom: '12px' }} />
+                    <div style={{ fontWeight: 700, fontSize: '16px', color: '#0F172A', marginBottom: '6px' }}>
+                      No Customer Orders Yet
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', maxWidth: '440px', margin: '0 auto 16px', lineHeight: 1.5 }}>
+                      Orders placed by buyers on your website will automatically appear here dynamically in real-time.
+                    </div>
+                    <button
+                      type="button"
+                      onClick={fetchOrders}
+                      style={{
+                        padding: '8px 18px',
+                        borderRadius: '8px',
+                        backgroundColor: '#0F172A',
+                        color: '#FFF',
+                        border: 'none',
+                        fontWeight: 600,
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}
+                    >
+                      <RefreshCw size={14} /> Refresh Live Orders
+                    </button>
+                  </td>
+                </tr>
+              ) : filteredOrders.length === 0 ? (
                 <tr>
                   <td colSpan={8} style={{ textAlign: 'center', padding: '40px', color: '#64748B' }}>
                     <Package size={32} style={{ color: '#CBD5E1', marginBottom: '8px' }} />
-                    <div style={{ fontWeight: 600 }}>No matching customer orders found.</div>
+                    <div style={{ fontWeight: 600 }}>No matching customer orders found for current filter or search.</div>
                   </td>
                 </tr>
               ) : (

@@ -412,20 +412,29 @@ const ProductsPage = () => {
 
     try {
       if (modalMode === 'create') {
+        const payload = { ...cleanedProduct };
+        delete payload._id;
+        delete payload.id;
+
         const res = await fetch(`${API_BASE_URL}/products`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(cleanedProduct),
+          body: JSON.stringify(payload),
         });
+
         if (res.ok) {
           const result = await res.json();
           if (result.success && result.data) {
-            setProducts((prev) => [result.data, ...prev]);
-            showToast(`Product published successfully.`);
+            setProducts((prev) => [result.data, ...prev.filter((p) => p._id !== result.data._id && p.sku !== result.data.sku)]);
+            showToast(`Product created successfully.`);
             setIsProductModalOpen(false);
             notifyChange();
             return;
           }
+        } else {
+          const errorData = await res.json().catch(() => null);
+          const errMsg = errorData?.message || errorData?.error || `Failed to create product (Status: ${res.status})`;
+          throw new Error(errMsg);
         }
       } else {
         const targetId = cleanedProduct._id || cleanedProduct.id || cleanedProduct.sku;
@@ -434,6 +443,7 @@ const ProductsPage = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(cleanedProduct),
         });
+
         if (res.ok) {
           const result = await res.json();
           if (result.success && result.data) {
@@ -449,35 +459,18 @@ const ProductsPage = () => {
             notifyChange();
             return;
           }
+        } else {
+          const errorData = await res.json().catch(() => null);
+          const errMsg = errorData?.message || errorData?.error || `Failed to update product (Status: ${res.status})`;
+          throw new Error(errMsg);
         }
       }
     } catch (err) {
-      console.warn('[ProductsPage] API Save fallback to local state:', err.message);
+      console.error('[ProductsPage] Product save error:', err);
+      showToast(`Error: ${err.message || 'Failed to save product'}`);
     } finally {
       setIsSaving(false);
     }
-
-    // Local fallback update
-    if (modalMode === 'create') {
-      const localItem = {
-        ...cleanedProduct,
-        _id: `prod-${Date.now()}`,
-        id: `PRD-${Date.now().toString().slice(-4)}`,
-      };
-      setProducts((prev) => [localItem, ...prev]);
-      showToast(`Product saved.`);
-    } else {
-      setProducts((prev) =>
-        prev.map((p) =>
-          p._id === cleanedProduct._id || p.id === cleanedProduct.id || p.sku === cleanedProduct.sku
-            ? cleanedProduct
-            : p
-        )
-      );
-      showToast(`Product updated.`);
-    }
-    setIsProductModalOpen(false);
-    notifyChange();
   };
 
   // Add Category handler

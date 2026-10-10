@@ -192,6 +192,8 @@ const AdminSidebar = ({ isOpen, onClose, onOpenLogout }) => {
             padding: '16px 14px',
             borderTop: '1px solid #EDE8E3',
             backgroundColor: '#FAF8F5',
+            marginTop: 'auto',
+            flexShrink: 0,
           }}
         >
           <div
