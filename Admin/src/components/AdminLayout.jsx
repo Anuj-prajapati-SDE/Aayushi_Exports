@@ -12,6 +12,11 @@ const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Auto-close sidebar on route change on mobile devices
+  React.useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
   const getPageTitle = (pathname) => {
     switch (pathname) {
       case '/dashboard':

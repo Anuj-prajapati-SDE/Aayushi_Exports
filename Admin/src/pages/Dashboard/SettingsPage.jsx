@@ -185,10 +185,10 @@ const SettingsPage = () => {
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '850px' }}>
       {/* Page Header */}
       <div>
-        <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#0F172A', margin: 0 }}>
+        <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#13172B', margin: 0 }}>
           Store & Security Settings
         </h1>
-        <p style={{ fontSize: '13px', color: '#64748B', marginTop: '3px', margin: 0 }}>
+        <p style={{ fontSize: '13px', color: '#5E626F', marginTop: '3px', margin: 0 }}>
           Manage your storefront currency, store information, and administrator account credentials.
         </p>
       </div>
@@ -200,7 +200,7 @@ const SettingsPage = () => {
           padding: '22px 24px',
           backgroundColor: '#FFFFFF',
           borderRadius: '10px',
-          border: '1px solid #E2E8F0',
+          border: '1px solid #EDE8E3',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
@@ -209,8 +209,8 @@ const SettingsPage = () => {
               width: '36px',
               height: '36px',
               borderRadius: '8px',
-              backgroundColor: '#F1F5F9',
-              color: '#0F172A',
+              backgroundColor: '#FAF8F5',
+              color: '#13172B',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -219,10 +219,10 @@ const SettingsPage = () => {
             <Store size={18} />
           </div>
           <div>
-            <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#0F172A', margin: 0 }}>
+            <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#13172B', margin: 0 }}>
               General Store Profile
             </h2>
-            <p style={{ fontSize: '12px', color: '#64748B', margin: '2px 0 0 0' }}>
+            <p style={{ fontSize: '12px', color: '#5E626F', margin: '2px 0 0 0' }}>
               Public store details and storefront currency display
             </p>
           </div>
@@ -355,7 +355,7 @@ const SettingsPage = () => {
           padding: '22px 24px',
           backgroundColor: '#FFFFFF',
           borderRadius: '10px',
-          border: '1px solid #E2E8F0',
+          border: '1px solid #EDE8E3',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
@@ -364,8 +364,8 @@ const SettingsPage = () => {
               width: '36px',
               height: '36px',
               borderRadius: '8px',
-              backgroundColor: '#EFF6FF',
-              color: '#2563EB',
+              backgroundColor: '#FFF1F2',
+              color: '#CC0D39',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -374,10 +374,10 @@ const SettingsPage = () => {
             <Shield size={18} />
           </div>
           <div>
-            <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#0F172A', margin: 0 }}>
+            <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#13172B', margin: 0 }}>
               Administrator Credentials & Security
             </h2>
-            <p style={{ fontSize: '12px', color: '#64748B', margin: '2px 0 0 0' }}>
+            <p style={{ fontSize: '12px', color: '#5E626F', margin: '2px 0 0 0' }}>
               Change your login email and password by confirming your current password
             </p>
           </div>
@@ -429,7 +429,7 @@ const SettingsPage = () => {
           {/* Admin Name & Email */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#13172B', marginBottom: '4px' }}>
                 Admin Full Name
               </label>
               <div style={{ position: 'relative' }}>
@@ -442,13 +442,13 @@ const SettingsPage = () => {
                   style={{ height: '36px', fontSize: '13px', paddingLeft: '32px' }}
                   required
                 />
-                <User size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+                <User size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                Admin Email Address (Login Email) <span style={{ color: '#DC2626' }}>*</span>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#13172B', marginBottom: '4px' }}>
+                Admin Email Address (Login Email) <span style={{ color: '#CC0D39' }}>*</span>
               </label>
               <div style={{ position: 'relative' }}>
                 <input
@@ -460,7 +460,7 @@ const SettingsPage = () => {
                   style={{ height: '36px', fontSize: '13px', paddingLeft: '32px' }}
                   required
                 />
-                <Mail size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+                <Mail size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
               </div>
             </div>
           </div>
@@ -468,15 +468,15 @@ const SettingsPage = () => {
           {/* Verification: Current Password */}
           <div
             style={{
-              backgroundColor: '#F8FAFC',
+              backgroundColor: '#FAF8F5',
               padding: '14px',
               borderRadius: '8px',
-              border: '1px solid #E2E8F0',
+              border: '1px solid #EDE8E3',
               marginTop: '4px',
             }}
           >
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#0F172A', marginBottom: '4px' }}>
-              Current Password <span style={{ color: '#DC2626' }}>* (Required to verify and save changes)</span>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#13172B', marginBottom: '4px' }}>
+              Current Password <span style={{ color: '#CC0D39' }}>* (Required to verify and save changes)</span>
             </label>
             <div style={{ position: 'relative' }}>
               <input
@@ -488,7 +488,7 @@ const SettingsPage = () => {
                 style={{ height: '36px', fontSize: '13px', paddingLeft: '32px', paddingRight: '36px', backgroundColor: '#FFFFFF' }}
                 required
               />
-              <KeyRound size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+              <KeyRound size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
               <button
                 type="button"
                 onClick={() => setShowCurrentPass(!showCurrentPass)}
@@ -499,7 +499,7 @@ const SettingsPage = () => {
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
-                  color: '#64748B',
+                  color: '#5E626F',
                   cursor: 'pointer',
                   padding: '4px',
                   display: 'flex',
@@ -511,14 +511,14 @@ const SettingsPage = () => {
           </div>
 
           {/* New Password & Confirm Password */}
-          <div style={{ borderTop: '1px solid #F1F5F9', paddingTop: '12px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569', display: 'block', marginBottom: '8px' }}>
+          <div style={{ borderTop: '1px solid #EDE8E3', paddingTop: '12px' }}>
+            <span style={{ fontSize: '12px', fontWeight: 600, color: '#5E626F', display: 'block', marginBottom: '8px' }}>
               Change Password (Leave blank if keeping current password)
             </span>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, color: '#334155', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, color: '#13172B', marginBottom: '4px' }}>
                   New Password
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -530,7 +530,7 @@ const SettingsPage = () => {
                     placeholder="Min. 6 characters"
                     style={{ height: '36px', fontSize: '13px', paddingLeft: '32px', paddingRight: '36px' }}
                   />
-                  <Lock size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+                  <Lock size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
                   <button
                     type="button"
                     onClick={() => setShowNewPass(!showNewPass)}
@@ -541,7 +541,7 @@ const SettingsPage = () => {
                       transform: 'translateY(-50%)',
                       background: 'none',
                       border: 'none',
-                      color: '#64748B',
+                      color: '#5E626F',
                       cursor: 'pointer',
                       padding: '4px',
                       display: 'flex',
@@ -553,7 +553,7 @@ const SettingsPage = () => {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, color: '#334155', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, color: '#13172B', marginBottom: '4px' }}>
                   Confirm New Password
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -565,7 +565,7 @@ const SettingsPage = () => {
                     placeholder="Re-enter new password"
                     style={{ height: '36px', fontSize: '13px', paddingLeft: '32px', paddingRight: '36px' }}
                   />
-                  <Lock size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+                  <Lock size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPass(!showConfirmPass)}
@@ -576,7 +576,7 @@ const SettingsPage = () => {
                       transform: 'translateY(-50%)',
                       background: 'none',
                       border: 'none',
-                      color: '#64748B',
+                      color: '#5E626F',
                       cursor: 'pointer',
                       padding: '4px',
                       display: 'flex',

@@ -89,11 +89,11 @@ const AdminLogin = () => {
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#F1F5F9',
+        backgroundColor: '#FBF9F6',
         backgroundImage: `
           radial-gradient(at 10% 15%, rgba(204, 13, 57, 0.08) 0px, transparent 50%),
-          radial-gradient(at 90% 85%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
-          radial-gradient(at 50% 50%, rgba(241, 245, 249, 1) 0%, rgba(226, 232, 240, 0.8) 100%)
+          radial-gradient(at 90% 85%, rgba(247, 148, 31, 0.08) 0px, transparent 50%),
+          radial-gradient(at 50% 50%, rgba(251, 249, 246, 1) 0%, rgba(245, 241, 236, 0.9) 100%)
         `,
         display: 'flex',
         alignItems: 'center',
@@ -110,7 +110,7 @@ const AdminLogin = () => {
           position: 'absolute',
           inset: 0,
           backgroundImage:
-            'linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px)',
+            'linear-gradient(rgba(19, 23, 43, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(19, 23, 43, 0.03) 1px, transparent 1px)',
           backgroundSize: '36px 36px',
           pointerEvents: 'none',
         }}
@@ -121,11 +121,11 @@ const AdminLogin = () => {
         style={{
           width: '100%',
           maxWidth: '460px',
-          padding: '42px 38px',
+          padding: 'clamp(28px, 6vw, 42px) clamp(20px, 6vw, 38px)',
           backgroundColor: '#FFFFFF',
-          borderRadius: '24px',
-          border: '1px solid #E2E8F0',
-          boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.03)',
+          borderRadius: 'clamp(16px, 4vw, 24px)',
+          border: '1px solid #EDE8E3',
+          boxShadow: '0 20px 45px -10px rgba(19, 23, 43, 0.08), 0 0 0 1px rgba(19, 23, 43, 0.03)',
           position: 'relative',
           zIndex: 10,
         }}
@@ -137,14 +137,15 @@ const AdminLogin = () => {
               width: '58px',
               height: '58px',
               borderRadius: '16px',
-              background: 'linear-gradient(135deg, #CC0D39 0%, #E61E4D 100%)',
+              background: 'linear-gradient(135deg, #FEEB9D 0%, #F5DE7A 100%)',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 10px 22px rgba(204, 13, 57, 0.3)',
-              color: '#ffffff',
-              fontWeight: 800,
-              fontSize: '26px',
+              boxShadow: '0 8px 22px rgba(229, 195, 101, 0.45)',
+              color: '#CC0D39',
+              fontWeight: 900,
+              fontSize: '28px',
+              border: '2px solid #E5C365',
               marginBottom: '16px',
             }}
           >
@@ -154,14 +155,14 @@ const AdminLogin = () => {
             style={{
               fontSize: '24px',
               fontWeight: 800,
-              color: '#0F172A',
+              color: '#13172B',
               letterSpacing: '-0.4px',
               fontFamily: "'Outfit', sans-serif",
             }}
           >
             Admin Portal
           </h1>
-          <p style={{ fontSize: '13.5px', color: '#64748B', marginTop: '6px' }}>
+          <p style={{ fontSize: '13.5px', color: '#5E626F', marginTop: '6px' }}>
             Sign in with authorized administrator credentials
           </p>
         </div>
@@ -224,7 +225,7 @@ const AdminLogin = () => {
                 display: 'block',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: '#334155',
+                color: '#13172B',
                 marginBottom: '8px',
               }}
             >
@@ -238,7 +239,7 @@ const AdminLogin = () => {
                   left: '14px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: '#94A3B8',
+                  color: '#AEB0B6',
                   pointerEvents: 'none',
                 }}
               />
@@ -254,9 +255,9 @@ const AdminLogin = () => {
                   width: '100%',
                   height: '48px',
                   backgroundColor: '#FFFFFF',
-                  border: '1.5px solid #CBD5E1',
+                  border: '1.5px solid #EDE8E3',
                   borderRadius: '12px',
-                  color: '#0F172A',
+                  color: '#13172B',
                   fontSize: '14px',
                   paddingLeft: '44px',
                   paddingRight: '16px',
@@ -265,11 +266,11 @@ const AdminLogin = () => {
                   boxSizing: 'border-box',
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#CC0D39';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(204, 13, 57, 0.1)';
+                  e.target.style.borderColor = '#E5C365';
+                  e.target.style.boxShadow = '0 0 0 4px rgba(254, 235, 157, 0.5)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = '#CBD5E1';
+                  e.target.style.borderColor = '#EDE8E3';
                   e.target.style.boxShadow = 'none';
                 }}
               />
@@ -291,7 +292,7 @@ const AdminLogin = () => {
                 style={{
                   fontSize: '13px',
                   fontWeight: 600,
-                  color: '#334155',
+                  color: '#13172B',
                   marginBottom: 0,
                 }}
               >
@@ -306,7 +307,7 @@ const AdminLogin = () => {
                   left: '14px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: '#94A3B8',
+                  color: '#AEB0B6',
                   pointerEvents: 'none',
                 }}
               />
@@ -322,9 +323,9 @@ const AdminLogin = () => {
                   width: '100%',
                   height: '48px',
                   backgroundColor: '#FFFFFF',
-                  border: '1.5px solid #CBD5E1',
+                  border: '1.5px solid #EDE8E3',
                   borderRadius: '12px',
-                  color: '#0F172A',
+                  color: '#13172B',
                   fontSize: '14px',
                   paddingLeft: '44px',
                   paddingRight: '44px',
@@ -333,11 +334,11 @@ const AdminLogin = () => {
                   boxSizing: 'border-box',
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#CC0D39';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(204, 13, 57, 0.1)';
+                  e.target.style.borderColor = '#E5C365';
+                  e.target.style.boxShadow = '0 0 0 4px rgba(254, 235, 157, 0.5)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = '#CBD5E1';
+                  e.target.style.borderColor = '#EDE8E3';
                   e.target.style.boxShadow = 'none';
                 }}
               />
@@ -349,7 +350,7 @@ const AdminLogin = () => {
                   right: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: '#64748B',
+                  color: '#5E626F',
                   padding: '6px',
                   borderRadius: '6px',
                   display: 'flex',
@@ -396,7 +397,7 @@ const AdminLogin = () => {
                   cursor: 'pointer',
                 }}
               />
-              <span style={{ fontSize: '13px', color: '#475569', fontWeight: 500 }}>
+              <span style={{ fontSize: '13px', color: '#5E626F', fontWeight: 500 }}>
                 Remember this device
               </span>
             </label>
@@ -412,11 +413,11 @@ const AdminLogin = () => {
               fontSize: '15px',
               fontWeight: 700,
               borderRadius: '12px',
-              backgroundColor: '#CC0D39',
-              backgroundImage: 'linear-gradient(135deg, #CC0D39 0%, #E61E4D 100%)',
-              color: '#FFFFFF',
-              border: 'none',
-              boxShadow: '0 8px 20px rgba(204, 13, 57, 0.3)',
+              backgroundColor: '#FEEB9D',
+              backgroundImage: 'linear-gradient(135deg, #FEEB9D 0%, #F5DC76 100%)',
+              color: '#13172B',
+              border: '1px solid #E5C365',
+              boxShadow: '0 8px 20px rgba(229, 195, 101, 0.35)',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -428,13 +429,13 @@ const AdminLogin = () => {
             onMouseOver={(e) => {
               if (!isLoading) {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 26px rgba(204, 13, 57, 0.4)';
+                e.currentTarget.style.boxShadow = '0 12px 26px rgba(229, 195, 101, 0.45)';
               }
             }}
             onMouseOut={(e) => {
               if (!isLoading) {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(204, 13, 57, 0.3)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(229, 195, 101, 0.35)';
               }
             }}
           >
@@ -456,10 +457,10 @@ const AdminLogin = () => {
           style={{
             marginTop: '28px',
             paddingTop: '20px',
-            borderTop: '1px solid #F1F5F9',
+            borderTop: '1px solid #EDE8E3',
             textAlign: 'center',
             fontSize: '12px',
-            color: '#94A3B8',
+            color: '#AEB0B6',
           }}
         >
           <span>E-Commerce Management Platform</span>

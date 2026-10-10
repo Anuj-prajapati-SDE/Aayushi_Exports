@@ -160,8 +160,8 @@ const ImageUploadField = ({
             width: compact ? '54px' : '74px',
             height: compact ? `${previewHeight || 54}px` : `${previewHeight || 74}px`,
             borderRadius: '10px',
-            border: '1.5px solid #E2E8F0',
-            backgroundColor: '#F8FAFC',
+            border: '1.5px solid #EDE8E3',
+            backgroundColor: '#FAF8F5',
             overflow: 'hidden',
             flexShrink: 0,
             display: 'flex',
@@ -181,9 +181,9 @@ const ImageUploadField = ({
               onLoad={() => setImgError(false)}
             />
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94A3B8' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#AEB0B6' }}>
               <ImageIcon size={compact ? 20 : 26} opacity={0.6} />
-              <span style={{ fontSize: '9px', fontWeight: 600, marginTop: '2px', color: '#94A3B8' }}>
+              <span style={{ fontSize: '9px', fontWeight: 600, marginTop: '2px', color: '#AEB0B6' }}>
                 {imgError ? 'Invalid' : 'Preview'}
               </span>
             </div>
@@ -194,7 +194,7 @@ const ImageUploadField = ({
               style={{
                 position: 'absolute',
                 inset: 0,
-                backgroundColor: 'rgba(15, 23, 42, 0.65)',
+                backgroundColor: 'rgba(19, 23, 43, 0.7)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -225,7 +225,7 @@ const ImageUploadField = ({
                 padding: compact ? '7px 10px' : '9px 12px',
                 backgroundColor: '#FFFFFF',
                 borderRadius: '8px',
-                border: uploadError ? '1px solid #EF4444' : '1px solid #CBD5E1',
+                border: uploadError ? '1px solid #CC0D39' : '1px solid #EDE8E3',
               }}
             />
 
@@ -240,21 +240,21 @@ const ImageUploadField = ({
                 gap: '6px',
                 padding: compact ? '7px 12px' : '9px 16px',
                 borderRadius: '8px',
-                backgroundColor: isUploading ? '#94A3B8' : '#CC0D39',
-                color: '#FFFFFF',
+                backgroundColor: isUploading ? '#AEB0B6' : '#FEEB9D',
+                color: isUploading ? '#FFFFFF' : '#13172B',
                 fontSize: compact ? '12px' : '13px',
                 fontWeight: 700,
-                border: 'none',
+                border: isUploading ? 'none' : '1px solid #E5C365',
                 cursor: isUploading ? 'not-allowed' : 'pointer',
                 whiteSpace: 'nowrap',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 2px 6px rgba(204, 13, 57, 0.2)',
+                boxShadow: isUploading ? 'none' : '0 2px 6px rgba(229, 195, 101, 0.35)',
               }}
               onMouseEnter={(e) => {
-                if (!isUploading) e.currentTarget.style.backgroundColor = '#A3082D';
+                if (!isUploading) e.currentTarget.style.backgroundColor = '#F5DE7A';
               }}
               onMouseLeave={(e) => {
-                if (!isUploading) e.currentTarget.style.backgroundColor = '#CC0D39';
+                if (!isUploading) e.currentTarget.style.backgroundColor = '#FEEB9D';
               }}
             >
               {isUploading ? (
@@ -264,7 +264,7 @@ const ImageUploadField = ({
                 </>
               ) : (
                 <>
-                  <UploadCloud size={15} />
+                  <UploadCloud size={15} color="#CC0D39" />
                   <span>Upload</span>
                 </>
               )}
@@ -278,9 +278,9 @@ const ImageUploadField = ({
                 style={{
                   padding: compact ? '7px 10px' : '9px 12px',
                   borderRadius: '8px',
-                  backgroundColor: '#F1F5F9',
-                  color: '#64748B',
-                  border: '1px solid #E2E8F0',
+                  backgroundColor: '#FAF8F5',
+                  color: '#5E626F',
+                  border: '1px solid #EDE8E3',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -289,13 +289,13 @@ const ImageUploadField = ({
                 title="Clear Image"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#FEE2E2';
-                  e.currentTarget.style.color = '#DC2626';
-                  e.currentTarget.style.borderColor = '#FCA5A5';
+                  e.currentTarget.style.color = '#CC0D39';
+                  e.currentTarget.style.borderColor = '#FECDD3';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F1F5F9';
-                  e.currentTarget.style.color = '#64748B';
-                  e.currentTarget.style.borderColor = '#E2E8F0';
+                  e.currentTarget.style.backgroundColor = '#FAF8F5';
+                  e.currentTarget.style.color = '#5E626F';
+                  e.currentTarget.style.borderColor = '#EDE8E3';
                 }}
               >
                 <Trash2 size={14} />

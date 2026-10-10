@@ -18,7 +18,8 @@ import {
 } from 'lucide-react';
 import ImageUploadField from '../../components/ImageUploadField';
 
-const API_BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/website/categories`;
+const BACKEND_BASE = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || 'http://localhost:5000';
+const API_BASE_URL = `${BACKEND_BASE}/api/website/categories`;
 
 /**
  * Resolves static or uploaded image URLs
@@ -31,7 +32,7 @@ const resolveImageUrl = (url) => {
   }
   if (clean.startsWith('/uploads/') || clean.startsWith('uploads/')) {
     const path = clean.startsWith('/') ? clean : `/${clean}`;
-    return `${API_BASE_URL}${path}`;
+    return `${BACKEND_BASE}${path}`;
   }
   if (clean.startsWith('/assets/') || clean.startsWith('assets/')) {
     const path = clean.startsWith('/') ? clean : `/${clean}`;

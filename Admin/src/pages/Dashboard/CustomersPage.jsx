@@ -66,10 +66,10 @@ const CustomersPage = () => {
   return (
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#0F172A', fontFamily: "'Outfit', sans-serif" }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#13172B', fontFamily: "'Outfit', sans-serif" }}>
           Registered Customers
         </h1>
-        <p style={{ fontSize: '13px', color: '#64748B' }}>
+        <p style={{ fontSize: '13px', color: '#5E626F' }}>
           View buyer directory, order activity, and lifetime value
         </p>
       </div>
@@ -84,7 +84,7 @@ const CustomersPage = () => {
         }}
       >
         <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
-          <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+          <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#AEB0B6' }} />
           <input
             type="text"
             placeholder="Search customers by name or email..."
@@ -116,20 +116,20 @@ const CustomersPage = () => {
                       <img
                         src={c.avatar}
                         alt={c.name}
-                        style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #E2E8F0' }}
+                        style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #EDE8E3' }}
                       />
                       <div>
-                        <div style={{ fontWeight: 600, color: '#0F172A', fontSize: '14px' }}>{c.name}</div>
-                        <div style={{ color: '#64748B', fontSize: '12px' }}>{c.email}</div>
+                        <div style={{ fontWeight: 600, color: '#13172B', fontSize: '14px' }}>{c.name}</div>
+                        <div style={{ color: '#5E626F', fontSize: '12px' }}>{c.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td style={{ color: '#475569', fontSize: '13px' }}>{c.phone}</td>
+                  <td style={{ color: '#5E626F', fontSize: '13px' }}>{c.phone}</td>
                   <td>
                     <span className="badge badge-info">{c.ordersCount} orders</span>
                   </td>
-                  <td style={{ fontWeight: 700, color: '#16A34A', fontSize: '15px' }}>{c.totalSpent}</td>
-                  <td style={{ color: '#64748B', fontSize: '13px' }}>{c.joined}</td>
+                  <td style={{ fontWeight: 700, color: '#059669', fontSize: '15px' }}>{c.totalSpent}</td>
+                  <td style={{ color: '#5E626F', fontSize: '13px' }}>{c.joined}</td>
                 </tr>
               ))}
             </tbody>

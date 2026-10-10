@@ -667,17 +667,17 @@ const ProductsPage = () => {
       >
         <div className="glass-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 500 }}>Total Products</div>
-            <div style={{ fontSize: '20px', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>{stats.total}</div>
+            <div style={{ fontSize: '12px', color: '#5E626F', fontWeight: 500 }}>Total Products</div>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: '#13172B', marginTop: '2px' }}>{stats.total}</div>
           </div>
-          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#F1F5F9', color: '#475569', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#FAF8F5', color: '#13172B', border: '1px solid #EDE8E3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Package size={18} />
           </div>
         </div>
 
         <div className="glass-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 500 }}>In Stock</div>
+            <div style={{ fontSize: '12px', color: '#5E626F', fontWeight: 500 }}>In Stock</div>
             <div style={{ fontSize: '20px', fontWeight: 700, color: '#16A34A', marginTop: '2px' }}>{stats.inStock}</div>
           </div>
           <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#DCFCE7', color: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -685,26 +685,26 @@ const ProductsPage = () => {
           </div>
         </div>
 
-        <div className="glass-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="glass-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: stats.lowStock + stats.outOfStock > 0 ? '1px solid #FEEB9D' : '1px solid #EDE8E3' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 500 }}>Low / Out of Stock</div>
-            <div style={{ fontSize: '20px', fontWeight: 700, color: stats.lowStock + stats.outOfStock > 0 ? '#D97706' : '#64748B', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: '#5E626F', fontWeight: 500 }}>Low / Out of Stock</div>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: stats.lowStock + stats.outOfStock > 0 ? '#13172B' : '#5E626F', marginTop: '2px' }}>
               {stats.lowStock + stats.outOfStock}
             </div>
           </div>
-          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#FEF3C7', color: '#D97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: stats.lowStock + stats.outOfStock > 0 ? '#FEEB9D' : '#FAF8F5', color: stats.lowStock + stats.outOfStock > 0 ? '#13172B' : '#5E626F', border: stats.lowStock + stats.outOfStock > 0 ? '1px solid #E5C365' : '1px solid #EDE8E3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <AlertTriangle size={18} />
           </div>
         </div>
 
         <div className="glass-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 500 }}>Inventory Value</div>
-            <div style={{ fontSize: '20px', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: '#5E626F', fontWeight: 500 }}>Inventory Value</div>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: '#13172B', marginTop: '2px' }}>
               {currencySymbol}{stats.totalInventoryValue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
             </div>
           </div>
-          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#F1F5F9', color: '#475569', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#FAF8F5', color: '#13172B', border: '1px solid #EDE8E3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <DollarSign size={18} />
           </div>
         </div>
@@ -1053,21 +1053,6 @@ const ProductsPage = () => {
                               title="Inspect Details"
                             >
                               <Eye size={15} />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleDuplicate(p)}
-                              style={{
-                                padding: '6px',
-                                borderRadius: '4px',
-                                background: 'transparent',
-                                color: '#64748B',
-                                border: 'none',
-                                cursor: 'pointer',
-                              }}
-                              title="Duplicate"
-                            >
-                              <Copy size={15} />
                             </button>
                             <button
                               type="button"
