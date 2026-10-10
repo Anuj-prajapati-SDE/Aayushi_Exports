@@ -138,10 +138,11 @@ function ShopPage() {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [wishlistVersion, setWishlistVersion] = useState(0);
 
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Fetch live products from backend MongoDB API
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/products");
+      const res = await fetch(`${API_URL}/api/website/products`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && Array.isArray(result.data) && result.data.length > 0) {
@@ -191,7 +192,7 @@ function ShopPage() {
   // Fetch dynamic CMS configuration from Backend API
   const fetchShopSettings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/content/shop_page");
+      const res = await fetch(`${API_URL}/api/website/content/shop_page`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && result.data) {
@@ -215,7 +216,7 @@ function ShopPage() {
   // Fetch live categories from backend if available
   const fetchCategories = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/website/categories");
+      const res = await fetch(`${API_URL}/api/website/categories`);
       if (res.ok) {
         const result = await res.json();
         if (result.success && Array.isArray(result.data) && result.data.length > 0) {
