@@ -19,7 +19,7 @@ const defaultCategoriesData = [
     material: "Solid Brass (High Grade)",
     finish: "Antique Golden Finish",
     img: "assets/images/products/brass-cylinder-vase-1.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const defaultCategoriesData = [
     material: "Cast Metal & Tempered Glass",
     finish: "Pearl White Powder Coat",
     img: "assets/images/products/white-moroccan-lanterns.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ const defaultCategoriesData = [
     material: "Hammered & Embossed Brass",
     finish: "High-Gloss Mirror Brass",
     img: "assets/images/products/brass-flower-vase-set.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ const defaultCategoriesData = [
     material: "Galvanized Metal & Glass",
     finish: "Matte Midnight Black",
     img: "assets/images/products/black-moroccan-lanterns.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 5,
@@ -87,7 +87,7 @@ const defaultCategoriesData = [
     material: "Heavy Cast Solid Brass",
     finish: "Antique Vintage Brass",
     img: "assets/images/products/brass-urli-bowl.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 6,
@@ -104,7 +104,7 @@ const defaultCategoriesData = [
     material: "Pure Moradabad Brass",
     finish: "Royal Gold Polish",
     img: "assets/images/products/brass-peacock-diya.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 7,
@@ -121,7 +121,7 @@ const defaultCategoriesData = [
     material: "Handcrafted Solid Brass",
     finish: "Antique Brushed Gold",
     img: "assets/images/products/brass-cylinder-vase-1.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
   {
     id: 8,
@@ -138,7 +138,7 @@ const defaultCategoriesData = [
     material: "Cast Metal & Glass",
     finish: "Ivory Pearl White",
     img: "assets/images/products/white-moroccan-lanterns.jpg",
-    link: "/shop-details",
+    link: "/shops",
   },
 ];
 
@@ -146,6 +146,7 @@ function HomeCategory() {
   const [categoriesData, setCategoriesData] = useState(defaultCategoriesData);
   const [itemsToShow, setItemsToShow] = useState(6);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(null);
   const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Fetch live dynamic categories from backend API
@@ -162,7 +163,7 @@ function HomeCategory() {
               title: item.name || item.title,
               name: item.name || item.title,
               img: item.image || item.img || "assets/images/products/brass-cylinder-vase-1.jpg",
-              link: item.link || "/shop-details",
+              link: "/shops",
               price: item.price || "145.00",
               category: item.name || item.title,
             }));
@@ -218,6 +219,17 @@ function HomeCategory() {
 
   const maxIndex = Math.max(0, categoriesData.length - itemsToShow);
 
+  // Auto-slide effect (automatically advances every 3 seconds, pauses on hover or touch)
+  useEffect(() => {
+    if (isPaused || maxIndex <= 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, maxIndex]);
+
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
@@ -227,10 +239,12 @@ function HomeCategory() {
   };
 
   const handleTouchStart = (e) => {
+    setIsPaused(true);
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e) => {
+    setIsPaused(false);
     if (touchStartX.current === null) return;
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (diff > 45) {
@@ -273,6 +287,8 @@ function HomeCategory() {
                 type="button"
                 className="category-nav-btn prev-btn"
                 onClick={handlePrev}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
                 aria-label="Previous Categories"
               >
                 <span className="dot-indicator" />
@@ -296,6 +312,8 @@ function HomeCategory() {
                 type="button"
                 className="category-nav-btn next-btn"
                 onClick={handleNext}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
                 aria-label="Next Categories"
               >
                 <span className="dot-indicator" />
@@ -327,6 +345,8 @@ function HomeCategory() {
       >
         <div
           className="category-slider-wrapper"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -336,42 +356,47 @@ function HomeCategory() {
               transform: `translate3d(-${currentIndex * (100 / itemsToShow)}%, 0px, 0px)`,
             }}
           >
-            {categoriesData.map((category) => (
-              <div
-                key={category.id}
-                className="category-slide-item"
-                style={{
-                  width: `${100 / itemsToShow}%`,
-                }}
-              >
-                <div className="category-item style-one text-center">
-                  <Link
-                    to="/shop-details"
-                    state={{ product: category }}
-                    className="category-img"
-                    title={`View ${category.title}`}
-                  >
-                    <img
-                      src={getImageUrl(category.img, "/assets/images/products/brass-cylinder-vase-1.jpg")}
-                      alt={category.title}
-                      onError={(e) => {
-                        e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
-                      }}
-                    />
-                  </Link>
-                  <div className="category-content">
+            {categoriesData.map((category) => {
+              const categoryName = category.category || category.name || category.title || "";
+              const targetUrl = `/shops?category=${encodeURIComponent(categoryName)}`;
+
+              return (
+                <div
+                  key={category.id}
+                  className="category-slide-item"
+                  style={{
+                    width: `${100 / itemsToShow}%`,
+                  }}
+                >
+                  <div className="category-item style-one text-center">
                     <Link
-                      to="/shop-details"
-                      state={{ product: category }}
-                      className="category-btn"
-                      title={category.title}
+                      to={targetUrl}
+                      state={{ category: categoryName }}
+                      className="category-img"
+                      title={`View ${category.title || categoryName}`}
                     >
-                      {category.title}
+                      <img
+                        src={getImageUrl(category.img, "/assets/images/products/brass-cylinder-vase-1.jpg")}
+                        alt={category.title || categoryName}
+                        onError={(e) => {
+                          e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
+                        }}
+                      />
                     </Link>
+                    <div className="category-content">
+                      <Link
+                        to={targetUrl}
+                        state={{ category: categoryName }}
+                        className="category-btn"
+                        title={category.title || categoryName}
+                      >
+                        {category.title || categoryName}
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { getImageUrl } from "../../utils/imageUrl";
 import { getCurrencySymbol } from "../../utils/currency";
 import { toggleWishlist, isInWishlist } from "../../utils/wishlistUtils";
@@ -128,15 +128,52 @@ const defaultShopSettings = {
 
 function ShopPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Helper to read category from URL search params or location state
+  const getInitialCategory = () => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const cat = params.get("category") || location.state?.category;
+      return cat ? decodeURIComponent(cat).trim() : "All";
+    } catch (e) {
+      return "All";
+    }
+  };
+
   const [products, setProducts] = useState(initialShopProducts);
   const [shopSettings, setShopSettings] = useState(defaultShopSettings);
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(getInitialCategory);
   const [selectedSort, setSelectedSort] = useState("Featured");
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState(500);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [wishlistVersion, setWishlistVersion] = useState(0);
+
+  // Sync selectedCategory whenever URL query params or navigation state change
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const cat = params.get("category") || location.state?.category;
+      if (cat) {
+        setSelectedCategory(decodeURIComponent(cat).trim());
+      } else {
+        setSelectedCategory("All");
+      }
+    } catch (e) {
+      setSelectedCategory("All");
+    }
+  }, [location.search, location.state]);
+
+  const handleSelectCategory = (catName) => {
+    setSelectedCategory(catName);
+    if (!catName || catName === "All") {
+      navigate("/shops", { replace: true });
+    } else {
+      navigate(`/shops?category=${encodeURIComponent(catName)}`, { replace: true });
+    }
+  };
 
   const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Fetch live products from backend MongoDB API
@@ -261,10 +298,41 @@ function ShopPage() {
     };
   }, []);
 
+  // Helper to check if product matches the selected category
+  const matchesCategoryFilter = (prod, targetCategory) => {
+    if (!targetCategory || targetCategory === "All") return true;
+
+    const target = targetCategory.trim().toLowerCase();
+    const prodCat = (prod.category || "").trim().toLowerCase();
+    const prodTitle = (prod.title || prod.name || "").trim().toLowerCase();
+
+    // 1. Direct exact match
+    if (prodCat === target) return true;
+
+    // 2. Either contains the other (e.g. "Vases" in "Brass Vases & Urns")
+    if (prodCat && (prodCat.includes(target) || target.includes(prodCat))) return true;
+
+    // 3. Category match in product title or name
+    if (prodTitle.includes(target)) return true;
+
+    // 4. Word-level token matching (e.g. "Moroccan", "Lanterns", "Urli", "Diya", "Vases")
+    const words = target
+      .replace(/[&,]/g, " ")
+      .split(/\s+/)
+      .map((w) => w.trim().toLowerCase())
+      .filter((w) => w.length >= 3 && !["and", "the", "for", "set"].includes(w));
+
+    if (words.length > 0) {
+      return words.some((w) => prodCat.includes(w) || prodTitle.includes(w));
+    }
+
+    return false;
+  };
+
   // Filter & Sort products dynamically
   const filteredProducts = products
     .filter((prod) => {
-      const matchesCategory = selectedCategory === "All" || prod.category === selectedCategory;
+      const matchesCategory = matchesCategoryFilter(prod, selectedCategory);
       const matchesSearch =
         (prod.title || prod.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
         (prod.sku || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -394,14 +462,19 @@ function ShopPage() {
                             color: selectedCategory === "All" ? "#cc0d39" : "#333",
                             transition: "all 0.2s ease",
                           }}
-                          onClick={() => setSelectedCategory("All")}
+                          onClick={() => handleSelectCategory("All")}
                         >
                           <span>All Categories</span>
                           <span className="badge bg-light text-dark">{products.length}</span>
                         </div>
                       </li>
                       {activeCategories.map((cat, idx) => {
-                        const isSelected = selectedCategory === cat.name;
+                        const isSelected =
+                          selectedCategory.toLowerCase() === (cat.name || "").toLowerCase() ||
+                          (selectedCategory !== "All" &&
+                            cat.name &&
+                            (cat.name.toLowerCase().includes(selectedCategory.toLowerCase()) ||
+                              selectedCategory.toLowerCase().includes(cat.name.toLowerCase())));
                         return (
                           <li key={cat.id || idx}>
                             <div
@@ -413,7 +486,7 @@ function ShopPage() {
                                 color: isSelected ? "#cc0d39" : "#333",
                                 transition: "all 0.2s ease",
                               }}
-                              onClick={() => setSelectedCategory(cat.name)}
+                              onClick={() => handleSelectCategory(cat.name)}
                             >
                               <span>{cat.name}</span>
                               <span className={`badge ${isSelected ? "bg-danger text-white" : "bg-light text-dark"}`}>
@@ -455,7 +528,7 @@ function ShopPage() {
                 </div>
 
                 {/* Sidebar Promo Banner */}
-                {shopSettings.sidebarBanner && (
+                {/* {shopSettings.sidebarBanner && (
                   <div
                     className="sidebar-promo-card p-4 text-center rounded-3 text-white mb-40"
                     style={{
@@ -471,7 +544,7 @@ function ShopPage() {
                       Shop Clearance
                     </Link>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -485,8 +558,50 @@ function ShopPage() {
                       <div className="show-text">
                         <p>
                           Showing <span>1–{filteredProducts.length}</span> of <span>{products.length}</span> items
-                          {selectedCategory !== "All" && ` in ${selectedCategory}`}
+                          {selectedCategory !== "All" && (
+                            <span className="ms-1 fw-bold" style={{ color: "#cc0d39" }}>
+                              {" "}in &quot;{selectedCategory}&quot;
+                            </span>
+                          )}
                         </p>
+                        {selectedCategory !== "All" && (
+                          <div className="mt-2 d-flex align-items-center gap-2">
+                            <span
+                              className="badge"
+                              style={{
+                                backgroundColor: "#fff2f4",
+                                color: "#cc0d39",
+                                border: "1px solid #ffd1d8",
+                                padding: "6px 12px",
+                                fontSize: "12px",
+                                fontWeight: "600",
+                                borderRadius: "20px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "6px",
+                              }}
+                            >
+                              Filtered: {selectedCategory}
+                              <button
+                                type="button"
+                                onClick={() => handleSelectCategory("All")}
+                                style={{
+                                  background: "none",
+                                  border: "none",
+                                  color: "#cc0d39",
+                                  cursor: "pointer",
+                                  padding: "0 0 0 4px",
+                                  fontSize: "14px",
+                                  fontWeight: "700",
+                                  lineHeight: 1,
+                                }}
+                                title="Clear filter"
+                              >
+                                &times;
+                              </button>
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -547,7 +662,7 @@ function ShopPage() {
                     <button
                       className="theme-btn style-one mt-3"
                       onClick={() => {
-                        setSelectedCategory("All");
+                        handleSelectCategory("All");
                         setSearchQuery("");
                         setMaxPrice(500);
                       }}

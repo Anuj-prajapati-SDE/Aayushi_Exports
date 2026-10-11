@@ -26,7 +26,7 @@ function Footer() {
             />
           </svg>
           {/*=== Footer Widget Area  ===*/}
-          <div className="footer-widget-area pb-80">
+          <div className="footer-widget-area pb-60">
             <div className="container">
               <div className="row">
                 <div className="col-xl-3 col-sm-6">
@@ -97,13 +97,13 @@ function Footer() {
                     <div className="widget-content">
                       <h4 className="widget-title">Customer Services</h4>
                       <ul className="widget-menu">
-                        <li>
+                        {/* <li>
                           <img
                             src="assets/images/icon/star-3.svg"
                             alt="star icon"
                           />
                           <Link to="/shops">Collections &amp; Delivery</Link>
-                        </li>
+                        </li> */}
                         <li>
                           <img
                             src="assets/images/icon/star-3.svg"
@@ -118,13 +118,13 @@ function Footer() {
                           />
                           <Link to="/about-us">Terms &amp; Conditions</Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <img
                             src="assets/images/icon/star-3.svg"
                             alt="star icon"
                           />
                           <Link to="/faq">Delivery Return</Link>
-                        </li>
+                        </li> */}
                         <li>
                           <img
                             src="assets/images/icon/star-3.svg"
@@ -175,13 +175,13 @@ function Footer() {
                           />
                           <Link to="/contact">Contact Us</Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <img
                             src="assets/images/icon/star-3.svg"
                             alt="star icon"
                           />
                           <Link to="/login">Login / Register</Link>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
@@ -232,7 +232,7 @@ function Footer() {
                           </span>
                         </div>
                       </div>
-                      <div className="recent-post-item">
+                      {/* <div className="recent-post-item">
                         <div className="thumb">
                           <img
                             src="assets/images/footer/recent-post-3.png"
@@ -249,79 +249,27 @@ function Footer() {
                             <Link to="/shops">Exclusive Collection</Link>
                           </span>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/*=== Government & Export Verification Strip ===*/}
-          <div className="footer-trust-strip">
-            <div className="container">
-              <div className="footer-trust-content">
-                <div className="footer-trust-left">
-                  <span className="footer-trust-badge">
-                    <i className="fas fa-shield-alt"></i> Govt. Recognized
-                  </span>
-                  <p className="footer-trust-text">
-                    Official Entity: <strong>AAYUSHI EXPORTS</strong> • Chandausi, Sambhal (U.P.)
-                  </p>
-                </div>
-                <div className="footer-trust-chips">
-                  <a
-                    href="/assets/certificates/gst-certificate.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-trust-chip-item"
-                    title="View GST Certificate"
-                  >
-                    <i className="fas fa-landmark text-warning"></i> GSTIN: <code>09BQUPY9133K1ZM</code>
-                  </a>
-                  <a
-                    href="/assets/certificates/iec-certificate.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-trust-chip-item"
-                    title="View DGFT IEC License"
-                  >
-                    <i className="fas fa-globe-americas text-warning"></i> DGFT IEC: <code>BQUPY9133K</code>
-                  </a>
-                  <a
-                    href="/assets/certificates/gst-certificate.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-trust-chip-item"
-                    style={{ borderColor: "rgba(212, 175, 55, 0.5)", color: "#facc15" }}
-                  >
-                    <i className="fas fa-certificate"></i> View Certificates
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
           {/*=== Footer Copyright  ===*/}
           <div className="copyright-area">
             <div className="container">
               <div className="row align-items-center">
-                <div className="col-lg-6">
-                  <div className="copyright-text">
+                <div className="col-lg-12">
+                  <div className="copyright-text text-center">
                     <p>
-                      © {new Date().getFullYear()}. All rights reserved by <span>Pesco Store</span>
+                      © {new Date().getFullYear()}. All rights reserved by <span>Aayushi Exports</span>
                     </p>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="payment-method text-lg-end">
-                    <Link to="/carts">
-                      <img
-                        src="assets/images/footer/payment-method.png"
-                        alt="payment methods"
-                      />
-                    </Link>
-                  </div>
-                </div>
+            
               </div>
             </div>
           </div>

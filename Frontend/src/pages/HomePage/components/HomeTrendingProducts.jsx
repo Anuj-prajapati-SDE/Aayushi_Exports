@@ -195,7 +195,7 @@ function HomeTrendingProducts() {
   };
 
   return (
-    <section className="trending-products-section pb-40 pb-130">
+    <section className="trending-products-section pb-40 pb-40">
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-8">

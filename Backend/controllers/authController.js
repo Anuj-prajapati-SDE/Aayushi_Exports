@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Product = require('../models/Product');
+const WebsiteContent = require('../models/WebsiteContent');
 
 // Helper to generate signed JWT token
 const generateToken = (id, role) => {
@@ -202,25 +204,42 @@ const getDashboardStats = async (req, res) => {
   try {
     const totalUsers = await User.countDocuments({ role: 'user' });
 
-    // Summary statistics data
+    // Fetch real orders from customer_orders
+    const orderContent = await WebsiteContent.findOne({ key: 'customer_orders' });
+    const orders = orderContent && Array.isArray(orderContent.data) ? orderContent.data : [];
+
+    const totalOrders = orders.length;
+    const totalRevenue = orders.reduce((sum, o) => sum + Number(o.pricing?.totalAmount || o.total || 0), 0);
+    const pendingOrders = orders.filter((o) => o.status === 'Processing' || o.paymentStatus === 'Pending').length;
+    const completedOrders = orders.filter((o) => o.status === 'Delivered').length;
+
+    // Fetch real products from Product collection
+    const products = await Product.find().lean();
+    const totalProducts = products.length;
+    const lowStockProducts = products.filter((p) => p.status === 'Low Stock' || Number(p.stock || 0) <= 10).length;
+
+    // Unique customer emails from orders
+    const orderCustomerEmails = new Set(orders.map((o) => o.email || o.shippingAddress?.email).filter(Boolean));
+    const customerCount = Math.max(totalUsers, orderCustomerEmails.size);
+
     const stats = {
       revenue: {
-        total: 128450.0,
-        monthlyGrowth: 18.4,
+        total: totalRevenue,
+        monthlyGrowth: 0,
       },
       orders: {
-        total: 1420,
-        pending: 34,
-        completed: 1358,
-        growth: 12.5,
+        total: totalOrders,
+        pending: pendingOrders,
+        completed: completedOrders,
+        growth: 0,
       },
       customers: {
-        total: totalUsers > 0 ? totalUsers : 842,
-        growth: 9.2,
+        total: customerCount,
+        growth: 0,
       },
       products: {
-        total: 156,
-        lowStock: 8,
+        total: totalProducts,
+        lowStock: lowStockProducts,
       },
     };
 

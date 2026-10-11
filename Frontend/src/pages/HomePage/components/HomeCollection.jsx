@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getImageUrl } from "../../../utils/imageUrl";
 import { getCurrencySymbol } from "../../../utils/currency";
 import { addToCart } from "../../../utils/cartUtils";
 import { toggleWishlist, isInWishlist } from "../../../utils/wishlistUtils";
+import "./HomeCollection.css";
 
 const collectionProducts = {
   cat1: [
@@ -271,10 +272,23 @@ const collectionProducts = {
 };
 
 function HomeCollection() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("cat1");
   const [productsMap, setProductsMap] = useState(collectionProducts);
+  const [sectionMeta, setSectionMeta] = useState({
+    subTitle: "Artisan Metalware",
+    title: "Our Featured Collection",
+    tab1Name: "Best Sellers",
+    tab2Name: "New Arrivals",
+    tab3Name: "Special Offers",
+  });
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
   const API_BASE = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "http://localhost:5000";
+
+  const handleProductClick = (item) => {
+    const prodId = item._id || item.id || item.sku;
+    navigate(`/shop-details?id=${prodId}`, { state: { product: item } });
+  };
   
   React.useEffect(() => {
     let isMounted = true;
@@ -285,19 +299,34 @@ function HomeCollection() {
           const result = await res.json();
           if (isMounted && result.success && result.data) {
             const d = result.data;
+            if (d.subTitle || d.title || d.tab1Name || d.tab2Name || d.tab3Name) {
+              setSectionMeta({
+                subTitle: d.subTitle || "Artisan Metalware",
+                title: d.title || "Our Featured Collection",
+                tab1Name: d.tab1Name || "Best Sellers",
+                tab2Name: d.tab2Name || "New Arrivals",
+                tab3Name: d.tab3Name || "Special Offers",
+              });
+            }
+
             const normalize = (items) => {
               if (!Array.isArray(items)) return [];
               return items.map((item, idx) => ({
-                id: item.id || idx + 1,
-                name: item.title || item.name,
+                id: item._id || item.id || idx + 1,
+                name: item.title || item.name || "Handcrafted Brass Artefact",
+                title: item.title || item.name || "Handcrafted Brass Artefact",
                 price: Number(item.price) || 99,
-                originalPrice: Number(item.prevPrice || item.originalPrice) || 129,
-                discount: item.discount || "20% Off",
-                rating: item.rating || 5,
-                reviews: item.reviews || 45,
-                image: item.image || "assets/images/products/brass-cylinder-vase-1.jpg",
+                originalPrice: Number(item.prevPrice || item.originalPrice) || 0,
+                discount: item.discount || (item.badge ? item.badge : "20% Off"),
+                rating: Number(item.rating) || 5,
+                reviews: Number(item.reviews) || 45,
+                image: item.image || item.img || "assets/images/products/brass-cylinder-vase-1.jpg",
                 sku: item.sku || `RB-COL-${idx + 1}`,
                 category: item.category || "Brass Decor",
+                material: item.material || "Solid Brass (High Grade)",
+                finish: item.finish || "Antique Golden Finish",
+                dimensions: item.dimensions || "",
+                description: item.description || "",
               }));
             };
 
@@ -306,10 +335,54 @@ function HomeCollection() {
               cat2: d.newProducts && d.newProducts.length > 0 ? normalize(d.newProducts) : collectionProducts.cat2,
               cat3: d.saleProducts && d.saleProducts.length > 0 ? normalize(d.saleProducts) : collectionProducts.cat3,
             });
+
+            localStorage.setItem("pesco_home_collections", JSON.stringify(d));
           }
         }
       } catch (err) {
-        console.warn("[HomeCollection] Using default collections:", err.message);
+        console.warn("[HomeCollection] Using default/cached collections:", err.message);
+        const cached = localStorage.getItem("pesco_home_collections");
+        if (cached) {
+          try {
+            const d = JSON.parse(cached);
+            if (d) {
+              if (d.subTitle || d.title || d.tab1Name || d.tab2Name || d.tab3Name) {
+                setSectionMeta({
+                  subTitle: d.subTitle || "Artisan Metalware",
+                  title: d.title || "Our Featured Collection",
+                  tab1Name: d.tab1Name || "Best Sellers",
+                  tab2Name: d.tab2Name || "New Arrivals",
+                  tab3Name: d.tab3Name || "Special Offers",
+                });
+              }
+              const normalize = (items) => {
+                if (!Array.isArray(items)) return [];
+                return items.map((item, idx) => ({
+                  id: item._id || item.id || idx + 1,
+                  name: item.title || item.name || "Handcrafted Brass Artefact",
+                  title: item.title || item.name || "Handcrafted Brass Artefact",
+                  price: Number(item.price) || 99,
+                  originalPrice: Number(item.prevPrice || item.originalPrice) || 0,
+                  discount: item.discount || (item.badge ? item.badge : "20% Off"),
+                  rating: Number(item.rating) || 5,
+                  reviews: Number(item.reviews) || 45,
+                  image: item.image || item.img || "assets/images/products/brass-cylinder-vase-1.jpg",
+                  sku: item.sku || `RB-COL-${idx + 1}`,
+                  category: item.category || "Brass Decor",
+                  material: item.material || "Solid Brass (High Grade)",
+                  finish: item.finish || "Antique Golden Finish",
+                  dimensions: item.dimensions || "",
+                  description: item.description || "",
+                }));
+              };
+              setProductsMap({
+                cat1: d.bestSellers?.length ? normalize(d.bestSellers) : collectionProducts.cat1,
+                cat2: d.newProducts?.length ? normalize(d.newProducts) : collectionProducts.cat2,
+                cat3: d.saleProducts?.length ? normalize(d.saleProducts) : collectionProducts.cat3,
+              });
+            }
+          } catch (e) {}
+        }
       }
     };
 
@@ -344,9 +417,9 @@ function HomeCollection() {
             >
               <div className="sub-heading d-inline-flex align-items-center">
                 <i className="flaticon-sparkler" />
-                <span className="sub-title">Artisan Metalware</span>
+                <span className="sub-title">{sectionMeta.subTitle || "Artisan Metalware"}</span>
               </div>
-              <h2>Our Featured Collection</h2>
+              <h2>{sectionMeta.title || "Our Featured Collection"}</h2>
             </div>
           </div>
           <div className="col-lg-6">
@@ -363,7 +436,7 @@ function HomeCollection() {
                     onClick={() => setActiveTab("cat1")}
                     type="button"
                   >
-                    Best Sellers
+                    {sectionMeta.tab1Name || "Best Sellers"}
                   </button>
                 </li>
                 <li>
@@ -372,7 +445,7 @@ function HomeCollection() {
                     onClick={() => setActiveTab("cat2")}
                     type="button"
                   >
-                    New Arrivals
+                    {sectionMeta.tab2Name || "New Arrivals"}
                   </button>
                 </li>
                 <li>
@@ -381,7 +454,7 @@ function HomeCollection() {
                     onClick={() => setActiveTab("cat3")}
                     type="button"
                   >
-                    Special Offers
+                    {sectionMeta.tab3Name || "Special Offers"}
                   </button>
                 </li>
               </ul>
@@ -398,98 +471,205 @@ function HomeCollection() {
             >
               <div className="tab-pane fade show active">
                 <div className="row justify-content-center">
-                  {currentList.map((item) => (
-                    <div key={item.id + item.name} className="col-xl-3 col-lg-4 col-sm-6">
-                      <div className="product-item style-one mb-40">
-                        <div className="product-thumbnail">
-                          <img
-                            src={getImageUrl(item.image, "/assets/images/products/brass-cylinder-vase-1.jpg")}
-                            alt={item.name}
+                  {currentList.map((item, idx) => {
+                    const prodId = item._id || item.id || item.sku || `prod-${idx}`;
+                    const itemName = item.name || item.title || "Handcrafted Brass Artefact";
+                    const currentPrice = Number(item.price) || 0;
+                    const origPrice = Number(item.originalPrice || item.prevPrice) || 0;
+                    const hasCutPrice = origPrice > currentPrice;
+                    const detailUrl = `/shop-details?id=${prodId}`;
+
+                    return (
+                      <div key={item.id ? `${item.id}-${idx}` : `${itemName}-${idx}`} className="col-xl-3 col-lg-4 col-sm-6">
+                        <div
+                          className="product-item style-one mb-40"
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <div
+                            className="product-thumbnail"
+                            onClick={() => handleProductClick(item)}
                             style={{
-                              width: "100%",
-                              height: "280px",
-                              objectFit: "cover",
-                              borderRadius: "12px 12px 0 0",
+                              cursor: "pointer",
+                              position: "relative",
+                              overflow: "hidden",
+                              borderRadius: "14px",
                             }}
-                            onError={(e) => {
-                              e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
-                            }}
-                          />
-                          <div className="discount">{item.discount}</div>
-                          <div className="hover-content">
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                toggleWishlist(item);
-                              }}
-                              className="icon-btn border-0"
-                              title={isInWishlist(item.id || item.sku) ? "Saved in Wishlist" : "Add to Wishlist"}
+                          >
+                            <img
+                              src={getImageUrl(item.image, "/assets/images/products/brass-cylinder-vase-1.jpg")}
+                              alt={itemName}
                               style={{
-                                backgroundColor: isInWishlist(item.id || item.sku) ? "#CC0D39" : "#FFFFFF",
-                                color: isInWishlist(item.id || item.sku) ? "#FFFFFF" : "#1E293B",
-                                cursor: "pointer",
-                                transition: "all 0.2s ease",
+                                width: "100%",
+                                height: "280px",
+                                objectFit: "cover",
+                                borderRadius: "14px",
+                                transition: "transform 0.4s ease",
+                              }}
+                              onError={(e) => {
+                                e.target.src = "/assets/images/products/brass-cylinder-vase-1.jpg";
+                              }}
+                            />
+                            {item.discount && <div className="discount">{item.discount}</div>}
+                            <div className="hover-content" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleWishlist(item);
+                                }}
+                                className="icon-btn border-0"
+                                title={isInWishlist(item.id || item.sku) ? "Saved in Wishlist" : "Add to Wishlist"}
+                                style={{
+                                  backgroundColor: isInWishlist(item.id || item.sku) ? "#CC0D39" : "#FFFFFF",
+                                  color: isInWishlist(item.id || item.sku) ? "#FFFFFF" : "#1E293B",
+                                  cursor: "pointer",
+                                  transition: "all 0.2s ease",
+                                }}
+                              >
+                                <i className={`fa${isInWishlist(item.id || item.sku) ? 's' : 'r'} fa-heart`} />
+                              </button>
+                              <Link
+                                to={detailUrl}
+                                state={{ product: item }}
+                                className="icon-btn"
+                                title="View Details"
+                              >
+                                <i className="fa fa-eye" />
+                              </Link>
+                            </div>
+                            <div className="cart-button" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  addToCart(item, 1);
+                                }}
+                                className="cart-btn border-0"
+                                style={{ cursor: "pointer", width: "100%" }}
+                              >
+                                <i className="far fa-shopping-basket" />{" "}
+                                <span className="text">Add To Cart</span>
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            className="product-info-wrap"
+                            style={{
+                              display: "block",
+                              paddingTop: "14px",
+                              flex: 1,
+                            }}
+                          >
+                            <div
+                              className="product-meta-row"
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginBottom: "8px",
+                                gap: "8px",
+                                flexWrap: "wrap",
                               }}
                             >
-                              <i className={`fa${isInWishlist(item.id || item.sku) ? 's' : 'r'} fa-heart`} />
-                            </button>
-                            <Link
-                              to="/shop-details"
-                              state={{ product: item }}
-                              className="icon-btn"
-                              title="View Details"
-                            >
-                              <i className="fa fa-eye" />
-                            </Link>
-                          </div>
-                          <div className="cart-button">
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                addToCart(item, 1);
-                              }}
-                              className="cart-btn border-0"
-                              style={{ cursor: "pointer", width: "100%" }}
-                            >
-                              <i className="far fa-shopping-basket" />{" "}
-                              <span className="text">Add To Cart</span>
-                            </button>
-                          </div>
-                        </div>
-                        <div className="product-info-wrap">
-                          <div className="product-info">
-                            <ul className="ratings rating5">
-                              {[...Array(item.rating || 5)].map((_, i) => (
-                                <li key={i}>
-                                  <i className="fas fa-star" />
+                              <ul
+                                className="ratings rating5"
+                                style={{
+                                  margin: 0,
+                                  padding: 0,
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {[...Array(item.rating || 5)].map((_, i) => (
+                                  <li key={i} style={{ display: "inline-block", marginRight: "2px" }}>
+                                    <i className="fas fa-star" style={{ color: "#F59E0B", fontSize: "13px" }} />
+                                  </li>
+                                ))}
+                                <li style={{ display: "inline-block", marginLeft: "4px" }}>
+                                  <span style={{ fontSize: "12px", color: "#64748B", fontWeight: 500 }}>
+                                    ({item.reviews || 50})
+                                  </span>
                                 </li>
-                              ))}
-                              <li>
-                                <span>({item.reviews || 50})</span>
-                              </li>
-                            </ul>
-                            <h4 className="title">
-                              <Link to="/shop-details" state={{ product: item }}>
-                                {item.name}
+                              </ul>
+
+                              <div
+                                className="product-price"
+                                style={{
+                                  display: "inline-flex",
+                                  alignItems: "baseline",
+                                  gap: "6px",
+                                  textAlign: "right",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                <span
+                                  className="price new-price"
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: 700,
+                                    color: "#13172B",
+                                    fontFamily: "var(--heading-font, inherit)",
+                                  }}
+                                >
+                                  {currencySymbol}{currentPrice.toFixed(2)}
+                                </span>
+                                {hasCutPrice && (
+                                  <span
+                                    className="price prev-price"
+                                    style={{
+                                      fontSize: "13px",
+                                      color: "#94A3B8",
+                                      textDecoration: "line-through",
+                                      fontWeight: 500,
+                                      fontFamily: "var(--heading-font, inherit)",
+                                    }}
+                                  >
+                                    {currencySymbol}{origPrice.toFixed(2)}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <h4
+                              className="title"
+                              style={{
+                                margin: 0,
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                lineHeight: 1.4,
+                              }}
+                            >
+                              <Link
+                                to={detailUrl}
+                                state={{ product: item }}
+                                title={itemName}
+                                style={{
+                                  color: "#13172B",
+                                  textDecoration: "none",
+                                  display: "-webkit-box",
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: "vertical",
+                                  overflow: "hidden",
+                                  minHeight: "42px",
+                                  transition: "color 0.2s ease",
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.color = "#CC0D39")}
+                                onMouseLeave={(e) => (e.currentTarget.style.color = "#13172B")}
+                              >
+                                {itemName}
                               </Link>
                             </h4>
                           </div>
-                          <div className="product-price">
-                            <span className="price">
-                              {currencySymbol}{item.price.toFixed(2)}{" "}
-                              <span className="prev-price">
-                                {item.originalPrice ? `${currencySymbol}${item.originalPrice.toFixed(2)}` : ""}
-                              </span>
-                            </span>
-                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>

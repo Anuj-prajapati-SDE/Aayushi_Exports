@@ -9,8 +9,8 @@ import ShopDetailsPage from "./pages/Shop/components/ShopDetailPage"
 import CartPage from "./pages/Cart/CartPage"
 import FaqPage from "./pages/Faq/FaqPage"
 import ContactPage from "./pages/Contact/ContactPages"
-import LoginPage from "./pages/auth/LoginPage"
-import SignUpPage from "./pages/auth/SignUpPage"
+// import LoginPage from "./pages/auth/LoginPage"
+// import SignUpPage from "./pages/auth/SignUpPage"
 
 // Scroll to top on every route change
 function ScrollToTop() {
@@ -33,13 +33,14 @@ function AppLayout() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us" element={<AboutusPage />} />
         <Route path="/shops" element={<ShopPage />} />
+        <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop-details" element={<ShopDetailsPage />} />
         <Route path="/shop-details/:id" element={<ShopDetailsPage />} />
         <Route path="/carts" element={<CartPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        {/* <Route path="/signup" element={<SignUpPage />} /> */}
        
 
         {/* Fallback route */}

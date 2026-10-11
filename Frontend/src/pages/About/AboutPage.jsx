@@ -72,9 +72,18 @@ const defaultAboutData = {
 };
 
 function AboutusPage() {
-  const [aboutData, setAboutData] = useState(defaultAboutData);
+  const [aboutData, setAboutData] = useState(() => {
+    const cached = localStorage.getItem("pesco_about_page");
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (parsed) return { ...defaultAboutData, ...parsed };
+      } catch (e) {}
+    }
+    return defaultAboutData;
+  });
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const  API_URL = import.meta.env.VITE_BACKEND_URL;
+  const API_URL = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "http://localhost:5000";
 
   // Fetch live CMS configuration from backend API
   const fetchAboutData = async () => {
@@ -108,7 +117,20 @@ function AboutusPage() {
   useEffect(() => {
     fetchAboutData();
 
-    const handleUpdate = () => fetchAboutData();
+    const handleUpdate = () => {
+      const cached = localStorage.getItem("pesco_about_page");
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed) {
+            setAboutData((prev) => ({ ...prev, ...parsed }));
+            return;
+          }
+        } catch (e) {}
+      }
+      fetchAboutData();
+    };
+
     window.addEventListener("storage", handleUpdate);
     window.addEventListener("pesco_website_updated", handleUpdate);
 

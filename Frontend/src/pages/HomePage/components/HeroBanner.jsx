@@ -28,7 +28,7 @@ const defaultBanners = [
   },
 ];
 
-function HomeBanner() {
+function HomeBanner({ subTitle = "Special Offers", title = "Popular Deals & Offers" }) {
   const [banners, setBanners] = useState(defaultBanners);
 
   useEffect(() => {
@@ -63,8 +63,26 @@ function HomeBanner() {
   }, []);
 
   return (
-    <section className="banner-section pt-130">
+    <section className="banner-section pt-70 pb-30">
       <div className="container">
+        {/*=== Section Title matching category header style ===*/}
+        <div className="row mb-35">
+          <div className="col-12">
+            <div
+              className="section-title aos-init aos-animate"
+              data-aos="fade-right"
+              data-aos-delay={10}
+              data-aos-duration={800}
+            >
+              <div className="sub-heading d-inline-flex align-items-center">
+                <i className="flaticon-sparkler" />
+                <span className="sub-title">{subTitle}</span>
+              </div>
+              <h2>{title}</h2>
+            </div>
+          </div>
+        </div>
+
         <div className="row banner-row">
           {banners.map((banner, index) => {
             const bgClass = banner.badgeBg || (index % 2 === 0 ? "bg-one" : "bg-two");

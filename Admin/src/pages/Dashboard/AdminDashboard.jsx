@@ -14,122 +14,11 @@ import {
   RefreshCw,
   Download,
   ArrowRight,
+  Package,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { getDashboardStatsApi } from '../../services/api';
 import { getCurrencySymbol } from '../../utils/currency';
-
-const initialRecentOrders = [
-  {
-    id: 'ORD-9842',
-    customer: {
-      name: 'Sarah Jenkins',
-      email: 'sarah.j@example.com',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120',
-    },
-    product: 'Handcrafted Antique Brass Jali Pillar Vase',
-    items: 2,
-    date: 'Today, 14:32',
-    total: '$158.00',
-    payment: 'Paid',
-    status: 'Delivered',
-  },
-  {
-    id: 'ORD-9841',
-    customer: {
-      name: 'Alexander Wright',
-      email: 'alex.wright@example.com',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120',
-    },
-    product: 'Royal Brass Floral Urli Bowl & Diya',
-    items: 1,
-    date: 'Today, 12:15',
-    total: '$89.00',
-    payment: 'Paid',
-    status: 'Shipped',
-  },
-  {
-    id: 'ORD-9840',
-    customer: {
-      name: 'Elena Rostova',
-      email: 'elena.r@example.com',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120',
-    },
-    product: 'Vintage Moroccan Glass & Metal Fairy Lanterns',
-    items: 3,
-    date: 'Yesterday, 19:40',
-    total: '$177.00',
-    payment: 'Paid',
-    status: 'Processing',
-  },
-  {
-    id: 'ORD-9839',
-    customer: {
-      name: 'Marcus Chen',
-      email: 'marcus.c@example.com',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120',
-    },
-    product: 'Grand Royal Brass Mayur Peacock Diya Lamp',
-    items: 1,
-    date: 'Yesterday, 15:20',
-    total: '$109.00',
-    payment: 'Pending',
-    status: 'Processing',
-  },
-  {
-    id: 'ORD-9838',
-    customer: {
-      name: 'Emily Watson',
-      email: 'emily.w@example.com',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=120',
-    },
-    product: 'Royal Floral Embossed Brass Flower Vases (Set of 3)',
-    items: 1,
-    date: '06 Oct 2026',
-    total: '$119.00',
-    payment: 'Paid',
-    status: 'Delivered',
-  },
-];
-
-const topProducts = [
-  {
-    name: 'Handcrafted Antique Brass Jali Pillar Vase',
-    category: 'Brass Vases & Urns',
-    price: '$79.00',
-    sales: '384 sold',
-    revenue: '$30,336.00',
-    stock: 25,
-    image: 'assets/images/products/brass-cylinder-vase-1.jpg',
-  },
-  {
-    name: 'Royal Floral Embossed Brass Flower Vases',
-    category: 'Brass Vases & Urns',
-    price: '$119.00',
-    sales: '215 sold',
-    revenue: '$25,585.00',
-    stock: 18,
-    image: 'assets/images/products/brass-flower-vase-set.jpg',
-  },
-  {
-    name: 'Vintage Moroccan Fairy Lanterns (Set of 3)',
-    category: 'Decorative Lanterns',
-    price: '$59.00',
-    sales: '412 sold',
-    revenue: '$24,308.00',
-    stock: 32,
-    image: 'assets/images/products/white-moroccan-lanterns.jpg',
-  },
-  {
-    name: 'Traditional Royal Brass Floral Urli Bowl',
-    category: 'Tabletop Urli & Bowls',
-    price: '$89.00',
-    sales: '320 sold',
-    revenue: '$28,480.00',
-    stock: 15,
-    image: 'assets/images/products/brass-urli-bowl.jpg',
-  },
-];
 
 const BACKEND_URL = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || 'http://localhost:5000';
 
@@ -160,13 +49,9 @@ const AdminDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [currencySymbol, setCurrencySymbol] = useState(getCurrencySymbol());
-  const [recentOrders, setRecentOrders] = useState(initialRecentOrders);
-  const [topSellingProducts, setTopSellingProducts] = useState(topProducts);
-  const [categoryDist, setCategoryDist] = useState([
-    { name: 'Brass Vases & Urns', pct: 42, color: '#CC0D39' },
-    { name: 'Decorative Lanterns', pct: 28, color: '#F7941F' },
-    { name: 'Tabletop Urli & Bowls', pct: 18, color: '#13172B' },
-  ]);
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [topSellingProducts, setTopSellingProducts] = useState([]);
+  const [categoryDist, setCategoryDist] = useState([]);
   const [storeName, setStoreName] = useState(() => {
     try {
       const cached = localStorage.getItem('pesco_store_settings');
@@ -179,17 +64,17 @@ const AdminDashboard = () => {
   });
 
   const [stats, setStats] = useState({
-    revenue: { total: 128450.0, monthlyGrowth: 18.4 },
-    orders: { total: 1420, pending: 34, growth: 12.5 },
-    customers: { total: 842, growth: 9.2 },
-    products: { total: 156, lowStock: 8 },
+    revenue: { total: 0, monthlyGrowth: 0 },
+    orders: { total: 0, pending: 0, growth: 0 },
+    customers: { total: 0, growth: 0 },
+    products: { total: 0, lowStock: 0 },
   });
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchDashboardData = async () => {
     setIsRefreshing(true);
     try {
-      // 1. Fetch Auth Stats (baseline metrics)
+      // 1. Fetch Auth Stats (baseline metrics from backend)
       let authStats = null;
       try {
         const statsData = await getDashboardStatsApi();
@@ -206,7 +91,7 @@ const AdminDashboard = () => {
         const ordersRes = await fetch(`${BACKEND_URL}/api/website/orders`);
         if (ordersRes.ok) {
           const ordResult = await ordersRes.json();
-          if (ordResult.success && Array.isArray(ordResult.data) && ordResult.data.length > 0) {
+          if (ordResult.success && Array.isArray(ordResult.data)) {
             liveOrders = ordResult.data;
           }
         }
@@ -220,7 +105,7 @@ const AdminDashboard = () => {
         const prodRes = await fetch(`${BACKEND_URL}/api/website/products/all`);
         if (prodRes.ok) {
           const prodResult = await prodRes.json();
-          if (prodResult.success && Array.isArray(prodResult.data) && prodResult.data.length > 0) {
+          if (prodResult.success && Array.isArray(prodResult.data)) {
             liveProducts = prodResult.data;
           }
         }
@@ -228,100 +113,146 @@ const AdminDashboard = () => {
         console.warn('[Dashboard Products note]:', err.message);
       }
 
-      // Format and set Live Recent Orders
-      if (liveOrders.length > 0) {
-        const mappedOrders = liveOrders.slice(0, 8).map((ord) => {
-          const shipAddr = ord.shippingAddress || {};
-          const itemsArr = Array.isArray(ord.items) ? ord.items : [];
-          const mainItemName = itemsArr[0]?.title || itemsArr[0]?.name || 'Handcrafted Artefact';
-          const itemsCount = itemsArr.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
-          const totalVal = Number(ord.pricing?.totalAmount || ord.total || 0);
+      // Format and set Live Recent Orders (sorted newest first)
+      const sortedOrders = [...liveOrders].sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.date || 0).getTime();
+        const dateB = new Date(b.createdAt || b.date || 0).getTime();
+        return dateB - dateA;
+      });
 
-          return {
-            id: ord.id || (ord._id ? `ORD-${ord._id.slice(-5).toUpperCase()}` : 'ORD-9842'),
-            customer: {
-              name: ord.customer || shipAddr.fullName || 'Valued Customer',
-              email: ord.email || shipAddr.email || 'customer@example.com',
-              avatar: ord.customer?.avatar || '',
-            },
-            product: mainItemName + (itemsArr.length > 1 ? ` (+${itemsArr.length - 1} more)` : ''),
-            items: itemsCount || 1,
-            date: ord.date || (ord.createdAt ? new Date(ord.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent'),
-            total: totalVal,
-            payment: ord.paymentStatus || 'Paid',
-            status: ord.status || 'Processing',
-          };
+      const mappedOrders = sortedOrders.slice(0, 8).map((ord) => {
+        const shipAddr = ord.shippingAddress || {};
+        const itemsArr = Array.isArray(ord.items) ? ord.items : [];
+        const mainItemName = itemsArr[0]?.title || itemsArr[0]?.name || ord.product || 'Handcrafted Artefact';
+        const itemsCount = itemsArr.length > 0
+          ? itemsArr.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0)
+          : (Number(ord.items) || 1);
+        const totalVal = Number(ord.pricing?.totalAmount ?? ord.total ?? 0);
+
+        return {
+          id: ord.id || (ord._id ? `ORD-${ord._id.slice(-5).toUpperCase()}` : 'ORD-1001'),
+          customer: {
+            name: ord.customer || shipAddr.fullName || 'Customer',
+            email: ord.email || shipAddr.email || 'N/A',
+            avatar: ord.customer?.avatar || ord.avatar || '',
+          },
+          product: mainItemName + (itemsArr.length > 1 ? ` (+${itemsArr.length - 1} more)` : ''),
+          items: itemsCount,
+          date: ord.date || (ord.createdAt ? new Date(ord.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent'),
+          total: totalVal,
+          payment: ord.paymentStatus || (ord.paymentMethod === 'Cash on Delivery' ? 'Pending' : 'Paid'),
+          status: ord.status || 'Processing',
+        };
+      });
+      setRecentOrders(mappedOrders);
+
+      // Compute Live Top Performing Products strictly from real order data
+      const salesMap = {};
+      liveOrders.forEach((ord) => {
+        const items = Array.isArray(ord.items) ? ord.items : [];
+        items.forEach((item) => {
+          const key = String(item.id || item.productId || item.sku || item.title || item.name || '').trim();
+          if (!key) return;
+          if (!salesMap[key]) {
+            salesMap[key] = {
+              key,
+              name: item.title || item.name || 'Handcrafted Item',
+              category: item.category || '',
+              price: Number(item.price || item.salePrice || 0),
+              quantity: 0,
+              revenue: 0,
+              image: item.image || '',
+            };
+          }
+          const qty = Number(item.quantity) || 1;
+          const rate = Number(item.price || item.salePrice || salesMap[key].price || 0);
+          salesMap[key].quantity += qty;
+          salesMap[key].revenue += rate * qty;
+          if (item.image && !salesMap[key].image) salesMap[key].image = item.image;
+          if (item.category && !salesMap[key].category) salesMap[key].category = item.category;
         });
-        setRecentOrders(mappedOrders);
-      }
+      });
 
-      // Format and set Live Top Products
-      if (liveProducts.length > 0) {
-        const mappedTop = liveProducts.slice(0, 4).map((p, idx) => {
-          const pPrice = Number(p.salePrice || p.price || 79);
-          const pStock = Number(p.stock || 20);
-          const soldCount = p.reviews ? p.reviews * 7 + 35 : (140 - idx * 28);
-          const revenue = pPrice * soldCount;
-
+      const salesItems = Object.values(salesMap);
+      if (salesItems.length > 0) {
+        // Sort by revenue descending, then units sold descending
+        salesItems.sort((a, b) => b.revenue - a.revenue || b.quantity - a.quantity);
+        const mappedTop = salesItems.slice(0, 4).map((item) => {
+          const matchedProd = liveProducts.find(
+            (p) => String(p._id) === item.key || String(p.sku) === item.key || p.name === item.name || p.title === item.name
+          );
           return {
-            name: p.name || p.title || 'Handcrafted Brass Artefact',
-            category: p.category || 'Brass Vases & Urns',
-            price: pPrice,
-            sales: `${soldCount} sold`,
-            revenue: revenue,
-            stock: pStock,
-            image: resolveImageUrl(p.image),
+            name: item.name,
+            category: item.category || matchedProd?.category || 'Handcrafted Artefacts',
+            price: item.price || matchedProd?.salePrice || matchedProd?.price || 0,
+            sales: `${item.quantity} sold`,
+            revenue: item.revenue,
+            stock: matchedProd?.stock !== undefined ? matchedProd.stock : null,
+            image: resolveImageUrl(item.image || matchedProd?.image),
           };
         });
         setTopSellingProducts(mappedTop);
+      } else {
+        // No orders/sales recorded yet
+        setTopSellingProducts([]);
+      }
 
-        // Compute Live Category Share
+      // Compute Live Category Share dynamically from active catalog products
+      if (liveProducts.length > 0) {
         const catMap = {};
         liveProducts.forEach((p) => {
-          const c = p.category || 'Brass Vases & Urns';
+          const c = p.category || 'Handcrafted Artefacts';
           catMap[c] = (catMap[c] || 0) + 1;
         });
         const totalP = liveProducts.length;
-        const colorPalette = ['#CC0D39', '#F7941F', '#13172B', '#AEB0B6'];
-        const dynamicDist = Object.entries(catMap).map(([name, count], i) => ({
-          name,
-          pct: Math.round((count / totalP) * 100),
-          color: colorPalette[i % colorPalette.length],
-        })).slice(0, 3);
-        if (dynamicDist.length > 0) {
-          setCategoryDist(dynamicDist);
-        }
+        const colorPalette = ['#CC0D39', '#F7941F', '#13172B', '#059669', '#6366F1', '#D97706'];
+        const dynamicDist = Object.entries(catMap)
+          .sort((a, b) => b[1] - a[1])
+          .map(([name, count], i) => ({
+            name,
+            count,
+            pct: Math.round((count / totalP) * 100),
+            color: colorPalette[i % colorPalette.length],
+          }))
+          .slice(0, 4);
+
+        setCategoryDist(dynamicDist);
+      } else {
+        setCategoryDist([]);
       }
 
-      // Calculate Real Consolidated KPI Metrics
-      const realOrderCount = liveOrders.length > 0 ? liveOrders.length : (authStats?.orders?.total || 1420);
-      const realRevenueTotal = liveOrders.length > 0
-        ? liveOrders.reduce((acc, o) => acc + Number(o.pricing?.totalAmount || o.total || 0), 0)
-        : (authStats?.revenue?.total || 128450.0);
-      const pendingOrdersCount = liveOrders.length > 0
-        ? liveOrders.filter((o) => o.status === 'Processing' || o.paymentStatus === 'Pending').length
-        : (authStats?.orders?.pending || 34);
-      const totalCatalogProducts = liveProducts.length > 0 ? liveProducts.length : (authStats?.products?.total || 156);
-      const lowStockProductsCount = liveProducts.length > 0
-        ? liveProducts.filter((p) => p.status === 'Low Stock' || Number(p.stock || 0) <= 10).length
-        : (authStats?.products?.lowStock || 8);
-      const uniqueBuyers = liveOrders.length > 0
-        ? new Set(liveOrders.map((o) => o.email).filter(Boolean)).size
-        : (authStats?.customers?.total || 842);
+      // Calculate Real Consolidated KPI Metrics strictly from database
+      const realOrderCount = liveOrders.length;
+      const realRevenueTotal = liveOrders.reduce(
+        (acc, o) => acc + Number(o.pricing?.totalAmount ?? o.total ?? 0),
+        0
+      );
+      const pendingOrdersCount = liveOrders.filter(
+        (o) => o.status === 'Processing' || o.paymentStatus === 'Pending'
+      ).length;
+      const totalCatalogProducts = liveProducts.length;
+      const lowStockProductsCount = liveProducts.filter(
+        (p) => p.status === 'Low Stock' || Number(p.stock || 0) <= 10
+      ).length;
+      const uniqueBuyers = new Set(
+        liveOrders.map((o) => o.email || o.shippingAddress?.email).filter(Boolean)
+      ).size;
+      const registeredCustomers = authStats?.customers?.total || 0;
+      const displayCustomers = Math.max(uniqueBuyers, registeredCustomers);
 
       setStats({
         revenue: {
-          total: realRevenueTotal > 0 ? realRevenueTotal : 128450.0,
-          monthlyGrowth: authStats?.revenue?.monthlyGrowth || 18.4,
+          total: realRevenueTotal,
+          monthlyGrowth: authStats?.revenue?.monthlyGrowth || 0,
         },
         orders: {
           total: realOrderCount,
           pending: pendingOrdersCount,
-          growth: authStats?.orders?.growth || 12.5,
+          growth: authStats?.orders?.growth || 0,
         },
         customers: {
-          total: uniqueBuyers > 0 ? uniqueBuyers : (authStats?.customers?.total || 842),
-          growth: authStats?.customers?.growth || 9.2,
+          total: displayCustomers,
+          growth: authStats?.customers?.growth || 0,
         },
         products: {
           total: totalCatalogProducts,
@@ -360,6 +291,10 @@ const AdminDashboard = () => {
   }, []);
 
   const handleExportCSV = () => {
+    if (!recentOrders || recentOrders.length === 0) {
+      alert('No orders available to export yet.');
+      return;
+    }
     const headers = ['Order ID', 'Customer Name', 'Customer Email', 'Product', 'Quantity', 'Date', 'Total', 'Payment', 'Status'];
     const rows = recentOrders.map((ord) => [
       ord.id,
@@ -624,10 +559,14 @@ const AdminDashboard = () => {
             {currencySymbol}{stats.revenue.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', fontSize: '12px' }}>
-            <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-              <ArrowUpRight size={13} /> +{stats.revenue.monthlyGrowth}%
-            </span>
-            <span style={{ color: '#AEB0B6' }}>vs last month</span>
+            {stats.revenue.monthlyGrowth > 0 ? (
+              <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                <ArrowUpRight size={13} /> +{stats.revenue.monthlyGrowth}%
+              </span>
+            ) : (
+              <span style={{ color: '#059669', fontWeight: 600 }}>Live store revenue</span>
+            )}
+            <span style={{ color: '#AEB0B6' }}>• Real-time</span>
           </div>
         </div>
 
@@ -656,9 +595,13 @@ const AdminDashboard = () => {
             {stats.orders.total.toLocaleString()}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', fontSize: '12px' }}>
-            <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-              <ArrowUpRight size={13} /> +{stats.orders.growth}%
-            </span>
+            {stats.orders.growth > 0 ? (
+              <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                <ArrowUpRight size={13} /> +{stats.orders.growth}%
+              </span>
+            ) : (
+              <span style={{ color: '#5E626F', fontWeight: 500 }}>{stats.orders.total} placed</span>
+            )}
             <span style={{ color: '#AEB0B6' }}>• {stats.orders.pending} pending</span>
           </div>
         </div>
@@ -688,9 +631,13 @@ const AdminDashboard = () => {
             {stats.customers.total.toLocaleString()}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', fontSize: '12px' }}>
-            <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-              <ArrowUpRight size={13} /> +{stats.customers.growth}%
-            </span>
+            {stats.customers.growth > 0 ? (
+              <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                <ArrowUpRight size={13} /> +{stats.customers.growth}%
+              </span>
+            ) : (
+              <span style={{ color: '#5E626F', fontWeight: 500 }}>Live buyer count</span>
+            )}
             <span style={{ color: '#AEB0B6' }}>registered buyers</span>
           </div>
         </div>
@@ -812,94 +759,124 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentOrders.map((ord) => {
-                  const custName = ord.customer?.name || 'Customer';
-                  const custEmail = ord.customer?.email || 'N/A';
-                  const custAvatar = ord.customer?.avatar || '';
-                  const totalFormatted = typeof ord.total === 'number'
-                    ? `${currencySymbol}${ord.total.toFixed(2)}`
-                    : ord.total;
-
-                  return (
-                    <tr
-                      key={ord.id}
-                      style={{
-                        borderBottom: '1px solid #F5F1EC',
-                        transition: 'background-color 0.15s ease',
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FAF8F5')}
-                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                    >
-                      <td style={{ padding: '10px 12px', fontWeight: 600, color: '#13172B', whiteSpace: 'nowrap' }}>
-                        {ord.id}
-                      </td>
-                      <td style={{ padding: '10px 12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          {custAvatar ? (
-                            <img
-                              src={custAvatar}
-                              alt={custName}
-                              style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                                if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            style={{
-                              display: custAvatar ? 'none' : 'flex',
-                              width: '28px',
-                              height: '28px',
-                              borderRadius: '50%',
-                              backgroundColor: '#FAF8F5',
-                              color: '#13172B',
-                              fontWeight: 700,
-                              fontSize: '11px',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              flexShrink: 0,
-                              border: '1px solid #EDE8E3',
-                            }}
-                          >
-                            {custName.charAt(0).toUpperCase()}
-                          </div>
-                          <div>
-                            <div style={{ fontWeight: 600, color: '#13172B', fontSize: '12px' }}>
-                              {custName}
-                            </div>
-                            <div style={{ color: '#AEB0B6', fontSize: '11px' }}>{custEmail}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td style={{ padding: '10px 12px' }}>
+                {recentOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: 'center', padding: '48px 16px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                         <div
                           style={{
-                            maxWidth: '180px',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            fontSize: '12px',
-                            color: '#5E626F',
-                            fontWeight: 500,
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '50%',
+                            backgroundColor: '#FAF8F5',
+                            border: '1px solid #EDE8E3',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#AEB0B6',
                           }}
                         >
-                          {ord.product}
+                          <ShoppingCart size={20} />
                         </div>
-                        <span style={{ fontSize: '11px', color: '#AEB0B6' }}>Qty: {ord.items}</span>
-                      </td>
-                      <td style={{ padding: '10px 12px', fontWeight: 700, color: '#13172B', whiteSpace: 'nowrap' }}>
-                        {totalFormatted}
-                      </td>
-                      <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                        {getPaymentBadge(ord.payment)}
-                      </td>
-                      <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                        {getStatusBadge(ord.status)}
-                      </td>
-                    </tr>
-                  );
-                })}
+                        <div style={{ fontWeight: 600, color: '#13172B', fontSize: '13px' }}>
+                          No orders placed yet
+                        </div>
+                        <p style={{ fontSize: '12px', color: '#5E626F', margin: 0, maxWidth: '320px' }}>
+                          Live customer orders placed on the storefront will automatically appear here.
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  recentOrders.map((ord) => {
+                    const custName = ord.customer?.name || 'Customer';
+                    const custEmail = ord.customer?.email || 'N/A';
+                    const custAvatar = ord.customer?.avatar || '';
+                    const totalFormatted = typeof ord.total === 'number'
+                      ? `${currencySymbol}${ord.total.toFixed(2)}`
+                      : ord.total;
+
+                    return (
+                      <tr
+                        key={ord.id}
+                        style={{
+                          borderBottom: '1px solid #F5F1EC',
+                          transition: 'background-color 0.15s ease',
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FAF8F5')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                      >
+                        <td style={{ padding: '10px 12px', fontWeight: 600, color: '#13172B', whiteSpace: 'nowrap' }}>
+                          {ord.id}
+                        </td>
+                        <td style={{ padding: '10px 12px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {custAvatar ? (
+                              <img
+                                src={custAvatar}
+                                alt={custName}
+                                style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+                                }}
+                              />
+                            ) : null}
+                            <div
+                              style={{
+                                display: custAvatar ? 'none' : 'flex',
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                backgroundColor: '#FAF8F5',
+                                color: '#13172B',
+                                fontWeight: 700,
+                                fontSize: '11px',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0,
+                                border: '1px solid #EDE8E3',
+                              }}
+                            >
+                              {custName.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <div style={{ fontWeight: 600, color: '#13172B', fontSize: '12px' }}>
+                                {custName}
+                              </div>
+                              <div style={{ color: '#AEB0B6', fontSize: '11px' }}>{custEmail}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td style={{ padding: '10px 12px' }}>
+                          <div
+                            style={{
+                              maxWidth: '180px',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              fontSize: '12px',
+                              color: '#5E626F',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {ord.product}
+                          </div>
+                          <span style={{ fontSize: '11px', color: '#AEB0B6' }}>Qty: {ord.items}</span>
+                        </td>
+                        <td style={{ padding: '10px 12px', fontWeight: 700, color: '#13172B', whiteSpace: 'nowrap' }}>
+                          {totalFormatted}
+                        </td>
+                        <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                          {getPaymentBadge(ord.payment)}
+                        </td>
+                        <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                          {getStatusBadge(ord.status)}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
@@ -936,72 +913,110 @@ const AdminDashboard = () => {
             </button>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {topSellingProducts.map((prod, idx) => {
-              const revFormatted = typeof prod.revenue === 'number'
-                ? `${currencySymbol}${prod.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                : prod.revenue;
+          {topSellingProducts.length === 0 ? (
+            <div
+              style={{
+                padding: '28px 16px',
+                textAlign: 'center',
+                backgroundColor: '#FAF8F5',
+                borderRadius: '8px',
+                border: '1px dashed #EDE8E3',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <div
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid #EDE8E3',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#AEB0B6',
+                }}
+              >
+                <Package size={18} />
+              </div>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: '#13172B' }}>
+                No sales recorded yet
+              </div>
+              <p style={{ fontSize: '11px', color: '#5E626F', margin: 0, maxWidth: '240px' }}>
+                Top performing products will be ranked dynamically by revenue once customer orders are placed.
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {topSellingProducts.map((prod, idx) => {
+                const revFormatted = typeof prod.revenue === 'number'
+                  ? `${currencySymbol}${prod.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                  : prod.revenue;
 
-              return (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px',
-                    borderRadius: '8px',
-                    backgroundColor: '#FAF8F5',
-                    border: '1px solid #EDE8E3',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
-                    <div
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '6px',
-                        backgroundColor: '#FFFFFF',
-                        border: '1px solid #EDE8E3',
-                        overflow: 'hidden',
-                        flexShrink: 0,
-                      }}
-                    >
-                      <img
-                        src={resolveImageUrl(prod.image)}
-                        alt={prod.name}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        onError={(e) => {
-                          e.target.src = '/assets/images/products/brass-cylinder-vase-1.jpg';
-                        }}
-                      />
-                    </div>
-                    <div style={{ minWidth: 0 }}>
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      backgroundColor: '#FAF8F5',
+                      border: '1px solid #EDE8E3',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
                       <div
                         style={{
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          color: '#13172B',
-                          whiteSpace: 'nowrap',
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '6px',
+                          backgroundColor: '#FFFFFF',
+                          border: '1px solid #EDE8E3',
                           overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          maxWidth: '140px',
+                          flexShrink: 0,
                         }}
                       >
-                        {prod.name}
+                        <img
+                          src={resolveImageUrl(prod.image)}
+                          alt={prod.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          onError={(e) => {
+                            e.target.src = '/assets/images/products/brass-cylinder-vase-1.jpg';
+                          }}
+                        />
                       </div>
-                      <div style={{ fontSize: '11px', color: '#5E626F' }}>{prod.category}</div>
+                      <div style={{ minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#13172B',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '140px',
+                          }}
+                        >
+                          {prod.name}
+                        </div>
+                        <div style={{ fontSize: '11px', color: '#5E626F' }}>{prod.category}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: 'right', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#059669' }}>{revFormatted}</div>
+                      <div style={{ fontSize: '11px', color: '#5E626F' }}>{prod.sales}</div>
                     </div>
                   </div>
-
-                  <div style={{ textAlign: 'right', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#059669' }}>{revFormatted}</div>
-                    <div style={{ fontSize: '11px', color: '#5E626F' }}>{prod.sales}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* Category Sales Distribution */}
           <div style={{ paddingTop: '12px', borderTop: '1px solid #EDE8E3' }}>
@@ -1009,19 +1024,25 @@ const AdminDashboard = () => {
               Category Volume Share
             </h4>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {categoryDist.map((cat, idx) => (
-                <div key={idx}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '3px' }}>
-                    <span style={{ color: '#5E626F', fontWeight: 500 }}>{cat.name}</span>
-                    <span style={{ color: '#13172B', fontWeight: 700 }}>{cat.pct}%</span>
+            {categoryDist.length === 0 ? (
+              <div style={{ fontSize: '12px', color: '#5E626F', textAlign: 'center', padding: '12px 0' }}>
+                No category data available
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {categoryDist.map((cat, idx) => (
+                  <div key={idx}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '3px' }}>
+                      <span style={{ color: '#5E626F', fontWeight: 500 }}>{cat.name}</span>
+                      <span style={{ color: '#13172B', fontWeight: 700 }}>{cat.pct}%</span>
+                    </div>
+                    <div style={{ height: '5px', backgroundColor: '#EDE8E3', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div style={{ width: `${cat.pct}%`, height: '100%', backgroundColor: cat.color || '#CC0D39', borderRadius: '3px' }} />
+                    </div>
                   </div>
-                  <div style={{ height: '5px', backgroundColor: '#EDE8E3', borderRadius: '3px', overflow: 'hidden' }}>
-                    <div style={{ width: `${cat.pct}%`, height: '100%', backgroundColor: cat.color || '#CC0D39', borderRadius: '3px' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

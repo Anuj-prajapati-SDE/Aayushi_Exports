@@ -1,0 +1,64 @@
+/* HomeCollection Component Styles */
+
+.features-products .product-item.style-one {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.features-products .product-item.style-one:hover {
+  transform: translateY(-4px);
+}
+
+.features-products .product-thumbnail {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  cursor: pointer;
+  background-color: #f8fafc;
+}
+
+.features-products .product-thumbnail img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 14px;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  display: block;
+}
+
+.features-products .product-item.style-one:hover .product-thumbnail img {
+  transform: scale(1.05);
+}
+
+.features-products .product-info-wrap {
+  padding-top: 14px;
+}
+
+.features-products .product-price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.features-products .product-price .price.new-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #13172b;
+}
+
+.features-products .product-price .price.prev-price {
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: line-through !important;
+  font-weight: 500;
+}
+
+.features-products .product-info-wrap h4.title a {
+  color: #13172b;
+  transition: color 0.2s ease;
+}
+
+.features-products .product-info-wrap h4.title a:hover {
+  color: #cc0d39;
+}

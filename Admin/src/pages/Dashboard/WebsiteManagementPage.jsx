@@ -36,6 +36,7 @@ import {
   Truck,
   DollarSign,
   Filter,
+  Star,
 } from 'lucide-react';
 
 // ==========================================
@@ -119,98 +120,255 @@ const defaultCategories = [
 ];
 
 const defaultCollections = {
+  subTitle: 'Artisan Metalware',
+  title: 'Our Featured Collection',
+  tab1Name: 'Best Sellers',
+  tab2Name: 'New Arrivals',
+  tab3Name: 'Special Offers',
   bestSellers: [
     {
       id: 'col-1',
-      title: 'Lightweight linen summer dress with belt',
-      price: '120.00',
-      prevPrice: '145.00',
-      discount: '10% Off',
+      title: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      name: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      price: '145.00',
+      prevPrice: '185.00',
+      discount: '22% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-1.png',
+      reviews: 64,
+      image: 'assets/images/products/brass-cylinder-vase-1.jpg',
       badge: 'Best Seller',
       stock: 'In Stock (45)',
+      category: 'Brass Vases & Urns',
+      sku: 'RB-VS-101',
     },
     {
       id: 'col-2',
-      title: 'Casual cotton sweatshirt with hood',
-      price: '85.00',
-      prevPrice: '100.00',
-      discount: '15% Off',
+      title: 'Vintage Moroccan Glass & Metal Fairy Lanterns (Set of 3 - White)',
+      name: 'Vintage Moroccan Glass & Metal Fairy Lanterns (Set of 3 - White)',
+      price: '89.00',
+      prevPrice: '120.00',
+      discount: '25% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-2.png',
+      reviews: 98,
+      image: 'assets/images/products/white-moroccan-lanterns.jpg',
       badge: 'Trending',
       stock: 'In Stock (30)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-201',
     },
     {
       id: 'col-3',
-      title: 'Embroidered Square Neck Sheath Gown',
-      price: '290.00',
-      prevPrice: '350.00',
-      discount: '20% Off',
+      title: 'Royal Floral Embossed Brass Flower Vases (Set of 3)',
+      name: 'Royal Floral Embossed Brass Flower Vases (Set of 3)',
+      price: '195.00',
+      prevPrice: '249.00',
+      discount: '21% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-3.png',
+      reviews: 42,
+      image: 'assets/images/products/brass-flower-vase-set.jpg',
       badge: 'Luxury',
       stock: 'In Stock (12)',
+      category: 'Brass Vases & Urns',
+      sku: 'RB-VS-301',
     },
     {
       id: 'col-4',
-      title: 'Slim-fit stretch denim jeans',
-      price: '65.00',
-      prevPrice: '80.00',
-      discount: '18% Off',
-      rating: 4,
-      image: 'assets/images/products/feature-product-4.png',
+      title: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      name: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      price: '92.00',
+      prevPrice: '125.00',
+      discount: '26% Off',
+      rating: 5,
+      reviews: 87,
+      image: 'assets/images/products/black-moroccan-lanterns.jpg',
       badge: 'Hot',
       stock: 'In Stock (64)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-401',
+    },
+    {
+      id: 'col-5',
+      title: 'Traditional Royal Brass Floral Urli with Diya Holders',
+      name: 'Traditional Royal Brass Floral Urli with Diya Holders',
+      price: '120.00',
+      prevPrice: '160.00',
+      discount: '25% Off',
+      rating: 5,
+      reviews: 55,
+      image: 'assets/images/products/brass-urli-bowl.jpg',
+      badge: 'Popular',
+      stock: 'In Stock (50)',
+      category: 'Tabletop Urli & Bowls',
+      sku: 'RB-UB-501',
+    },
+    {
+      id: 'col-6',
+      title: 'Grand Royal Brass Mayur Peacock Diya & Oil Lamp',
+      name: 'Grand Royal Brass Mayur Peacock Diya & Oil Lamp',
+      price: '165.00',
+      prevPrice: '210.00',
+      discount: '21% Off',
+      rating: 5,
+      reviews: 38,
+      image: 'assets/images/products/brass-peacock-diya.jpg',
+      badge: 'Royal Diya',
+      stock: 'In Stock (35)',
+      category: 'Pooja & Spiritual Artefacts',
+      sku: 'RB-SP-601',
+    },
+    {
+      id: 'col-7',
+      title: 'Handcrafted Moradabad Brass Jali Pillar Artefact',
+      name: 'Handcrafted Moradabad Brass Jali Pillar Artefact',
+      price: '155.00',
+      prevPrice: '199.00',
+      discount: '22% Off',
+      rating: 5,
+      reviews: 29,
+      image: 'assets/images/products/brass-cylinder-vase-1.jpg',
+      badge: 'Artisan',
+      stock: 'In Stock (25)',
+      category: 'Handcrafted Brass Decor',
+      sku: 'RB-VS-102',
+    },
+    {
+      id: 'col-8',
+      title: 'Pearl White Fairy Decorative Tabletop Lantern Large',
+      name: 'Pearl White Fairy Decorative Tabletop Lantern Large',
+      price: '48.00',
+      prevPrice: '65.00',
+      discount: '26% Off',
+      rating: 5,
+      reviews: 51,
+      image: 'assets/images/products/white-moroccan-lanterns.jpg',
+      badge: 'Exclusive',
+      stock: 'In Stock (40)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-202',
     },
   ],
   newProducts: [
     {
-      id: 'col-5',
-      title: 'Vintage wash oversized denim jacket',
-      price: '110.00',
-      prevPrice: '130.00',
-      discount: 'New',
+      id: 'col-9',
+      title: 'Royal Floral Embossed Brass Flower Vases (Set of 3)',
+      name: 'Royal Floral Embossed Brass Flower Vases (Set of 3)',
+      price: '195.00',
+      prevPrice: '249.00',
+      discount: '21% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-5.png',
+      reviews: 42,
+      image: 'assets/images/products/brass-flower-vase-set.jpg',
       badge: 'New Arrival',
-      stock: 'In Stock (25)',
+      stock: 'In Stock (20)',
+      category: 'Brass Vases & Urns',
+      sku: 'RB-VS-301',
     },
     {
-      id: 'col-6',
-      title: 'Floral print flared silk maxi skirt',
-      price: '95.00',
-      prevPrice: '115.00',
-      discount: 'New',
+      id: 'col-10',
+      title: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      name: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      price: '145.00',
+      prevPrice: '185.00',
+      discount: '22% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-6.png',
+      reviews: 64,
+      image: 'assets/images/products/brass-cylinder-vase-1.jpg',
+      badge: 'New Arrival',
+      stock: 'In Stock (35)',
+      category: 'Brass Vases & Urns',
+      sku: 'RB-VS-101',
+    },
+    {
+      id: 'col-11',
+      title: 'Grand Royal Brass Mayur Peacock Diya & Oil Lamp',
+      name: 'Grand Royal Brass Mayur Peacock Diya & Oil Lamp',
+      price: '165.00',
+      prevPrice: '210.00',
+      discount: '21% Off',
+      rating: 5,
+      reviews: 38,
+      image: 'assets/images/products/brass-peacock-diya.jpg',
       badge: 'New Arrival',
       stock: 'In Stock (18)',
+      category: 'Pooja & Spiritual Artefacts',
+      sku: 'RB-SP-601',
+    },
+    {
+      id: 'col-12',
+      title: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      name: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      price: '92.00',
+      prevPrice: '125.00',
+      discount: '26% Off',
+      rating: 5,
+      reviews: 87,
+      image: 'assets/images/products/black-moroccan-lanterns.jpg',
+      badge: 'New Arrival',
+      stock: 'In Stock (24)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-401',
     },
   ],
   saleProducts: [
     {
-      id: 'col-7',
-      title: 'Athletic leggings with mesh ventilation',
-      price: '40.00',
-      prevPrice: '75.00',
-      discount: '45% Off',
-      rating: 4,
-      image: 'assets/images/products/feature-product-7.png',
-      badge: 'Mega Sale',
-      stock: 'In Stock (100+)',
+      id: 'col-13',
+      title: 'Vintage Moroccan Glass & Metal Fairy Lanterns (Set of 3 - White)',
+      name: 'Vintage Moroccan Glass & Metal Fairy Lanterns (Set of 3 - White)',
+      price: '89.00',
+      prevPrice: '120.00',
+      discount: '25% Off',
+      rating: 5,
+      reviews: 98,
+      image: 'assets/images/products/white-moroccan-lanterns.jpg',
+      badge: 'Special Offer',
+      stock: 'In Stock (30)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-201',
     },
     {
-      id: 'col-8',
-      title: 'Ribbed knit wool cardigan sweater',
-      price: '55.00',
-      prevPrice: '90.00',
-      discount: '38% Off',
+      id: 'col-14',
+      title: 'Traditional Royal Brass Floral Urli with Diya Holders',
+      name: 'Traditional Royal Brass Floral Urli with Diya Holders',
+      price: '120.00',
+      prevPrice: '160.00',
+      discount: '25% Off',
       rating: 5,
-      image: 'assets/images/products/feature-product-8.png',
-      badge: 'Sale',
-      stock: 'In Stock (15)',
+      reviews: 55,
+      image: 'assets/images/products/brass-urli-bowl.jpg',
+      badge: 'Special Offer',
+      stock: 'In Stock (25)',
+      category: 'Tabletop Urli & Bowls',
+      sku: 'RB-UB-501',
+    },
+    {
+      id: 'col-15',
+      title: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      name: 'Handcrafted Antique Brass Cylindrical Jali Vase',
+      price: '145.00',
+      prevPrice: '185.00',
+      discount: '22% Off',
+      rating: 5,
+      reviews: 64,
+      image: 'assets/images/products/brass-cylinder-vase-1.jpg',
+      badge: 'Special Offer',
+      stock: 'In Stock (40)',
+      category: 'Brass Vases & Urns',
+      sku: 'RB-VS-101',
+    },
+    {
+      id: 'col-16',
+      title: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      name: 'Matte Black Vintage Moroccan Fairy Light Lanterns (Set of 3)',
+      price: '92.00',
+      prevPrice: '125.00',
+      discount: '26% Off',
+      rating: 5,
+      reviews: 87,
+      image: 'assets/images/products/black-moroccan-lanterns.jpg',
+      badge: 'Special Offer',
+      stock: 'In Stock (28)',
+      category: 'Decorative Lanterns',
+      sku: 'RB-LT-401',
     },
   ],
 };
@@ -262,6 +420,59 @@ const defaultTrendingProducts = [
   },
 ];
 
+// 1.6 HomeTestimonial Default Data
+const defaultTestimonialsData = {
+  subTitle: 'Client Testimonials',
+  title: 'What Our Clients Say About Us',
+  description: 'Real feedback from luxury homeowners, interior designers, and boutique hospitality clients worldwide.',
+  testimonials: [
+    {
+      id: 'testi-1',
+      name: 'Rhodes Jhon',
+      role: 'Verified Homeowner',
+      location: 'California, USA',
+      rating: 5,
+      review: 'The antique cylindrical jali vase is an absolute masterpiece! The hand-carved fretwork and heavy solid brass craftsmanship exceeded my expectations. Delivered in impeccable shockproof packaging.',
+      image: 'assets/images/testimonial/author-1.png',
+      productName: 'Antique Brass Cylindrical Jali Vase',
+      isActive: true,
+    },
+    {
+      id: 'testi-2',
+      name: 'Eleanor Vance',
+      role: 'Interior Architecture Director',
+      location: 'London, UK',
+      rating: 5,
+      review: 'We ordered the Moroccan fairy lanterns and royal floral urlis for a boutique hotel lobby project. The ambient candlelight glow and authentic brass patina are simply breathtaking.',
+      image: 'assets/images/testimonial/author-2.png',
+      productName: 'Vintage Moroccan Glass & Metal Lanterns',
+      isActive: true,
+    },
+    {
+      id: 'testi-3',
+      name: 'Rajesh & Sunita Mehra',
+      role: 'Luxury Decor Enthusiasts',
+      location: 'New Delhi, India',
+      rating: 5,
+      review: 'The royal peacock diya lamp and embossed vase set became the centerpiece of our festive celebrations. Genuine virgin brass with protective clear lacquer that stays gleaming without tarnish.',
+      image: 'assets/images/testimonial/author-1.png',
+      productName: 'Royal Mayur Peacock Diya & Urli Bowl',
+      isActive: true,
+    },
+    {
+      id: 'testi-4',
+      name: 'Sophia Laurent',
+      role: 'Commercial Staging Specialist',
+      location: 'Paris, France',
+      rating: 5,
+      review: 'Exceptional Moradabad artisan heritage quality! Seamless international courier delivery with full tracking. Our clients constantly ask where we sourced these exquisite brass vessels.',
+      image: 'assets/images/testimonial/author-2.png',
+      productName: 'Handcrafted Moradabad Brass Artefacts',
+      isActive: true,
+    },
+  ],
+};
+
 // 2. ShopPage Default Data
 const defaultShopData = {
   bannerTitle: 'Shop Page',
@@ -312,22 +523,33 @@ const defaultCartData = {
 // 5. About Us Default Data
 const defaultAboutData = {
   bannerTitle: 'About Us',
-  heading: 'Online shopping is buying things from stores on the internet.',
-  description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+  subTitle: 'About us',
+  heading: 'Online Shopping Is Buying Things From Stores On The Internet.',
+  description: "There are many variations of passages of Lorem Ipsum available, but the our majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable you are going to.",
   experienceYears: '25',
   experienceText: "Year's Experience",
+  image1: 'assets/images/about/about-1.jpg',
+  image2: 'assets/images/about/about-2.jpg',
+  thumb1: 'assets/images/about/about-3.png',
+  thumb2: 'assets/images/about/about-4.png',
   authorName: 'Thomas Alison',
   authorRole: 'CEO at PESCO',
+  authorImage: 'assets/images/about/author.png',
+  signatureImage: 'assets/images/about/signature.png',
   serviceFeatures: [
-    { id: 'f-1', title: 'Free Shipping', desc: 'You get your items delivered without any extra cost.', icon: 'shipping' },
-    { id: 'f-2', title: 'Great Support 24/7', desc: 'Our customer support team is available around the clock.', icon: 'support' },
-    { id: 'f-3', title: 'Return Available', desc: "Making it easy to return any items if you're not satisfied.", icon: 'return' },
-    { id: 'f-4', title: 'Secure Payment', desc: 'Shop with confidence knowing that our payment is secure.', icon: 'payment' },
+    { id: 'f-1', title: 'We are provide 100% best products' },
+    { id: 'f-2', title: 'Flexible and affordable price' },
+    { id: 'f-3', title: 'All products is imported' },
   ],
+  teamSubTitle: 'Our Team',
+  teamTitle: 'Meet Management Team',
   teamMembers: [
-    { id: 'team-1', name: 'Thomas Alison', role: 'Founder & CEO', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300' },
-    { id: 'team-2', name: 'Sophia Martinez', role: 'Head of Design', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300' },
-    { id: 'team-3', name: 'David Miller', role: 'Operations Director', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300' },
+    { id: 'team-1', name: 'Davidthy Phillips', role: 'Senior Developer', image: 'assets/images/team/team-1.jpg' },
+    { id: 'team-2', name: 'Sarah Jones', role: 'Product Manager', image: 'assets/images/team/team-2.jpg' },
+    { id: 'team-3', name: 'Davis Liam', role: 'Marketing Specialist', image: 'assets/images/team/team-3.jpg' },
+    { id: 'team-4', name: 'Michael Davis', role: 'Digital Marketing Specialist', image: 'assets/images/team/team-4.jpg' },
+    { id: 'team-5', name: 'Sarah Jones', role: 'Product Manager', image: 'assets/images/team/team-5.jpg' },
+    { id: 'team-6', name: 'Emily Garcia', role: 'Digital Marketing Specialist', image: 'assets/images/team/team-6.jpg' },
   ],
 };
 
@@ -449,12 +671,33 @@ const WebsiteManagementPage = () => {
   });
   const [collections, setCollections] = useState(() => {
     const saved = localStorage.getItem('pesco_home_collections');
-    return saved ? JSON.parse(saved) : defaultCollections;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return {
+          subTitle: parsed.subTitle || defaultCollections.subTitle,
+          title: parsed.title || defaultCollections.title,
+          tab1Name: parsed.tab1Name || defaultCollections.tab1Name,
+          tab2Name: parsed.tab2Name || defaultCollections.tab2Name,
+          tab3Name: parsed.tab3Name || defaultCollections.tab3Name,
+          bestSellers: Array.isArray(parsed.bestSellers) && parsed.bestSellers.length > 0 ? parsed.bestSellers : defaultCollections.bestSellers,
+          newProducts: Array.isArray(parsed.newProducts) && parsed.newProducts.length > 0 ? parsed.newProducts : defaultCollections.newProducts,
+          saleProducts: Array.isArray(parsed.saleProducts) && parsed.saleProducts.length > 0 ? parsed.saleProducts : defaultCollections.saleProducts,
+        };
+      } catch (e) {
+        return defaultCollections;
+      }
+    }
+    return defaultCollections;
   });
   const [activeCollectionSubTab, setActiveCollectionSubTab] = useState('bestSellers');
   const [trendingProducts, setTrendingProducts] = useState(() => {
     const saved = localStorage.getItem('pesco_trending_products');
     return saved ? JSON.parse(saved) : defaultTrendingProducts;
+  });
+  const [testimonialsData, setTestimonialsData] = useState(() => {
+    const saved = localStorage.getItem('pesco_testimonials_data');
+    return saved ? JSON.parse(saved) : defaultTestimonialsData;
   });
 
   // 2. Shop Page State
@@ -524,6 +767,7 @@ const WebsiteManagementPage = () => {
             if (d.categories) setCategories(d.categories);
             if (d.collections) setCollections(d.collections);
             if (d.trending_products) setTrendingProducts(d.trending_products);
+            if (d.testimonials) setTestimonialsData(d.testimonials);
             if (d.shop_page) setShopData(d.shop_page);
             if (d.shop_detail_page) setShopDetailData(d.shop_detail_page);
             if (d.cart_page) setCartData(d.cart_page);
@@ -548,6 +792,7 @@ const WebsiteManagementPage = () => {
     localStorage.setItem('pesco_home_categories', JSON.stringify(categories));
     localStorage.setItem('pesco_home_collections', JSON.stringify(collections));
     localStorage.setItem('pesco_trending_products', JSON.stringify(trendingProducts));
+    localStorage.setItem('pesco_testimonials_data', JSON.stringify(testimonialsData));
     localStorage.setItem('pesco_shop_page', JSON.stringify(shopData));
     localStorage.setItem('pesco_shop_detail_page', JSON.stringify(shopDetailData));
     localStorage.setItem('pesco_cart_page', JSON.stringify(cartData));
@@ -591,6 +836,7 @@ const WebsiteManagementPage = () => {
             categories,
             collections,
             trending_products: trendingProducts,
+            testimonials: testimonialsData,
             shop_page: shopData,
             shop_detail_page: shopDetailData,
             cart_page: cartData,
@@ -618,6 +864,7 @@ const WebsiteManagementPage = () => {
       setCategories(defaultCategories);
       setCollections(defaultCollections);
       setTrendingProducts(defaultTrendingProducts);
+      setTestimonialsData(defaultTestimonialsData);
       setShopData(defaultShopData);
       setShopDetailData(defaultShopDetailData);
       setCartData(defaultCartData);
@@ -632,22 +879,23 @@ const WebsiteManagementPage = () => {
 
   // Top Page Selector Configuration (7 Pages)
   const pageNavs = [
-    { id: 'home', label: 'HomePage Management', icon: Home, desc: 'Banners, Sliders & Collections' },
-    { id: 'shop', label: 'ShopPage Management', icon: ShoppingBag, desc: 'Filters, Categories & Pricing' },
-    { id: 'shopDetail', label: 'ShopDetailPage Management', icon: Eye, desc: 'Product Gallery, Info & Upsell' },
-    { id: 'cart', label: 'CartPage Management', icon: ShoppingCart, desc: 'Coupons, Shipping & Summary' },
-    { id: 'about', label: 'About Us Management', icon: Users, desc: 'Story, Features & Team' },
-    { id: 'contact', label: 'Contact Us Management', icon: Phone, desc: 'Global Offices & Form' },
-    { id: 'faq', label: 'FAQ Management', icon: HelpCircle, desc: 'Q&As & Search Bar' },
+    { id: 'home', label: 'HomePage ', icon: Home, desc: 'Banners, Sliders & Collections' },
+    { id: 'about', label: 'About Us ', icon: Users, desc: 'Story, Features & Team' },
+    // { id: 'shop collection', label: 'ShopPage ', icon: ShoppingBag, desc: 'Filters, Categories & Pricing' },
+    { id: 'faq', label: 'FAQ ', icon: HelpCircle, desc: 'Q&As & Search Bar' },
+    { id: 'contact', label: 'Contact Us ', icon: Phone, desc: 'Global Offices & Form' },
+    // { id: 'shopDetail', label: 'ShopDetailPage ', icon: Eye, desc: 'Product Gallery, Info & Upsell' },
+    // { id: 'cart', label: 'CartPage ', icon: ShoppingCart, desc: 'Coupons, Shipping & Summary' },
   ];
 
   // Sub-tabs configurations
   const homeTabs = [
-    { id: 'HeroBanner', label: 'HeroBanner', desc: 'Promo Offer Banners', icon: Image, count: heroBanners.length },
     { id: 'HeroPage', label: 'HeroPage', desc: 'Main Hero Sliders', icon: Sliders, count: heroSlides.length },
     { id: 'HomeCategory', label: 'HomeCategory', desc: 'Category Carousel', icon: Layers, count: categories.length },
-    { id: 'HomeCollection', label: 'HomeCollection', desc: 'Featured Tabs & Items', icon: Sparkles, count: collections.bestSellers.length + collections.newProducts.length + collections.saleProducts.length },
+    { id: 'HeroBanner', label: 'HeroBanner', desc: 'Promo Offer Banners', icon: Image, count: heroBanners.length },
+    { id: 'HomeCollection', label: 'HomeCollection', desc: 'Featured Tabs & Items', icon: Sparkles, count: ((collections.bestSellers || []).length + (collections.newProducts || []).length + (collections.saleProducts || []).length) },
     { id: 'HomeTrendingProducts', label: 'HomeTrendingProducts', desc: 'Trending Carousel', icon: Flame, count: trendingProducts.length },
+    { id: 'HomeTestimonial', label: 'HomeTestimonial', desc: 'Client Reviews & Carousel', icon: MessageSquare, count: (testimonialsData?.testimonials || []).length },
   ];
 
   const shopTabs = [
@@ -669,9 +917,10 @@ const WebsiteManagementPage = () => {
   ];
 
   const aboutTabs = [
-    { id: 'AboutStory', label: 'Story & Mission', desc: 'Headings, Experience & CEO', icon: FileText, count: 'Core' },
-    { id: 'AboutFeatures', label: 'Service Highlights', desc: 'Shipping, Support & Warranty', icon: ShieldCheck, count: aboutData.serviceFeatures?.length || 4 },
-    { id: 'AboutTeam', label: 'Leadership Team', desc: 'Founders & Directors', icon: Users, count: aboutData.teamMembers?.length || 3 },
+    { id: 'AboutStory', label: 'Story & Mission', desc: 'Banner, Subtitle, Headings & CEO', icon: FileText, count: 'Story' },
+    { id: 'AboutMedia', label: 'Media & Showcase', desc: 'Images, Thumbs & Signature', icon: Image, count: 'Media' },
+    { id: 'AboutFeatures', label: 'Service Highlights', desc: 'Key assurances & bullet points', icon: ShieldCheck, count: aboutData.serviceFeatures?.length || 3 },
+    { id: 'AboutTeam', label: 'Leadership Team', desc: 'Team Members & Titles', icon: Users, count: aboutData.teamMembers?.length || 6 },
   ];
 
   const contactTabs = [
@@ -687,11 +936,19 @@ const WebsiteManagementPage = () => {
 
   // Horizontal Scroller Ref & Helpers
   const pageScrollerRef = useRef(null);
+  const homeTabScrollerRef = useRef(null);
 
   const scrollPageNav = (direction) => {
     if (pageScrollerRef.current) {
       const scrollOffset = direction === 'left' ? -280 : 280;
       pageScrollerRef.current.scrollBy({ left: scrollOffset, behavior: 'smooth' });
+    }
+  };
+
+  const scrollHomeTab = (direction) => {
+    if (homeTabScrollerRef.current) {
+      const scrollOffset = direction === 'left' ? -240 : 240;
+      homeTabScrollerRef.current.scrollBy({ left: scrollOffset, behavior: 'smooth' });
     }
   };
 
@@ -768,16 +1025,6 @@ const WebsiteManagementPage = () => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button
-            type="button"
-            onClick={handleResetDefaults}
-            className="btn-secondary"
-            title="Reset all pages to default seed data"
-          >
-            <RotateCcw size={16} />
-            <span>Reset Defaults</span>
-          </button>
-
           <button
             type="button"
             onClick={handleSaveAll}
@@ -868,8 +1115,14 @@ const WebsiteManagementPage = () => {
         <div
           ref={pageScrollerRef}
           className="horizontal-scroller"
+          onWheel={(e) => {
+            if (e.deltaY !== 0) {
+              e.currentTarget.scrollLeft += e.deltaY;
+            }
+          }}
           style={{
             display: 'flex',
+            flexWrap: 'nowrap',
             alignItems: 'stretch',
             gap: '12px',
             overflowX: 'auto',
@@ -945,18 +1198,7 @@ const WebsiteManagementPage = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span
-                    style={{
-                      fontSize: '10.5px',
-                      fontWeight: 700,
-                      padding: '2px 6px',
-                      borderRadius: '999px',
-                      backgroundColor: isActive ? 'rgba(255, 255, 255, 0.25)' : '#F1F5F9',
-                      color: isActive ? '#FFFFFF' : '#64748B',
-                    }}
-                  >
-                    {page.count}
-                  </span>
+                
                   {isActive ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
                 </div>
               </button>
@@ -1038,80 +1280,165 @@ const WebsiteManagementPage = () => {
       {/* ========================================== */}
       {activePage === 'home' && (
         <div className="animate-fade-in">
-          {/* Sub-Tabs for HomePage */}
-          <div
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: '16px',
-              border: '1px solid #E2E8F0',
-              padding: '8px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
-              gap: '8px',
-              marginBottom: '26px',
-              boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
-            }}
-          >
-            {homeTabs.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeHomeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveHomeTab(tab.id)}
+          {/* Sub-Tabs for HomePage (Single Row with Scroller) */}
+          <div style={{ marginBottom: '26px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '8px',
+                padding: '0 2px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    border: isActive ? '1px solid #CC0D39' : '1px solid transparent',
-                    backgroundColor: isActive ? 'rgba(204, 13, 57, 0.06)' : '#FFFFFF',
-                    color: isActive ? '#CC0D39' : '#475569',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    textAlign: 'left',
+                    fontSize: '11.5px',
+                    fontWeight: 700,
+                    color: '#475569',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.6px',
                   }}
                 >
-                  <div
+                  HomePage Sections ({homeTabs.length} Tabs)
+                </span>
+                <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 500 }}>
+                  • Scroll horizontally to view all sections
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <button
+                  type="button"
+                  onClick={() => scrollHomeTab('left')}
+                  className="btn-secondary"
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '8px',
+                    border: '1px solid #E2E8F0',
+                    backgroundColor: '#FFFFFF',
+                    cursor: 'pointer',
+                  }}
+                  title="Scroll Left"
+                >
+                  <ChevronLeft size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollHomeTab('right')}
+                  className="btn-secondary"
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '8px',
+                    border: '1px solid #E2E8F0',
+                    backgroundColor: '#FFFFFF',
+                    cursor: 'pointer',
+                  }}
+                  title="Scroll Right"
+                >
+                  <ChevronRight size={15} />
+                </button>
+              </div>
+            </div>
+
+            <div
+              ref={homeTabScrollerRef}
+              className="horizontal-scroller"
+              onWheel={(e) => {
+                if (e.deltaY !== 0) {
+                  e.currentTarget.scrollLeft += e.deltaY;
+                }
+              }}
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: '16px',
+                border: '1px solid #E2E8F0',
+                padding: '8px',
+                display: 'flex',
+                flexWrap: 'nowrap',
+                alignItems: 'center',
+                gap: '8px',
+                overflowX: 'auto',
+                boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
+                scrollBehavior: 'smooth',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              {homeTabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeHomeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveHomeTab(tab.id)}
                     style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '10px',
-                      backgroundColor: isActive ? '#CC0D39' : '#F1F5F9',
-                      color: isActive ? '#FFFFFF' : '#64748B',
+                      flex: '0 0 auto',
+                      minWidth: '220px',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
+                      gap: '12px',
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      border: isActive ? '1px solid #CC0D39' : '1px solid transparent',
+                      backgroundColor: isActive ? 'rgba(204, 13, 57, 0.06)' : '#FFFFFF',
+                      color: isActive ? '#CC0D39' : '#475569',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap',
                     }}
                   >
-                    <Icon size={18} />
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '13.5px', fontWeight: 700, color: isActive ? '#CC0D39' : '#0F172A' }}>
-                        {tab.label}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: '11px',
-                          fontWeight: 700,
-                          padding: '2px 6px',
-                          borderRadius: '999px',
-                          backgroundColor: isActive ? 'rgba(204, 13, 57, 0.15)' : '#F1F5F9',
-                          color: isActive ? '#CC0D39' : '#64748B',
-                        }}
-                      >
-                        {tab.count}
-                      </span>
+                    <div
+                      style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
+                        backgroundColor: isActive ? '#CC0D39' : '#F1F5F9',
+                        color: isActive ? '#FFFFFF' : '#64748B',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Icon size={18} />
                     </div>
-                    <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '2px' }}>{tab.desc}</div>
-                  </div>
-                </button>
-              );
-            })}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <span style={{ fontSize: '13.5px', fontWeight: 700, color: isActive ? '#CC0D39' : '#0F172A' }}>
+                          {tab.label}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 700,
+                            padding: '2px 6px',
+                            borderRadius: '999px',
+                            backgroundColor: isActive ? 'rgba(204, 13, 57, 0.15)' : '#F1F5F9',
+                            color: isActive ? '#CC0D39' : '#64748B',
+                          }}
+                        >
+                          {tab.count}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '2px' }}>{tab.desc}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* 5.1 HeroBanner */}
@@ -1517,10 +1844,10 @@ const WebsiteManagementPage = () => {
           {/* 5.4 HomeCollection */}
           {activeHomeTab === 'HomeCollection' && (
             <div className="animate-fade-in">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A' }}>HomeCollection Showcase</h2>
-                  <p style={{ fontSize: '13px', color: '#64748B' }}>Manage products rendered in the 3 featured collection tabs in <code>HomeCollection.jsx</code>.</p>
+                  <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', margin: 0 }}>HomeCollection Showcase</h2>
+                  <p style={{ fontSize: '13px', color: '#64748B', margin: '4px 0 0 0' }}>Manage section headings, category tab labels, and products displayed in <code>HomeCollection.jsx</code>.</p>
                 </div>
                 <button
                   type="button"
@@ -1528,20 +1855,24 @@ const WebsiteManagementPage = () => {
                   onClick={() => {
                     const newItem = {
                       id: `col-${Date.now()}`,
-                      title: 'New Featured Designer Outfit',
-                      price: '95.00',
-                      prevPrice: '120.00',
-                      discount: '15% Off',
+                      title: 'Handcrafted Antique Brass Artefact',
+                      name: 'Handcrafted Antique Brass Artefact',
+                      price: '135.00',
+                      prevPrice: '175.00',
+                      discount: '23% Off',
                       rating: 5,
-                      image: 'assets/images/products/feature-product-1.png',
-                      badge: 'Featured',
-                      stock: 'In Stock (20)',
+                      reviews: 45,
+                      image: 'assets/images/products/brass-cylinder-vase-1.jpg',
+                      badge: activeCollectionSubTab === 'bestSellers' ? 'Best Seller' : activeCollectionSubTab === 'newProducts' ? 'New Arrival' : 'Special Offer',
+                      stock: 'In Stock (25)',
+                      category: 'Brass Vases & Urns',
+                      sku: `RB-COL-${Date.now().toString().slice(-4)}`,
                     };
                     setCollections({
                       ...collections,
-                      [activeCollectionSubTab]: [...collections[activeCollectionSubTab], newItem],
+                      [activeCollectionSubTab]: [...(collections[activeCollectionSubTab] || []), newItem],
                     });
-                    showToast(`New item added to ${activeCollectionSubTab}!`);
+                    showToast(`New item added to ${activeCollectionSubTab === 'bestSellers' ? (collections.tab1Name || 'Best Sellers') : activeCollectionSubTab === 'newProducts' ? (collections.tab2Name || 'New Arrivals') : (collections.tab3Name || 'Special Offers')}!`);
                   }}
                 >
                   <Plus size={16} />
@@ -1549,12 +1880,72 @@ const WebsiteManagementPage = () => {
                 </button>
               </div>
 
+              {/* Section Header & Tab Labels Configuration */}
+              <div className="glass-card mb-4" style={{ padding: '22px', border: '1.5px solid #E2E8F0', borderRadius: '12px', marginBottom: '24px' }}>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0F172A', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sparkles size={17} style={{ color: '#CC0D39' }} />
+                  Section Header & Tab Labels
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Section Subtitle (Sparkle Tag)</label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Artisan Metalware"
+                      value={collections.subTitle || ''}
+                      onChange={(e) => setCollections({ ...collections, subTitle: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Main Section Title</label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Our Featured Collection"
+                      value={collections.title || ''}
+                      onChange={(e) => setCollections({ ...collections, title: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Tab 1 Label</label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Best Sellers"
+                      value={collections.tab1Name || ''}
+                      onChange={(e) => setCollections({ ...collections, tab1Name: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Tab 2 Label</label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. New Arrivals"
+                      value={collections.tab2Name || ''}
+                      onChange={(e) => setCollections({ ...collections, tab2Name: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Tab 3 Label</label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Special Offers"
+                      value={collections.tab3Name || ''}
+                      onChange={(e) => setCollections({ ...collections, tab3Name: e.target.value })}
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Sub collection tabs switcher */}
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid #E2E8F0', paddingBottom: '10px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid #E2E8F0', paddingBottom: '10px', overflowX: 'auto' }}>
                 {[
-                  { id: 'bestSellers', label: 'Best Sellers', count: collections.bestSellers.length },
-                  { id: 'newProducts', label: 'New Products', count: collections.newProducts.length },
-                  { id: 'saleProducts', label: 'Sale Products', count: collections.saleProducts.length },
+                  { id: 'bestSellers', label: collections.tab1Name || 'Best Sellers', count: (collections.bestSellers || []).length },
+                  { id: 'newProducts', label: collections.tab2Name || 'New Arrivals', count: (collections.newProducts || []).length },
+                  { id: 'saleProducts', label: collections.tab3Name || 'Special Offers', count: (collections.saleProducts || []).length },
                 ].map((st) => (
                   <button
                     key={st.id}
@@ -1572,6 +1963,8 @@ const WebsiteManagementPage = () => {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px',
+                      transition: 'all 0.2s ease',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     <span>{st.label}</span>
@@ -1582,51 +1975,53 @@ const WebsiteManagementPage = () => {
                 ))}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-                {collections[activeCollectionSubTab].map((prod) => (
-                  <div key={prod.id} className="glass-card" style={{ padding: '20px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#CC0D39', backgroundColor: 'rgba(204, 13, 57, 0.08)', padding: '2px 8px', borderRadius: '4px' }}>
-                        {prod.badge || 'Collection'}
+              {/* Products Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+                {(collections[activeCollectionSubTab] || []).map((prod, pIdx) => (
+                  <div key={prod.id || pIdx} className="glass-card" style={{ padding: '20px', border: '1.5px solid #E2E8F0', borderRadius: '12px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#CC0D39', backgroundColor: 'rgba(204, 13, 57, 0.08)', padding: '3px 8px', borderRadius: '4px' }}>
+                        #{pIdx + 1} &bull; {prod.badge || prod.discount || 'Collection'}
                       </span>
                       <button
                         type="button"
                         onClick={() => {
                           setCollections({
                             ...collections,
-                            [activeCollectionSubTab]: collections[activeCollectionSubTab].filter((p) => p.id !== prod.id),
+                            [activeCollectionSubTab]: (collections[activeCollectionSubTab] || []).filter((p) => p.id !== prod.id),
                           });
                           showToast('Product removed from collection.');
                         }}
-                        style={{ padding: '4px 6px', borderRadius: '4px', backgroundColor: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', cursor: 'pointer' }}
+                        style={{ padding: '5px 8px', borderRadius: '6px', backgroundColor: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', cursor: 'pointer' }}
+                        title="Delete product"
                       >
                         <Trash2 size={13} />
                       </button>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div>
-                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Product Title</label>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Product Title / Name</label>
                         <input
                           type="text"
                           className="input-field"
-                          value={prod.title}
+                          value={prod.title || prod.name || ''}
                           onChange={(e) => {
                             const val = e.target.value;
                             setCollections({
                               ...collections,
-                              [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, title: val } : p),
+                              [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, title: val, name: val } : p),
                             });
                           }}
                         />
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                         <div>
-                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Sale Price ($)</label>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Sale Price ($)</label>
                           <input
                             type="text"
                             className="input-field"
-                            value={prod.price}
+                            value={prod.price || ''}
                             onChange={(e) => {
                               const val = e.target.value;
                               setCollections({
@@ -1637,16 +2032,84 @@ const WebsiteManagementPage = () => {
                           />
                         </div>
                         <div>
-                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Regular Price ($)</label>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Regular Price ($)</label>
                           <input
                             type="text"
                             className="input-field"
-                            value={prod.prevPrice}
+                            value={prod.prevPrice || prod.originalPrice || ''}
                             onChange={(e) => {
                               const val = e.target.value;
                               setCollections({
                                 ...collections,
-                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, prevPrice: val } : p),
+                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, prevPrice: val, originalPrice: val } : p),
+                              });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                        <div>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Discount Tag</label>
+                          <input
+                            type="text"
+                            className="input-field"
+                            placeholder="e.g. 22% Off"
+                            value={prod.discount || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setCollections({
+                                ...collections,
+                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, discount: val } : p),
+                              });
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Category</label>
+                          <input
+                            type="text"
+                            className="input-field"
+                            placeholder="e.g. Brass Vases & Urns"
+                            value={prod.category || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setCollections({
+                                ...collections,
+                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, category: val } : p),
+                              });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                        <div>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Rating (1-5)</label>
+                          <input
+                            type="number"
+                            min="1"
+                            max="5"
+                            className="input-field"
+                            value={prod.rating || 5}
+                            onChange={(e) => {
+                              const val = Number(e.target.value);
+                              setCollections({
+                                ...collections,
+                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, rating: val } : p),
+                              });
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>Reviews Count</label>
+                          <input
+                            type="number"
+                            className="input-field"
+                            value={prod.reviews || 0}
+                            onChange={(e) => {
+                              const val = Number(e.target.value);
+                              setCollections({
+                                ...collections,
+                                [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, reviews: val } : p),
                               });
                             }}
                           />
@@ -1657,14 +2120,14 @@ const WebsiteManagementPage = () => {
                           compact
                           label="Product Thumbnail Image"
                           folder="collections"
-                          value={prod.image}
+                          value={prod.image || ''}
                           onChange={(val) => {
                             setCollections({
                               ...collections,
                               [activeCollectionSubTab]: collections[activeCollectionSubTab].map((p) => p.id === prod.id ? { ...p, image: val } : p),
                             });
                           }}
-                          placeholder="assets/images/products/feature-product-1.png or Upload file"
+                          placeholder="assets/images/products/brass-cylinder-vase-1.jpg or Upload file"
                         />
                       </div>
                     </div>
@@ -1776,6 +2239,402 @@ const WebsiteManagementPage = () => {
                           placeholder="assets/images/products/trending-product-1.png or Upload file"
                         />
                       </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 5.6 HomeTestimonial */}
+          {activeHomeTab === 'HomeTestimonial' && (
+            <div className="animate-fade-in">
+              {/* Section Header Configuration */}
+              <div
+                className="glass-card"
+                style={{
+                  padding: '22px',
+                  marginBottom: '24px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '16px',
+                  backgroundColor: '#FFFFFF',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                  <div
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '10px',
+                      backgroundColor: 'rgba(204, 13, 57, 0.08)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#CC0D39',
+                    }}
+                  >
+                    <MessageSquare size={18} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '15px', fontWeight: 800, color: '#0F172A', margin: 0 }}>
+                      Testimonials Section Header
+                    </h3>
+                    <p style={{ fontSize: '12px', color: '#64748B', margin: '2px 0 0 0' }}>
+                      Configure the title, subtitle, and description displayed above the reviews carousel on the Home Page.
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '4px' }}>
+                      Section Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Client Testimonials"
+                      value={testimonialsData?.subTitle || ''}
+                      onChange={(e) =>
+                        setTestimonialsData({ ...testimonialsData, subTitle: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '4px' }}>
+                      Main Section Title
+                    </label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. What Our Clients Say About Us"
+                      value={testimonialsData?.title || ''}
+                      onChange={(e) =>
+                        setTestimonialsData({ ...testimonialsData, title: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '4px' }}>
+                      Section Description
+                    </label>
+                    <textarea
+                      rows={2}
+                      className="input-field"
+                      placeholder="Provide brief context about client satisfaction and authenticity..."
+                      value={testimonialsData?.description || ''}
+                      onChange={(e) =>
+                        setTestimonialsData({ ...testimonialsData, description: e.target.value })
+                      }
+                      style={{ resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Toolbar */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '20px',
+                  flexWrap: 'wrap',
+                  gap: '12px',
+                }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', margin: 0 }}>
+                    Client Reviews & Testimonials Carousel
+                  </h2>
+                  <p style={{ fontSize: '13px', color: '#64748B', margin: '4px 0 0 0' }}>
+                    Total ({(testimonialsData?.testimonials || []).length}) reviews configured for <code>HomeTestinominal.jsx</code>.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    const newTesti = {
+                      id: `testi-${Date.now()}`,
+                      name: 'Client Name',
+                      role: 'Verified Buyer',
+                      location: 'New York, USA',
+                      rating: 5,
+                      review: 'Outstanding quality and handcrafted excellence! The brass decor completely transformed our home ambiance.',
+                      image: 'assets/images/testimonial/author-1.png',
+                      productName: 'Handcrafted Brass Decor Vase',
+                      isActive: true,
+                    };
+                    setTestimonialsData({
+                      ...testimonialsData,
+                      testimonials: [...(testimonialsData?.testimonials || []), newTesti],
+                    });
+                    showToast('New Client Testimonial added!');
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <Plus size={16} />
+                  <span>Add Client Review</span>
+                </button>
+              </div>
+
+              {/* Testimonials Cards Grid */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+                  gap: '20px',
+                }}
+              >
+                {(testimonialsData?.testimonials || []).map((testi, idx) => (
+                  <div
+                    key={testi.id || idx}
+                    className="glass-card"
+                    style={{
+                      padding: '20px',
+                      borderRadius: '16px',
+                      border: '1px solid #E2E8F0',
+                      backgroundColor: '#FFFFFF',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '14px',
+                      opacity: testi.isActive === false ? 0.65 : 1,
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    {/* Card Top Bar */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingBottom: '12px',
+                        borderBottom: '1px solid #F1F5F9',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            color: '#CC0D39',
+                            backgroundColor: 'rgba(204, 13, 57, 0.08)',
+                            padding: '3px 8px',
+                            borderRadius: '6px',
+                          }}
+                        >
+                          Review #{idx + 1}
+                        </span>
+                        <label
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: testi.isActive !== false ? '#16A34A' : '#94A3B8',
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={testi.isActive !== false}
+                            onChange={(e) => {
+                              const updated = (testimonialsData?.testimonials || []).map((t) =>
+                                t.id === testi.id ? { ...t, isActive: e.target.checked } : t
+                              );
+                              setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                            }}
+                            style={{ accentColor: '#16A34A', cursor: 'pointer' }}
+                          />
+                          <span>{testi.isActive !== false ? 'Active' : 'Hidden'}</span>
+                        </label>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = (testimonialsData?.testimonials || []).filter(
+                            (t) => t.id !== testi.id
+                          );
+                          setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                          showToast('Testimonial removed.');
+                        }}
+                        style={{
+                          padding: '5px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#FEF2F2',
+                          color: '#DC2626',
+                          border: '1px solid #FECACA',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          fontSize: '11px',
+                          fontWeight: 600,
+                        }}
+                        title="Delete Review"
+                      >
+                        <Trash2 size={13} />
+                        <span>Delete</span>
+                      </button>
+                    </div>
+
+                    {/* Author Information Form */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <div>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Client Name
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="e.g. Eleanor Vance"
+                          value={testi.name || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const updated = (testimonialsData?.testimonials || []).map((t) =>
+                              t.id === testi.id ? { ...t, name: val } : t
+                            );
+                            setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Role / Title
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="e.g. Interior Designer"
+                          value={testi.role || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const updated = (testimonialsData?.testimonials || []).map((t) =>
+                              t.id === testi.id ? { ...t, role: val } : t
+                            );
+                            setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <div>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Location / City
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="e.g. London, UK"
+                          value={testi.location || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const updated = (testimonialsData?.testimonials || []).map((t) =>
+                              t.id === testi.id ? { ...t, location: val } : t
+                            );
+                            setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Star Rating
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '38px' }}>
+                          <select
+                            className="input-field"
+                            value={testi.rating || 5}
+                            onChange={(e) => {
+                              const val = Number(e.target.value);
+                              const updated = (testimonialsData?.testimonials || []).map((t) =>
+                                t.id === testi.id ? { ...t, rating: val } : t
+                              );
+                              setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                            }}
+                            style={{ width: '80px', padding: '6px 8px' }}
+                          >
+                            <option value={5}>5 Stars</option>
+                            <option value={4}>4 Stars</option>
+                            <option value={3}>3 Stars</option>
+                            <option value={2}>2 Stars</option>
+                            <option value={1}>1 Star</option>
+                          </select>
+                          <div style={{ display: 'flex', gap: '2px', color: '#EAB308' }}>
+                            {Array.from({ length: 5 }).map((_, sIdx) => (
+                              <Star
+                                key={sIdx}
+                                size={14}
+                                fill={sIdx < (testi.rating || 5) ? '#EAB308' : 'none'}
+                                color={sIdx < (testi.rating || 5) ? '#EAB308' : '#CBD5E1'}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                        Purchased / Featured Product
+                      </label>
+                      <input
+                        type="text"
+                        className="input-field"
+                        placeholder="e.g. Antique Brass Cylindrical Jali Vase"
+                        value={testi.productName || ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const updated = (testimonialsData?.testimonials || []).map((t) =>
+                            t.id === testi.id ? { ...t, productName: val } : t
+                          );
+                          setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                        Client Review Text
+                      </label>
+                      <textarea
+                        rows={3}
+                        className="input-field"
+                        placeholder="Write the client's detailed testimonial..."
+                        value={testi.review || ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const updated = (testimonialsData?.testimonials || []).map((t) =>
+                            t.id === testi.id ? { ...t, review: val } : t
+                          );
+                          setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                        }}
+                        style={{ resize: 'vertical' }}
+                      />
+                    </div>
+
+                    <div>
+                      <ImageUploadField
+                        compact
+                        label="Client Avatar / Photo"
+                        folder="testimonials"
+                        value={testi.image || ''}
+                        onChange={(val) => {
+                          const updated = (testimonialsData?.testimonials || []).map((t) =>
+                            t.id === testi.id ? { ...t, image: val } : t
+                          );
+                          setTestimonialsData({ ...testimonialsData, testimonials: updated });
+                        }}
+                        placeholder="assets/images/testimonial/author-1.png or Upload file"
+                      />
                     </div>
                   </div>
                 ))}
@@ -2634,10 +3493,36 @@ const WebsiteManagementPage = () => {
                 Story, Mission & Experience
               </h3>
               <p style={{ fontSize: '13px', color: '#64748B', marginBottom: '22px' }}>
-                Manage main heading, story description, years of experience, and CEO signature in <code>AboutPage.jsx</code>.
+                Manage banner title, section headings, story description, years of experience, and founder credentials for <code>AboutPage.jsx</code>.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
+                <div>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                    Banner Page Title
+                  </label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    placeholder="e.g. About Us"
+                    value={aboutData.bannerTitle || ''}
+                    onChange={(e) => setAboutData({ ...aboutData, bannerTitle: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                    Section Subtitle
+                  </label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    placeholder="e.g. About us"
+                    value={aboutData.subTitle || ''}
+                    onChange={(e) => setAboutData({ ...aboutData, subTitle: e.target.value })}
+                  />
+                </div>
+
                 <div style={{ gridColumn: '1 / -1' }}>
                   <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>
                     Main Headline Title
@@ -2645,7 +3530,8 @@ const WebsiteManagementPage = () => {
                   <input
                     type="text"
                     className="input-field"
-                    value={aboutData.heading}
+                    placeholder="e.g. Online Shopping Is Buying Things From Stores On The Internet."
+                    value={aboutData.heading || ''}
                     onChange={(e) => setAboutData({ ...aboutData, heading: e.target.value })}
                   />
                 </div>
@@ -2655,10 +3541,12 @@ const WebsiteManagementPage = () => {
                     Story / Company Description
                   </label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     className="input-field"
-                    value={aboutData.description}
+                    placeholder="Enter brand story or company background..."
+                    value={aboutData.description || ''}
                     onChange={(e) => setAboutData({ ...aboutData, description: e.target.value })}
+                    style={{ resize: 'vertical' }}
                   />
                 </div>
 
@@ -2669,7 +3557,8 @@ const WebsiteManagementPage = () => {
                   <input
                     type="text"
                     className="input-field"
-                    value={aboutData.experienceYears}
+                    placeholder="e.g. 25"
+                    value={aboutData.experienceYears || ''}
                     onChange={(e) => setAboutData({ ...aboutData, experienceYears: e.target.value })}
                   />
                 </div>
@@ -2681,31 +3570,34 @@ const WebsiteManagementPage = () => {
                   <input
                     type="text"
                     className="input-field"
-                    value={aboutData.experienceText}
+                    placeholder="e.g. Year's Experience"
+                    value={aboutData.experienceText || ''}
                     onChange={(e) => setAboutData({ ...aboutData, experienceText: e.target.value })}
                   />
                 </div>
 
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>
-                    Author / CEO Name
+                    Founder / CEO Name
                   </label>
                   <input
                     type="text"
                     className="input-field"
-                    value={aboutData.authorName}
+                    placeholder="e.g. Thomas Alison"
+                    value={aboutData.authorName || ''}
                     onChange={(e) => setAboutData({ ...aboutData, authorName: e.target.value })}
                   />
                 </div>
 
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>
-                    Author Role / Position
+                    Founder / CEO Designation
                   </label>
                   <input
                     type="text"
                     className="input-field"
-                    value={aboutData.authorRole}
+                    placeholder="e.g. CEO at PESCO"
+                    value={aboutData.authorRole || ''}
                     onChange={(e) => setAboutData({ ...aboutData, authorRole: e.target.value })}
                   />
                 </div>
@@ -2713,51 +3605,172 @@ const WebsiteManagementPage = () => {
             </div>
           )}
 
-          {/* 9.2 Service Features */}
-          {activeAboutTab === 'AboutFeatures' && (
-            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          {/* 9.2 About Media & Showcase Images */}
+          {activeAboutTab === 'AboutMedia' && (
+            <div className="glass-card animate-fade-in" style={{ padding: '28px' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginBottom: '4px' }}>
+                Media, Showcase Images & Signatures
+              </h3>
+              <p style={{ fontSize: '13px', color: '#64748B', marginBottom: '22px' }}>
+                Upload and configure the overlapping gallery images, product thumbnails, founder avatar, and signature graphic in <code>AboutPage.jsx</code>.
+              </p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '22px' }}>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A' }}>Service Highlights</h3>
-                  <p style={{ fontSize: '13px', color: '#64748B' }}>Configure key customer assurances (Shipping, Support, Returns, Payments).</p>
+                  <ImageUploadField
+                    compact
+                    label="Primary Showcase Image 1 (Background)"
+                    folder="about"
+                    value={aboutData.image1 || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, image1: val })}
+                    placeholder="assets/images/about/about-1.jpg or Upload file"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploadField
+                    compact
+                    label="Secondary Showcase Image 2 (Foreground)"
+                    folder="about"
+                    value={aboutData.image2 || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, image2: val })}
+                    placeholder="assets/images/about/about-2.jpg or Upload file"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploadField
+                    compact
+                    label="Product Thumbnail 1 (Under Story)"
+                    folder="about"
+                    value={aboutData.thumb1 || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, thumb1: val })}
+                    placeholder="assets/images/about/about-3.png or Upload file"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploadField
+                    compact
+                    label="Product Thumbnail 2 (Under Story)"
+                    folder="about"
+                    value={aboutData.thumb2 || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, thumb2: val })}
+                    placeholder="assets/images/about/about-4.png or Upload file"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploadField
+                    compact
+                    label="Founder / CEO Profile Avatar"
+                    folder="about"
+                    value={aboutData.authorImage || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, authorImage: val })}
+                    placeholder="assets/images/about/author.png or Upload file"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploadField
+                    compact
+                    label="Founder / CEO Signature Graphic"
+                    folder="about"
+                    value={aboutData.signatureImage || ''}
+                    onChange={(val) => setAboutData({ ...aboutData, signatureImage: val })}
+                    placeholder="assets/images/about/signature.png or Upload file"
+                  />
                 </div>
               </div>
+            </div>
+          )}
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
+          {/* 9.3 Service Features & Bullet Points */}
+          {activeAboutTab === 'AboutFeatures' && (
+            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', margin: 0 }}>
+                    Service Highlights & Bullet Points
+                  </h3>
+                  <p style={{ fontSize: '13px', color: '#64748B', margin: '4px 0 0 0' }}>
+                    Configure the sparkler bullet points displayed next to the company story on <code>AboutPage.jsx</code>.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    const newFeat = {
+                      id: `f-${Date.now()}`,
+                      title: 'Premium Handcrafted Quality Guaranteed',
+                    };
+                    const updated = [...(aboutData.serviceFeatures || []), newFeat];
+                    setAboutData({
+                      ...aboutData,
+                      serviceFeatures: updated,
+                      featuresList: updated.map((f) => f.title),
+                    });
+                    showToast('New highlight feature added!');
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <Plus size={16} />
+                  <span>Add Highlight Feature</span>
+                </button>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '18px' }}>
                 {aboutData.serviceFeatures?.map((feat, idx) => (
                   <div key={feat.id || idx} className="glass-card" style={{ padding: '20px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#CC0D39', backgroundColor: 'rgba(204, 13, 57, 0.08)', padding: '2px 8px', borderRadius: '4px' }}>
-                        Feature #{idx + 1}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#CC0D39', backgroundColor: 'rgba(204, 13, 57, 0.08)', padding: '3px 8px', borderRadius: '6px' }}>
+                        Bullet Point #{idx + 1}
                       </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = aboutData.serviceFeatures.filter((_, fIdx) => fIdx !== idx);
+                          setAboutData({
+                            ...aboutData,
+                            serviceFeatures: updated,
+                            featuresList: updated.map((f) => f.title),
+                          });
+                          showToast('Bullet point removed.');
+                        }}
+                        style={{
+                          padding: '4px 6px',
+                          borderRadius: '6px',
+                          backgroundColor: '#FEF2F2',
+                          color: '#DC2626',
+                          border: '1px solid #FECACA',
+                          cursor: 'pointer',
+                        }}
+                        title="Delete feature"
+                      >
+                        <Trash2 size={13} />
+                      </button>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div>
-                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Title</label>
-                        <input
-                          type="text"
-                          className="input-field"
-                          value={feat.title}
-                          onChange={(e) => {
-                            const updated = [...aboutData.serviceFeatures];
-                            updated[idx].title = e.target.value;
-                            setAboutData({ ...aboutData, serviceFeatures: updated });
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Description</label>
-                        <textarea
-                          rows={2}
-                          className="input-field"
-                          value={feat.desc}
-                          onChange={(e) => {
-                            const updated = [...aboutData.serviceFeatures];
-                            updated[idx].desc = e.target.value;
-                            setAboutData({ ...aboutData, serviceFeatures: updated });
-                          }}
-                        />
-                      </div>
+
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '4px' }}>
+                        Bullet Feature Text
+                      </label>
+                      <input
+                        type="text"
+                        className="input-field"
+                        placeholder="e.g. We provide 100% best products"
+                        value={feat.title || ''}
+                        onChange={(e) => {
+                          const updated = [...aboutData.serviceFeatures];
+                          updated[idx] = { ...updated[idx], title: e.target.value };
+                          setAboutData({
+                            ...aboutData,
+                            serviceFeatures: updated,
+                            featuresList: updated.map((f) => f.title),
+                          });
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -2765,13 +3778,64 @@ const WebsiteManagementPage = () => {
             </div>
           )}
 
-          {/* 9.3 About Team */}
+          {/* 9.4 About Team */}
           {activeAboutTab === 'AboutTeam' && (
-            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              {/* Team Section Header Settings */}
+              <div
+                className="glass-card"
+                style={{
+                  padding: '22px',
+                  borderRadius: '16px',
+                  border: '1px solid #E2E8F0',
+                  backgroundColor: '#FFFFFF',
+                }}
+              >
+                <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0F172A', marginBottom: '4px' }}>
+                  Team Section Titles
+                </h3>
+                <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '16px' }}>
+                  Configure headings displayed above the leadership team carousel.
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '4px' }}>
+                      Team Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Our Team"
+                      value={aboutData.teamSubTitle || ''}
+                      onChange={(e) => setAboutData({ ...aboutData, teamSubTitle: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '4px' }}>
+                      Main Team Heading
+                    </label>
+                    <input
+                      type="text"
+                      className="input-field"
+                      placeholder="e.g. Meet Management Team"
+                      value={aboutData.teamTitle || ''}
+                      onChange={(e) => setAboutData({ ...aboutData, teamTitle: e.target.value })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Toolbar */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A' }}>Executive Leadership Team</h3>
-                  <p style={{ fontSize: '13px', color: '#64748B' }}>Add, update, or remove key team profiles displayed on the About Us page.</p>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', margin: 0 }}>
+                    Executive Leadership Team
+                  </h3>
+                  <p style={{ fontSize: '13px', color: '#64748B', margin: '4px 0 0 0' }}>
+                    Total ({(aboutData.teamMembers || []).length}) member profiles configured for <code>AboutPage.jsx</code>.
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -2779,9 +3843,9 @@ const WebsiteManagementPage = () => {
                   onClick={() => {
                     const newMember = {
                       id: `team-${Date.now()}`,
-                      name: 'Elena Rostova',
-                      role: 'Creative Director',
-                      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300',
+                      name: 'Team Member Name',
+                      role: 'Specialist / Manager',
+                      image: 'assets/images/team/team-1.jpg',
                     };
                     setAboutData({
                       ...aboutData,
@@ -2789,15 +3853,17 @@ const WebsiteManagementPage = () => {
                     });
                     showToast('New team member added!');
                   }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
                 >
                   <Plus size={16} />
                   <span>Add Team Member</span>
                 </button>
               </div>
 
+              {/* Team Members Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                 {aboutData.teamMembers?.map((member, idx) => (
-                  <div key={member.id} className="glass-card" style={{ padding: '20px' }}>
+                  <div key={member.id || idx} className="glass-card" style={{ padding: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                       <span style={{ fontSize: '11px', fontWeight: 800, color: '#CC0D39', backgroundColor: 'rgba(204, 13, 57, 0.08)', padding: '2px 8px', borderRadius: '4px' }}>
                         Member #{idx + 1}
@@ -2812,6 +3878,7 @@ const WebsiteManagementPage = () => {
                           showToast('Team member removed.');
                         }}
                         style={{ padding: '4px 6px', borderRadius: '4px', backgroundColor: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', cursor: 'pointer' }}
+                        title="Delete member"
                       >
                         <Trash2 size={13} />
                       </button>
@@ -2819,40 +3886,48 @@ const WebsiteManagementPage = () => {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div>
-                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Full Name</label>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Full Name
+                        </label>
                         <input
                           type="text"
                           className="input-field"
-                          value={member.name}
+                          placeholder="e.g. Davidthy Phillips"
+                          value={member.name || ''}
                           onChange={(e) => {
                             const updated = aboutData.teamMembers.map((m) => m.id === member.id ? { ...m, name: e.target.value } : m);
                             setAboutData({ ...aboutData, teamMembers: updated });
                           }}
                         />
                       </div>
+
                       <div>
-                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block' }}>Role / Designation</label>
+                        <label style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', display: 'block', marginBottom: '3px' }}>
+                          Role / Designation
+                        </label>
                         <input
                           type="text"
                           className="input-field"
-                          value={member.role}
+                          placeholder="e.g. Senior Developer"
+                          value={member.role || ''}
                           onChange={(e) => {
                             const updated = aboutData.teamMembers.map((m) => m.id === member.id ? { ...m, role: e.target.value } : m);
                             setAboutData({ ...aboutData, teamMembers: updated });
                           }}
                         />
                       </div>
+
                       <div>
                         <ImageUploadField
                           compact
                           label="Team Member Photo"
                           folder="team"
-                          value={member.image}
+                          value={member.image || ''}
                           onChange={(val) => {
                             const updated = aboutData.teamMembers.map((m) => m.id === member.id ? { ...m, image: val } : m);
                             setAboutData({ ...aboutData, teamMembers: updated });
                           }}
-                          placeholder="https://... or Upload file"
+                          placeholder="assets/images/team/team-1.jpg or Upload file"
                         />
                       </div>
                     </div>

@@ -207,6 +207,7 @@ const HeroPage = () => {
                               <img
                                 src={getImageUrl(slide.image, '/assets/images/products/brass-cylinder-vase-1.jpg')}
                                 alt={typeof slide.title === 'string' ? slide.title : 'Hero Item'}
+                                loading={index === 0 ? 'eager' : 'lazy'}
                                 onError={(e) => {
                                   e.target.src = '/assets/images/products/brass-cylinder-vase-1.jpg';
                                 }}

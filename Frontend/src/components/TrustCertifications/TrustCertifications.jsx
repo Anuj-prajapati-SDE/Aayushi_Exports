@@ -75,7 +75,7 @@ export default function TrustCertifications() {
     setCopiedCode(code);
     setTimeout(() => setCopiedCode(null), 2200);
   };
-
+ 
   const modalCert = activeModalCert ? certificateData[activeModalCert] : null;
 
   return (
@@ -83,17 +83,20 @@ export default function TrustCertifications() {
       <div className="container">
         {/* Section Heading */}
         <div className="text-center trust-header">
-          <div className="trust-badge-pill">
-            <i className="fas fa-shield-alt"></i> 100% Verified &amp; Government Recognized
-          </div>
+          <div className="sub-heading d-inline-flex align-items-center">
+                <i className="flaticon-sparkler" />
+                <span className="sub-title">100% Verified &amp; Government Recognized</span>
+                <i className="flaticon-sparkler" />
+              </div>
+         
           <h2>
-            Trust, Compliance &amp; <span>Legal Certifications</span>
+            Trust, Compliance &amp; Legal Certification
           </h2>
-          <p>
+          {/* <p>
             <strong>AAYUSHI EXPORTS</strong> is an officially registered and government-accredited
             export house recognized by the Directorate General of Foreign Trade (DGFT) and the
             Goods &amp; Services Tax Council of India.
-          </p>
+          </p> */}
         </div>
 
         {/* 2 Main Certification Cards */}
@@ -179,15 +182,7 @@ export default function TrustCertifications() {
                 >
                   <i className="fas fa-expand-arrows-alt"></i> View Full Certificate
                 </button>
-                <a
-                  href="/assets/certificates/gst-certificate.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cert-btn-secondary"
-                  title="Download Official PDF"
-                >
-                  <i className="fas fa-file-pdf text-danger"></i> Download PDF
-                </a>
+             
                 <a
                   href="https://services.gst.gov.in/services/searchtp"
                   target="_blank"
@@ -292,15 +287,7 @@ export default function TrustCertifications() {
                 >
                   <i className="fas fa-expand-arrows-alt"></i> View Full Certificate
                 </button>
-                <a
-                  href="/assets/certificates/iec-certificate.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cert-btn-secondary"
-                  title="Download Official PDF"
-                >
-                  <i className="fas fa-file-pdf text-danger"></i> Download PDF
-                </a>
+               
                 <a
                   href="https://dgft.gov.in"
                   target="_blank"
@@ -316,7 +303,7 @@ export default function TrustCertifications() {
         </div>
 
         {/* Trust Badges Strip (4 Pillars) */}
-        <div className="trust-summary-strip">
+        {/* <div className="trust-summary-strip">
           <div className="trust-points-row">
             <div className="trust-point-item">
               <div className="point-icon">
@@ -358,7 +345,7 @@ export default function TrustCertifications() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* FULL PREVIEW MODAL */}
@@ -400,14 +387,7 @@ export default function TrustCertifications() {
               </div>
 
               <div className="modal-actions-right">
-                <a
-                  href={modalCert.pdfUrl}
-                  download
-                  className="modal-tool-btn primary"
-                  title="Download Certificate PDF"
-                >
-                  <i className="fas fa-download"></i> Download PDF
-                </a>
+               
                 <a
                   href={modalCert.verifyUrl}
                   target="_blank"
