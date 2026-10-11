@@ -1020,7 +1020,7 @@ const WebsiteManagementPage = () => {
             Website Management
           </h1>
           <p style={{ fontSize: '14px', color: '#64748B', marginTop: '4px' }}>
-            Manage and customize dynamic sections for all pages across the Pesco Store.
+            Manage and customize dynamic sections for all pages across the Aayushi Export Store.
           </p>
         </div>
 
@@ -1599,7 +1599,7 @@ const WebsiteManagementPage = () => {
                     const newSlide = {
                       id: `hero-${Date.now()}`,
                       subHeading: 'New Seasonal Trend',
-                      title: 'New Modern Arrivals in Pesco Online',
+                      title: 'New Modern Arrivals in Aayushi Export Online',
                       description: 'Explore the latest trending items with high durability, modern aesthetics, and special discounted prices.',
                       price: '115.00',
                       buttonText: 'Shop Now',
@@ -3596,7 +3596,7 @@ const WebsiteManagementPage = () => {
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="e.g. CEO at PESCO"
+                    placeholder="e.g. CEO at Aayushi Export"
                     value={aboutData.authorRole || ''}
                     onChange={(e) => setAboutData({ ...aboutData, authorRole: e.target.value })}
                   />

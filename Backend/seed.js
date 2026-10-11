@@ -1,17 +1,22 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const HeroSlide = require('./models/HeroSlide');
 
 // Load environment variables
 dotenv.config();
 
-const seedAdmin = async () => {
+const seedDatabase = async (isStandalone = false) => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/e-commerce';
-    console.log(`[Connecting to Database]: ${mongoUri}...`);
-    
-    await mongoose.connect(mongoUri);
-    console.log('[MongoDB Connected Successfully]');
+    // If not already connected (e.g., when run directly via CLI)
+    if (mongoose.connection.readyState !== 1) {
+      const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/e-commerce';
+      console.log(`🌱 [Seeder]: Connecting to Database: ${mongoUri}...`);
+      await mongoose.connect(mongoUri);
+      console.log('🌱 [Seeder]: MongoDB Connected Successfully');
+    }
+
+    console.log('🌱 [Seeder]: Initializing database seeds...');
 
     const adminEmail = (process.env.ADMIN_EMAIL || 'admin@pesco.com').toLowerCase();
     const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
@@ -21,21 +26,25 @@ const seedAdmin = async () => {
     const existingAdmin = await User.findOne({ email: adminEmail });
 
     if (existingAdmin) {
-      console.log(`[Info]: Admin with email "${adminEmail}" already exists. Updating credentials...`);
-      existingAdmin.name = adminName; 
-      existingAdmin.role = 'admin';
-      existingAdmin.password = adminPassword; // Pre-save hook will hash it
-      existingAdmin.isActive = true;
-      existingAdmin.avatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250';
-      await existingAdmin.save();
-      console.log('----------------------------------------------------');
-      console.log('✅ Demo Admin Account Updated Successfully:');
-      console.log(`   Email:    ${adminEmail}`);
-      console.log(`   Password: ${adminPassword}`);
-      console.log(`   Role:     admin`);
-      console.log('----------------------------------------------------');
+      let isPasswordValid = false;
+      try {
+        isPasswordValid = await existingAdmin.matchPassword(adminPassword);
+      } catch (err) {
+        isPasswordValid = false;
+      }
+
+      if (!isPasswordValid || existingAdmin.role !== 'admin' || !existingAdmin.isActive) {
+        existingAdmin.name = adminName;
+        existingAdmin.role = 'admin';
+        existingAdmin.password = adminPassword; // Pre-save hook will hash it
+        existingAdmin.isActive = true;
+        await existingAdmin.save();
+        console.log(`✅ [Seeder]: Demo Admin Account Verified & Updated (${adminEmail})`);
+      } else {
+        console.log(`✅ [Seeder]: Demo Admin Account Active (${adminEmail})`);
+      }
     } else {
-      console.log(`[Info]: Creating new demo admin account...`);
+      console.log(`[Seeder]: Creating demo admin account...`);
       const newAdmin = new User({
         name: adminName,
         email: adminEmail,
@@ -48,8 +57,7 @@ const seedAdmin = async () => {
 
       await newAdmin.save();
       console.log('----------------------------------------------------');
-      console.log('🎉 Demo Admin Created Successfully:');
-      console.log(`   Name:     ${adminName}`);
+      console.log('🎉 [Seeder]: Demo Admin Created Successfully:');
       console.log(`   Email:    ${adminEmail}`);
       console.log(`   Password: ${adminPassword}`);
       console.log(`   Role:     admin`);
@@ -69,11 +77,10 @@ const seedAdmin = async () => {
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250',
       });
       await customer.save();
-      console.log('✅ Sample Demo Customer Created: customer@pesco.com / customer123');
+      console.log(`✅ [Seeder]: Sample Demo Customer Created: ${sampleCustomerEmail} / customer123`);
     }
 
     // Seed Hero Slides if not present
-    const HeroSlide = require('./models/HeroSlide');
     const heroSlidesCount = await HeroSlide.countDocuments();
     if (heroSlidesCount === 0) {
       const defaultSlides = [
@@ -115,19 +122,30 @@ const seedAdmin = async () => {
         },
       ];
       await HeroSlide.insertMany(defaultSlides);
-      console.log('✅ Default Hero Slides Seeded Successfully.');
+      console.log('✅ [Seeder]: Default Hero Slides Seeded Successfully.');
     }
 
-    console.log('🌟 Database Seeding Finished.');
-    await mongoose.connection.close();
-    process.exit(0);
-  } catch (error) {
-    console.error('❌ Error during seeding:', error.message);
-    if (mongoose.connection.readyState !== 0) {
+    console.log('🌟 [Seeder]: Database Seeding Finished.');
+
+    if (isStandalone) {
       await mongoose.connection.close();
+      process.exit(0);
     }
-    process.exit(1);
+  } catch (error) {
+    console.error('❌ [Seeder Error]:', error.message);
+    if (isStandalone) {
+      if (mongoose.connection.readyState !== 0) {
+        await mongoose.connection.close();
+      }
+      process.exit(1);
+    }
   }
 };
 
-seedAdmin();
+// Auto-run if executed directly via CLI: `node seed.js`
+if (require.main === module) {
+  seedDatabase(true);
+}
+
+module.exports = seedDatabase;
+

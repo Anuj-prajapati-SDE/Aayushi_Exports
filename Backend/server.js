@@ -13,13 +13,25 @@ dotenv.config();
 // Initialize Express App
 const app = express();
 
-// Connect to MongoDB Database
-connectDB();
+// Connect to MongoDB Database and Auto-run Seed
+const seedDatabase = require('./seed');
+
+connectDB()
+  .then(async () => {
+    try {
+      await seedDatabase();
+    } catch (seedErr) {
+      console.error('⚠️ [Auto-Seed Warning]:', seedErr.message);
+    }
+  })
+  .catch((err) => {
+    console.error('❌ [MongoDB Connection Error]:', err.message);
+  });
 
 // Middleware
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000', 'http://localhost:5175'],
+    origin: true,
     credentials: true,
   })
 );
@@ -55,14 +67,14 @@ app.use('/api/upload', uploadRoutes);
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
-    service: 'Pesco E-Commerce API',
+    service: 'Aayushi Export E-Commerce API',
     timestamp: new Date(),
   });
 });
 
 // Default Root Route
 app.get('/', (req, res) => {
-  res.send('Pesco E-Commerce Backend API is running.');
+  res.send('Aayushi Export E-Commerce Backend API is running.');
 });
 
 // 404 Route Handler

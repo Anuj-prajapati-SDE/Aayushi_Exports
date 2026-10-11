@@ -48,14 +48,6 @@ const AdminLogin = () => {
     if (errorMessage) setErrorMessage('');
   };
 
-  const handleFillDemo = () => {
-    setFormData({
-      email: 'admin@pesco.com',
-      password: 'admin123',
-      rememberMe: true,
-    });
-    setErrorMessage('');
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,7 +63,7 @@ const AdminLogin = () => {
 
     try {
       await login(formData.email.trim(), formData.password);
-      setSuccessMessage('Authentication successful! Welcome to Pesco Admin Dashboard.');
+      setSuccessMessage('Authentication successful! Welcome to Aayushi Export Admin Dashboard.');
 
       const from = location.state?.from?.pathname || '/dashboard';
       setTimeout(() => {

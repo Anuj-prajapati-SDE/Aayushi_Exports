@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import CartDrawer from './CartDrawer'
 import WishlistDrawer from './WishlistDrawer'
 import { getCartTotalCount } from '../utils/cartUtils'
@@ -8,10 +8,51 @@ import './Navbar.css'
 
 
 const Navbar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [isWishlistDrawerOpen, setIsWishlistDrawerOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileActiveTab, setMobileActiveTab] = useState("menu");
+  const [mobileSearchQuery, setMobileSearchQuery] = useState("");
   const [cartCount, setCartCount] = useState(getCartTotalCount());
   const [wishlistCount, setWishlistCount] = useState(getWishlistCount());
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Lock background scroll when mobile drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // Auto-close mobile drawer when viewport resized to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 992 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobileMenuOpen]);
+
+  const handleMobileSearch = (e) => {
+    e.preventDefault();
+    if (mobileSearchQuery.trim()) {
+      setIsMobileMenuOpen(false);
+      navigate(`/shops?search=${encodeURIComponent(mobileSearchQuery.trim())}`);
+      setMobileSearchQuery("");
+    }
+  };
 
   useEffect(() => {
     const updateCounts = () => {
@@ -145,13 +186,16 @@ const Navbar = () => {
         </div>
 
         {/*===  Header Navigation  ===*/}
-        <div className="header-navigation style-one">
+        <div className={`header-navigation style-one ${isMobileMenuOpen ? "mobile-drawer-open" : ""}`}>
           <div className="container">
             {/*=== Primary Menu ===*/}
             <div className="primary-menu">
               <div className="site-branding d-lg-none d-block">
                 <Link to="/" className="brand-logo">
-                  <img src="assets/images/logo/logo-main.png" alt="Pesco Logo" />
+                  <img
+                    src="/assets/images/logo/logo-main.png"
+                    alt="Aayushi Exports Logo"
+                  />
                 </Link>
               </div>
 
@@ -159,143 +203,192 @@ const Navbar = () => {
               <div className="nav-inner-menu">
                 {/*=== Main Category ===*/}
                 {/*=== Site Branding  ===*/}
-                <div className="site-branding">
+                <div className="site-branding d-none d-lg-block">
                   <Link to="/" className="brand-logo">
-                    <img src="assets/images/logo/logo-main.png" alt="Pesco Logo" />
+                    <img
+                      src="/assets/images/logo/logo-main.png"
+                      alt="Aayushi Exports Logo"
+                    />
                   </Link>
                 </div>
 
                 {/*=== Pesco Nav Main ===*/}
                 <div className="pesco-nav-main">
-                  {/*=== Pesco Nav Menu ===*/}
-                  <div className="pesco-nav-menu">
-                    {/*=== Responsive Menu Search ===*/}
-                    <div className="nav-search mb-40 d-block d-lg-none">
-                      <div className="form-group">
-                        <input
-                          type="search"
-                          className="form_control"
-                          placeholder="Search Here..."
-                          name="search"
-                        />
-                        <button className="search-btn">
-                          <i className="far fa-search" />
+                  {/*=== Pesco Nav Menu (Mobile Drawer on <992px, in-flow container on >=992px) ===*/}
+                  <div className={`pesco-nav-menu ${isMobileMenuOpen ? "menu-on" : ""}`}>
+                    {/*=== Mobile Drawer Header with Logo & Close Button ===*/}
+                    <div className="mobile-drawer-header d-block d-lg-none">
+                      <div className="d-flex align-items-center justify-content-between">
+                        <Link
+                          to="/"
+                          className="mobile-drawer-logo"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <img
+                            src="/assets/images/logo/logo-main.png"
+                            alt="Aayushi Exports Logo"
+                            style={{ maxHeight: "38px", width: "auto", objectFit: "contain" }}
+                          />
+                        </Link>
+                        <button
+                          type="button"
+                          className="mobile-drawer-close"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          aria-label="Close Mobile Menu"
+                        >
+                          <i className="fas fa-times" />
                         </button>
                       </div>
                     </div>
 
+                    {/*=== Responsive Menu Search ===*/}
+                    <div className="nav-search mb-30 d-block d-lg-none">
+                      <form onSubmit={handleMobileSearch} className="form-group mb-0">
+                        <input
+                          type="search"
+                          className="form_control"
+                          placeholder="Search products..."
+                          name="search"
+                          value={mobileSearchQuery}
+                          onChange={(e) => setMobileSearchQuery(e.target.value)}
+                        />
+                        <button type="submit" className="search-btn">
+                          <i className="far fa-search" />
+                        </button>
+                      </form>
+                    </div>
+
                     {/*=== Responsive Menu Tab for Mobile ===*/}
                     <div className="pesco-tabs style-three d-block d-lg-none">
-                      <ul className="nav nav-tabs mb-30" role="tablist">
+                      <ul className="nav nav-tabs mb-25" role="tablist">
                         <li>
                           <button
-                            className="nav-link active"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav1"
-                            role="tab"
-                            aria-selected="true"
+                            type="button"
+                            className={`nav-link ${mobileActiveTab === "menu" ? "active" : ""}`}
+                            onClick={() => setMobileActiveTab("menu")}
                           >
                             Menu
                           </button>
                         </li>
                         <li>
                           <button
-                            className="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav2"
-                            role="tab"
-                            aria-selected="false"
-                            tabIndex={-1}
+                            type="button"
+                            className={`nav-link ${mobileActiveTab === "category" ? "active" : ""}`}
+                            onClick={() => setMobileActiveTab("category")}
                           >
                             Category
                           </button>
                         </li>
                       </ul>
                       <div className="tab-content">
-                        <div
-                          className="tab-pane fade show active"
-                          id="nav1"
-                          role="tabpanel"
-                        >
-                          <nav className="main-menu">
-                            <ul>
-                              <li className="menu-item">
-                                <Link to="/">Home</Link>
-                              </li>
-                              <li className="menu-item has-children">
-                                <Link to="/shops">Shop</Link>
-                                <ul className="sub-menu">
-                                  <li>
-                                    <Link to="/shops">Shop Products</Link>
-                                  </li>
-                                  <li>
-                                    <Link to="/shop-details">Product Details</Link>
-                                  </li>
-                                  <li>
-                                    <Link to="/carts">Cart</Link>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li className="menu-item has-children">
-                                <a href="#pages">Pages</a>
-                                <ul className="sub-menu">
-                                  <li>
-                                    <Link to="/about-us">About Us</Link>
-                                  </li>
-                                  <li>
-                                    <Link to="/faq">FAQs</Link>
-                                  </li>
-                                  <li>
-                                    <Link to="/login">Login</Link>
-                                  </li>
-                                  <li>
-                                    <Link to="/signup">Register</Link>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li className="menu-item">
-                                <Link to="/contact">Contact</Link>
-                              </li>
-                            </ul>
-                          </nav>
-                        </div>
-                        <div className="tab-pane fade" id="nav2" role="tabpanel">
-                          <div className="categori-dropdown-item">
-                            <ul>
-                              <li>
-                                <Link to="/shops">
-                                  Brass Vases & Urns
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/shops">
-                                  Decorative Lanterns
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/shops">
-                                  Tabletop Urli Bowls
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/shops">
-                                  Pooja & Peacock Diyas
-                                </Link>
-                              </li>
-                            </ul>
+                        {mobileActiveTab === "menu" ? (
+                          <div className="tab-pane fade show active">
+                            <nav className="main-menu mobile-main-menu">
+                              <ul>
+                                <li className="menu-item">
+                                  <NavLink
+                                    to="/"
+                                    end
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Home</span>
+                                    <i className="far fa-angle-right" />
+                                  </NavLink>
+                                </li>
+                                <li className="menu-item">
+                                  <NavLink
+                                    to="/about-us"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>About Us</span>
+                                    <i className="far fa-angle-right" />
+                                  </NavLink>
+                                </li>
+                                <li className="menu-item">
+                                  <NavLink
+                                    to="/shops"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Shop Collection</span>
+                                    <i className="far fa-angle-right" />
+                                  </NavLink>
+                                </li>
+                                <li className="menu-item">
+                                  <NavLink
+                                    to="/faq"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>FAQs</span>
+                                    <i className="far fa-angle-right" />
+                                  </NavLink>
+                                </li>
+                                <li className="menu-item">
+                                  <NavLink
+                                    to="/contact"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Contact</span>
+                                    <i className="far fa-angle-right" />
+                                  </NavLink>
+                                </li>
+                              </ul>
+                            </nav>
                           </div>
-                        </div>
+                        ) : (
+                          <div className="tab-pane fade show active">
+                            <div className="categori-dropdown-item mobile-category-list">
+                              <ul>
+                                <li>
+                                  <Link
+                                    to="/shops?category=Brass+Vases+%26+Urns"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Brass Vases & Urns</span>
+                                    <i className="far fa-angle-right" />
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/shops?category=Decorative+Lanterns"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Decorative Lanterns</span>
+                                    <i className="far fa-angle-right" />
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/shops?category=Tabletop+Urli+Bowls"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Tabletop Urli Bowls</span>
+                                    <i className="far fa-angle-right" />
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/shops?category=Pooja+%26+Peacock+Diyas"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    <span>Pooja & Peacock Diyas</span>
+                                    <i className="far fa-angle-right" />
+                                  </Link>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
                     {/*=== Desktop Main Menu ===*/}
-                    <nav className="main-menu d-none d-lg-block">
+                    <nav className="main-menu desktop-main-menu d-none d-lg-block">
                       <ul>
                         <li className="menu-item">
                           <NavLink to="/" end>Home</NavLink>
                         </li>
                         <li className="menu-item">
-                          <Link to="/about-us">About Us</Link>
+                          <NavLink to="/about-us">About Us</NavLink>
                         </li>
                         <li className="menu-item">
                           <NavLink to="/shops">
@@ -303,7 +396,7 @@ const Navbar = () => {
                           </NavLink>
                         </li>
                         <li className="menu-item">
-                          <Link to="/faq">FAQs</Link>
+                          <NavLink to="/faq">FAQs</NavLink>
                         </li>
                         <li className="menu-item">
                           <NavLink to="/contact">Contact</NavLink>
@@ -322,15 +415,9 @@ const Navbar = () => {
                       type="button"
                       onClick={() => setIsWishlistDrawerOpen(true)}
                       title="My Wishlist"
-                      className="wishlist-btn d-flex align-items-center"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        padding: 0,
-                        cursor: "pointer",
-                      }}
+                      className="wishlist-btn"
                     >
-                      <div className="icon" style={{ position: "relative" }}>
+                      <div className="icon">
                         <i className="far fa-heart" />
                         <span className="pro-count">{formattedWishlistCount}</span>
                       </div>
@@ -341,22 +428,22 @@ const Navbar = () => {
                       type="button"
                       onClick={() => setIsCartDrawerOpen(true)}
                       title="Shopping Cart"
-                      className="cart-button d-flex align-items-center"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        padding: 0,
-                        cursor: "pointer",
-                      }}
+                      className="cart-button"
                     >
-                      <div className="icon" style={{ position: "relative" }}>
+                      <div className="icon">
                         <i className="fas fa-shopping-bag" />
                         <span className="pro-count">{formattedCount}</span>
                       </div>
                     </button>
                   </li>
                 </ul>
-                <div className="navbar-toggler d-block d-lg-none">
+                <div
+                  className={`navbar-toggler d-block d-lg-none ${isMobileMenuOpen ? "active" : ""}`}
+                  onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Toggle Navigation Menu"
+                >
                   <span />
                   <span />
                   <span />
@@ -366,6 +453,12 @@ const Navbar = () => {
           </div>
         </div>
       </header>
+
+      {/* Offcanvas Overlay for Mobile Menu */}
+      <div
+        className={`offcanvas__overlay ${isMobileMenuOpen ? "overlay-open" : ""}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
 
       {/* Dynamic Slide-out Cart Drawer */}
       <CartDrawer

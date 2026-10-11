@@ -40,8 +40,9 @@ function Footer() {
                     <div className="widget-content">
                       <Link to="/" className="footer-logo">
                         <img
-                          src="assets/images/logo/logo-main.png"
-                          alt="Brand Logo"
+                          src="/assets/images/logo/logo-main.png"
+                          alt="Aayushi Exports Logo"
+                          style={{ maxHeight: "100px", width: "auto", objectFit: "contain" }}
                         />
                       </Link>
                       <p>

@@ -23,7 +23,7 @@ const SettingsPage = () => {
   const { user, updateUser } = useAuth();
 
   // General Store Settings State
-  const [storeName, setStoreName] = useState('Pesco Handicrafts');
+  const [storeName, setStoreName] = useState('Aayushi Export Handicrafts');
   const [contactEmail, setContactEmail] = useState('contact@pescostore.com');
   const [contactPhone, setContactPhone] = useState('+91 98765 43210');
   const [currency, setCurrency] = useState('USD ($)');

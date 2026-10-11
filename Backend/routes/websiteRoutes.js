@@ -27,6 +27,7 @@ const {
   updateProduct,
   deleteProduct,
   bulkSaveProducts,
+  addProductReview,
   getOrders,
   createOrder,
   updateOrderStatus,
@@ -70,6 +71,8 @@ router.route('/products/:id')
   .get(getProductById)
   .put(updateProduct)
   .delete(deleteProduct);
+
+router.post('/products/:id/reviews', addProductReview);
 
 // 4. Hero Banners
 router.route('/hero-banners')

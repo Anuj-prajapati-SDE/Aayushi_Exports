@@ -24,6 +24,7 @@ import {
   RefreshCw,
   MoreVertical,
   ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 
 const API_BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/website`;
@@ -87,9 +88,20 @@ const emptyProductTemplate = {
   material: '100% Solid Virgin Cast Brass',
   fabricType: '100% Solid Virgin Cast Brass',
   finish: 'Antique Brushed Gold',
+  craftsmanship: 'Hand-Engraved Jaali & Filigree',
+  origin: 'Moradabad, Uttar Pradesh, India',
   careInstructions: 'Wipe with soft dry cotton cloth; avoid chemical cleaners',
   occasion: 'Luxury Living Room, Console Decor & Grand Entryways',
   description: '',
+  artisanDetails: '',
+  highlights: [
+    'Handcrafted from heavy gauge solid virgin brass',
+    'Antioxidant clear lacquer coat prevents tarnishing',
+    'Ideal luxury gift for weddings, housewarmings, and festive occasions',
+    'Authentic heirloom-grade decorative artefact',
+  ],
+  specifications: [],
+  reviewsList: [],
   tags: ['Brass', 'Handicraft', 'Ratan Brass'],
   featured: true,
   isActive: true,
@@ -361,10 +373,17 @@ const ProductsPage = () => {
     setModalMode('edit');
     setActiveModalTab('general');
     setCurrentProduct({
+      ...emptyProductTemplate,
       ...prod,
       name: prod.name || prod.title || '',
       title: prod.title || prod.name || '',
-      gallery: Array.isArray(prod.gallery) && prod.gallery.length > 0 ? prod.gallery : [prod.image],
+      craftsmanship: prod.craftsmanship || 'Hand-Engraved Jaali & Filigree',
+      origin: prod.origin || 'Moradabad, Uttar Pradesh, India',
+      artisanDetails: prod.artisanDetails || prod.description || '',
+      highlights: Array.isArray(prod.highlights) && prod.highlights.length > 0 ? prod.highlights : emptyProductTemplate.highlights,
+      specifications: Array.isArray(prod.specifications) ? prod.specifications : [],
+      reviewsList: Array.isArray(prod.reviewsList) ? prod.reviewsList : [],
+      gallery: Array.isArray(prod.gallery) && prod.gallery.length > 0 ? prod.gallery : [prod.image || 'assets/images/products/brass-cylinder-vase-1.jpg'],
     });
     setIsProductModalOpen(true);
   };
@@ -408,6 +427,16 @@ const ProductsPage = () => {
       material: currentProduct.material || currentProduct.fabricType || '100% Solid Virgin Cast Brass',
       fabricType: currentProduct.material || currentProduct.fabricType || '100% Solid Virgin Cast Brass',
       finish: currentProduct.finish || 'Antique Brushed Gold',
+      craftsmanship: currentProduct.craftsmanship || 'Hand-Engraved Jaali & Filigree',
+      origin: currentProduct.origin || 'Moradabad, Uttar Pradesh, India',
+      careInstructions: currentProduct.careInstructions || 'Dry Cotton Cloth Wipe',
+      occasion: currentProduct.occasion || 'Luxury Living Room, Console Decor & Grand Entryways',
+      artisanDetails: currentProduct.artisanDetails || currentProduct.description || '',
+      highlights: Array.isArray(currentProduct.highlights) && currentProduct.highlights.length > 0
+        ? currentProduct.highlights
+        : emptyProductTemplate.highlights,
+      specifications: Array.isArray(currentProduct.specifications) ? currentProduct.specifications : [],
+      reviewsList: Array.isArray(currentProduct.reviewsList) ? currentProduct.reviewsList : [],
     };
 
     try {
@@ -564,6 +593,88 @@ const ProductsPage = () => {
       ...prev,
       gallery: (prev.gallery || []).filter((_, i) => i !== index),
     }));
+  };
+
+  // Highlights handlers
+  const addHighlightSlot = () => {
+    setCurrentProduct((prev) => ({
+      ...prev,
+      highlights: [...(prev.highlights || []), ''],
+    }));
+  };
+
+  const updateHighlight = (idx, text) => {
+    setCurrentProduct((prev) => {
+      const list = [...(prev.highlights || [])];
+      list[idx] = text;
+      return { ...prev, highlights: list };
+    });
+  };
+
+  const removeHighlight = (idx) => {
+    setCurrentProduct((prev) => ({
+      ...prev,
+      highlights: (prev.highlights || []).filter((_, i) => i !== idx),
+    }));
+  };
+
+  const resetDefaultHighlights = () => {
+    setCurrentProduct((prev) => ({
+      ...prev,
+      highlights: [
+        'Handcrafted from heavy gauge solid virgin brass',
+        'Antioxidant clear lacquer coat prevents tarnishing',
+        'Ideal luxury gift for weddings, housewarmings, and festive occasions',
+        'Authentic heirloom-grade decorative artefact',
+      ],
+    }));
+  };
+
+  // Specifications handlers
+  const addSpecRow = () => {
+    setCurrentProduct((prev) => ({
+      ...prev,
+      specifications: [...(prev.specifications || []), { label: '', value: '' }],
+    }));
+  };
+
+  const updateSpecRow = (idx, field, val) => {
+    setCurrentProduct((prev) => {
+      const specs = [...(prev.specifications || [])];
+      specs[idx] = { ...specs[idx], [field]: val };
+      return { ...prev, specifications: specs };
+    });
+  };
+
+  const removeSpecRow = (idx) => {
+    setCurrentProduct((prev) => ({
+      ...prev,
+      specifications: (prev.specifications || []).filter((_, i) => i !== idx),
+    }));
+  };
+
+  // Reviews handlers
+  const removeReview = (idx) => {
+    setCurrentProduct((prev) => {
+      const reviews = (prev.reviewsList || []).filter((_, i) => i !== idx);
+      return { ...prev, reviewsList: reviews, reviews: reviews.length };
+    });
+  };
+
+  const addAdminReview = (authorName, ratingVal, commentText) => {
+    if (!authorName.trim() || !commentText.trim()) return;
+    setCurrentProduct((prev) => {
+      const reviews = [
+        {
+          name: authorName.trim(),
+          rating: Number(ratingVal) || 5,
+          comment: commentText.trim(),
+          date: new Date(),
+        },
+        ...(prev.reviewsList || []),
+      ];
+      return { ...prev, reviewsList: reviews, reviews: reviews.length };
+    });
   };
 
   return (
@@ -1288,7 +1399,9 @@ const ProductsPage = () => {
                 { id: 'general', label: '1. General', icon: Info },
                 { id: 'pricing', label: '2. Pricing & Stock', icon: DollarSign },
                 { id: 'variants', label: '3. Variants & Specs', icon: SlidersHorizontal },
-                { id: 'media', label: '4. Media & Gallery', icon: ImageIcon },
+                { id: 'heritage', label: '4. Heritage & Highlights', icon: Sparkles },
+                { id: 'media', label: '5. Media & Gallery', icon: ImageIcon },
+                { id: 'reviews', label: '6. Reviews', icon: Star },
               ].map((tab) => {
                 const IconComponent = tab.icon;
                 const isActive = activeModalTab === tab.id;
@@ -1632,6 +1745,34 @@ const ProductsPage = () => {
                       </div>
                     </div>
 
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                          Craftsmanship Technique
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="e.g. Hand-Engraved Jaali & Filigree"
+                          value={currentProduct.craftsmanship || ''}
+                          onChange={(e) => setCurrentProduct({ ...currentProduct, craftsmanship: e.target.value })}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                          Origin / Workshop
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="e.g. Moradabad, Uttar Pradesh, India"
+                          value={currentProduct.origin || ''}
+                          onChange={(e) => setCurrentProduct({ ...currentProduct, origin: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                         Care Instructions
@@ -1639,15 +1780,168 @@ const ProductsPage = () => {
                       <input
                         type="text"
                         className="input-field"
-                        placeholder="e.g. Wipe with soft dry cotton cloth"
+                        placeholder="e.g. Dry Cotton Cloth Wipe"
                         value={currentProduct.careInstructions || ''}
                         onChange={(e) => setCurrentProduct({ ...currentProduct, careInstructions: e.target.value })}
                       />
                     </div>
+
+                    {/* Custom Specifications Section */}
+                    <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '14px', marginTop: '4px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <div>
+                          <label style={{ fontSize: '12px', fontWeight: 600, color: '#0F172A', display: 'block' }}>
+                            Additional Custom Specifications
+                          </label>
+                          <span style={{ fontSize: '11px', color: '#64748B' }}>
+                            Displayed in the Product Specifications box (e.g. Weight, Dimensions, Included Items).
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          className="btn-secondary"
+                          onClick={addSpecRow}
+                          style={{ padding: '3px 8px', fontSize: '11px' }}
+                        >
+                          <Plus size={12} /> Add Spec
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {(currentProduct.specifications || []).map((spec, sIdx) => (
+                          <div key={sIdx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <input
+                              type="text"
+                              className="input-field"
+                              placeholder="Label (e.g. Weight)"
+                              value={spec.label || ''}
+                              onChange={(e) => updateSpecRow(sIdx, 'label', e.target.value)}
+                              style={{ flex: 1 }}
+                            />
+                            <input
+                              type="text"
+                              className="input-field"
+                              placeholder="Value (e.g. 3.2 kg)"
+                              value={spec.value || ''}
+                              onChange={(e) => updateSpecRow(sIdx, 'value', e.target.value)}
+                              style={{ flex: 1.5 }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeSpecRow(sIdx)}
+                              style={{
+                                padding: '6px',
+                                color: '#DC2626',
+                                background: '#FEF2F2',
+                                border: '1px solid #FECACA',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                              title="Remove"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </div>
+                        ))}
+                        {(!currentProduct.specifications || currentProduct.specifications.length === 0) && (
+                          <p style={{ fontSize: '11px', color: '#94A3B8', margin: 0, fontStyle: 'italic' }}>
+                            No custom specifications added yet. Standard specs (Material, Finish, Craftsmanship, Occasion, Care, Origin) will be shown.
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 )}
 
-                {/* TAB 4: Media & Images */}
+                {/* TAB 4: Heritage & Highlights */}
+                {activeModalTab === 'heritage' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} className="animate-fade-in">
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                        <label style={{ fontSize: '12px', fontWeight: 600, color: '#334155' }}>
+                          Artisan Craftsmanship & Details (Heritage Story)
+                        </label>
+                        <span style={{ fontSize: '11px', color: '#64748B' }}>
+                          Displayed in "Description & Heritage" tab
+                        </span>
+                      </div>
+                      <textarea
+                        className="input-field"
+                        rows={4}
+                        placeholder="e.g. Opulent trio of hand-engraved botanical floral brass vases in gleaming gold polish. Ideal for holding natural fresh blooms, dried pampas grass, or decorative artificial bouquets..."
+                        value={currentProduct.artisanDetails || currentProduct.description || ''}
+                        onChange={(e) => setCurrentProduct({ ...currentProduct, artisanDetails: e.target.value })}
+                      />
+                    </div>
+
+                    <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <div>
+                          <label style={{ fontSize: '12px', fontWeight: 600, color: '#0F172A', display: 'block' }}>
+                            Key Highlights (Bullet Points)
+                          </label>
+                          <span style={{ fontSize: '11px', color: '#64748B' }}>
+                            Bullet points displayed prominently under Artisan Craftsmanship
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '6px' }}>
+                          <button
+                            type="button"
+                            className="btn-secondary"
+                            onClick={resetDefaultHighlights}
+                            style={{ padding: '3px 8px', fontSize: '11px' }}
+                            title="Reset to default handcrafted brass highlights"
+                          >
+                            Preload Defaults
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-secondary"
+                            onClick={addHighlightSlot}
+                            style={{ padding: '3px 8px', fontSize: '11px' }}
+                          >
+                            <Plus size={12} /> Add Highlight
+                          </button>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {(currentProduct.highlights || []).map((hl, hlIdx) => (
+                          <div key={hlIdx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontSize: '14px', fontWeight: 700, color: '#64748B', width: '16px' }}>
+                              •
+                            </span>
+                            <input
+                              type="text"
+                              className="input-field"
+                              placeholder={`Highlight bullet #${hlIdx + 1}`}
+                              value={hl}
+                              onChange={(e) => updateHighlight(hlIdx, e.target.value)}
+                              style={{ flex: 1 }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeHighlight(hlIdx)}
+                              style={{
+                                padding: '6px',
+                                color: '#DC2626',
+                                background: '#FEF2F2',
+                                border: '1px solid #FECACA',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                              title="Remove"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 5: Media & Images */}
                 {activeModalTab === 'media' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} className="animate-fade-in">
                     <ImageUploadField
@@ -1724,6 +2018,122 @@ const ProductsPage = () => {
                             )}
                           </div>
                         ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 6: Customer Reviews */}
+                {activeModalTab === 'reviews' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} className="animate-fade-in">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600, color: '#0F172A', margin: 0 }}>
+                          Customer Reviews ({currentProduct.reviewsList?.length || currentProduct.reviews || 0})
+                        </h4>
+                        <p style={{ fontSize: '11px', color: '#64748B', margin: '2px 0 0 0' }}>
+                          Manage real customer feedback displayed in the storefront reviews tab.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '250px', overflowY: 'auto' }}>
+                      {(currentProduct.reviewsList || []).map((rev, rIdx) => (
+                        <div
+                          key={rIdx}
+                          style={{
+                            padding: '10px 12px',
+                            background: '#F8FAFC',
+                            borderRadius: '6px',
+                            border: '1px solid #E2E8F0',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'flex-start',
+                            gap: '10px',
+                          }}
+                        >
+                          <div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <strong style={{ fontSize: '12px', color: '#0F172A' }}>{rev.name}</strong>
+                              <div style={{ display: 'flex', gap: '1px', color: '#F59E0B' }}>
+                                {[...Array(5)].map((_, si) => (
+                                  <Star key={si} size={11} fill={si < (rev.rating || 5) ? '#F59E0B' : 'none'} color="#F59E0B" />
+                                ))}
+                              </div>
+                              <span style={{ fontSize: '10px', color: '#16A34A', background: '#DCFCE7', padding: '1px 5px', borderRadius: '4px' }}>
+                                Verified
+                              </span>
+                            </div>
+                            <p style={{ fontSize: '11px', color: '#475569', margin: '4px 0 0 0', lineHeight: '1.4' }}>
+                              {rev.comment}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeReview(rIdx)}
+                            style={{
+                              padding: '4px 6px',
+                              color: '#DC2626',
+                              background: '#FEF2F2',
+                              border: '1px solid #FECACA',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                            }}
+                            title="Delete Review"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      ))}
+                      {(!currentProduct.reviewsList || currentProduct.reviewsList.length === 0) && (
+                        <p style={{ fontSize: '12px', color: '#94A3B8', textAlign: 'center', padding: '16px 0', margin: 0 }}>
+                          No customer reviews listed. Add one below to showcase testimonials on storefront!
+                        </p>
+                      )}
+                    </div>
+
+                    <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '12px' }}>
+                      <label style={{ fontSize: '12px', fontWeight: 600, color: '#0F172A', display: 'block', marginBottom: '8px' }}>
+                        Add Verified Customer Review
+                      </label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 100px', gap: '8px', marginBottom: '8px' }}>
+                        <input
+                          type="text"
+                          id="new-rev-name"
+                          placeholder="Customer Full Name (e.g. Ananya Deshmukh)"
+                          className="input-field"
+                        />
+                        <select id="new-rev-rating" className="input-field" defaultValue="5">
+                          <option value="5">5 Stars</option>
+                          <option value="4">4 Stars</option>
+                          <option value="3">3 Stars</option>
+                        </select>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          id="new-rev-comment"
+                          placeholder="Write review testimonial..."
+                          className="input-field"
+                          style={{ flex: 1 }}
+                        />
+                        <button
+                          type="button"
+                          className="btn-primary"
+                          style={{ fontSize: '11px', padding: '6px 12px' }}
+                          onClick={() => {
+                            const nameEl = document.getElementById('new-rev-name');
+                            const rateEl = document.getElementById('new-rev-rating');
+                            const commEl = document.getElementById('new-rev-comment');
+                            if (nameEl && commEl && nameEl.value.trim() && commEl.value.trim()) {
+                              addAdminReview(nameEl.value, rateEl?.value || 5, commEl.value);
+                              nameEl.value = '';
+                              commEl.value = '';
+                            }
+                          }}
+                        >
+                          <Plus size={12} /> Add Review
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1856,7 +2266,31 @@ const ProductsPage = () => {
                     <div><strong>Inventory:</strong> {viewProduct.stock} units</div>
                     <div><strong>Material:</strong> {viewProduct.material || 'Solid Brass'}</div>
                     <div><strong>Finish:</strong> {viewProduct.finish || 'Antique Gold'}</div>
+                    <div><strong>Craftsmanship:</strong> {viewProduct.craftsmanship || 'Hand-Engraved Jaali'}</div>
+                    <div><strong>Origin:</strong> {viewProduct.origin || 'Moradabad, UP'}</div>
                   </div>
+
+                  {Array.isArray(viewProduct.highlights) && viewProduct.highlights.length > 0 && (
+                    <div style={{ marginTop: '8px', borderTop: '1px solid #F1F5F9', paddingTop: '8px' }}>
+                      <strong style={{ fontSize: '12px', color: '#0F172A', display: 'block', marginBottom: '4px' }}>Key Highlights:</strong>
+                      <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '11px', color: '#475569' }}>
+                        {viewProduct.highlights.map((hl, hi) => (
+                          <li key={hi}>{hl}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {Array.isArray(viewProduct.specifications) && viewProduct.specifications.length > 0 && (
+                    <div style={{ marginTop: '8px', borderTop: '1px solid #F1F5F9', paddingTop: '8px' }}>
+                      <strong style={{ fontSize: '12px', color: '#0F172A', display: 'block', marginBottom: '4px' }}>Specifications:</strong>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', fontSize: '11px', color: '#475569' }}>
+                        {viewProduct.specifications.filter((s) => s && s.label).map((s, si) => (
+                          <div key={si}><strong>{s.label}:</strong> {s.value}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

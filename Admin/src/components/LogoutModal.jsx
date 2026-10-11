@@ -88,7 +88,7 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
         </div>
 
         <p style={{ fontSize: '14px', color: '#5E626F', marginBottom: '24px', lineHeight: 1.6 }}>
-          Are you sure you want to sign out of the Pesco Admin Portal? You will need to log in again to access the management dashboard.
+          Are you sure you want to sign out of the Aayushi Export Admin Portal? You will need to log in again to access the management dashboard.
         </p>
 
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>

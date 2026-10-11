@@ -103,6 +103,16 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: 'Antique Brushed Gold',
     },
+    craftsmanship: {
+      type: String,
+      trim: true,
+      default: 'Hand-Engraved Jaali & Filigree',
+    },
+    origin: {
+      type: String,
+      trim: true,
+      default: 'Moradabad, Uttar Pradesh, India',
+    },
     careInstructions: {
       type: String,
       trim: true,
@@ -118,6 +128,15 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    artisanDetails: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    highlights: {
+      type: [String],
+      default: [],
+    },
     tags: {
       type: [String],
       default: [],
@@ -126,6 +145,15 @@ const productSchema = new mongoose.Schema(
       {
         label: { type: String, trim: true },
         value: { type: String, trim: true },
+      },
+    ],
+    reviewsList: [
+      {
+        name: { type: String, trim: true },
+        email: { type: String, trim: true },
+        rating: { type: Number, min: 1, max: 5, default: 5 },
+        comment: { type: String, trim: true },
+        date: { type: Date, default: Date.now },
       },
     ],
     featured: {

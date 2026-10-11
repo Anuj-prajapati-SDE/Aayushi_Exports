@@ -829,10 +829,41 @@ const defaultProducts = [
     fabricType: '100% Solid Virgin Cast Brass',
     material: '100% Solid Virgin Cast Brass',
     finish: 'Antique Brushed Gold',
+    craftsmanship: 'Hand-Engraved Jaali & Filigree',
+    origin: 'Moradabad, Uttar Pradesh, India',
     careInstructions: 'Wipe with soft dry cotton cloth; avoid chemical cleaners',
     occasion: 'Luxury Living Room, Console Decor & Grand Entryways',
     description:
       'Masterpiece hand-carved cylindrical pillar vase crafted in pure solid brass with exquisite geometric floral jali fretwork and a slender fluted neck. Finished in antique brushed gold with clear lacquer protection.',
+    artisanDetails:
+      'Masterpiece hand-carved cylindrical pillar vase crafted in pure solid brass with exquisite geometric floral jali fretwork and a slender fluted neck. Finished in antique brushed gold with clear lacquer protection.',
+    highlights: [
+      'Handcrafted from heavy gauge solid virgin brass',
+      'Antioxidant clear lacquer coat prevents tarnishing',
+      'Ideal luxury gift for weddings, housewarmings, and festive occasions',
+      'Authentic heirloom-grade decorative artefact',
+    ],
+    specifications: [
+      { label: 'Weight', value: '3.2 kg' },
+      { label: 'Dimensions', value: '18" H x 5.5" Dia' },
+      { label: 'Packaging', value: '5-Ply Shockproof Box' },
+    ],
+    reviewsList: [
+      {
+        name: 'Ananya Deshmukh',
+        email: 'ananya@example.com',
+        rating: 5,
+        comment: 'The craftsmanship on this piece is breathtaking! The weight and solid brass feel are top-notch. Arrived packed in solid shockproof box without a scratch.',
+        date: new Date('2026-09-25'),
+      },
+      {
+        name: 'Rajesh Varma',
+        email: 'rajesh@example.com',
+        rating: 5,
+        comment: 'Truly royal piece. Adds instant elegance to our entrance console table. Beautiful antique gold finish.',
+        date: new Date('2026-10-02'),
+      },
+    ],
     tags: ['Brass', 'Vase', 'Ratan Brass', 'Handicraft', 'Home Decor'],
     featured: true,
     isActive: true,
@@ -862,10 +893,34 @@ const defaultProducts = [
     fabricType: 'Pure Hand-Hammered Heavy Brass',
     material: 'Pure Hand-Hammered Heavy Brass',
     finish: 'High-Gloss Polished Brass',
-    careInstructions: 'Clean with Pitambari powder or dry microfiber cloth',
+    craftsmanship: 'Hand-Engraved Jaali & Filigree',
+    origin: 'Moradabad, Uttar Pradesh, India',
+    careInstructions: 'Dry Cotton Cloth Wipe',
     occasion: 'Dining Table Centerpiece, Hotel Lounges & Gifting',
     description:
       'Opulent trio of hand-engraved botanical floral brass vases in gleaming gold polish. Ideal for holding natural fresh blooms, dried pampas grass, or decorative artificial bouquets.',
+    artisanDetails:
+      'Opulent trio of hand-engraved botanical floral brass vases in gleaming gold polish. Ideal for holding natural fresh blooms, dried pampas grass, or decorative artificial bouquets.',
+    highlights: [
+      'Handcrafted from heavy gauge solid virgin brass',
+      'Antioxidant clear lacquer coat prevents tarnishing',
+      'Ideal luxury gift for weddings, housewarmings, and festive occasions',
+      'Authentic heirloom-grade decorative artefact',
+    ],
+    specifications: [
+      { label: 'Included Items', value: 'Set of 3 Vases (Small, Medium, Large)' },
+      { label: 'Total Weight', value: '4.8 kg' },
+      { label: 'Dimensions', value: '16", 12", 9" Heights' },
+    ],
+    reviewsList: [
+      {
+        name: 'Ananya Deshmukh',
+        email: 'ananya@example.com',
+        rating: 5,
+        comment: 'The craftsmanship on this piece is breathtaking! The weight and solid brass feel are top-notch. Arrived packed in solid shockproof box without a scratch.',
+        date: new Date('2026-09-28'),
+      },
+    ],
     tags: ['Vase Set', 'Brass Decor', 'Ratan Brass', 'Centerpiece'],
     featured: true,
     isActive: true,
@@ -1107,9 +1162,33 @@ const getProductById = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Product not found' });
     }
 
+    const productData = product.toObject ? product.toObject() : { ...product };
+    if (!productData.craftsmanship) productData.craftsmanship = 'Hand-Engraved Jaali & Filigree';
+    if (!productData.origin) productData.origin = 'Moradabad, Uttar Pradesh, India';
+    if (!productData.artisanDetails) productData.artisanDetails = productData.description || '';
+    if (!Array.isArray(productData.highlights) || productData.highlights.length === 0) {
+      productData.highlights = [
+        'Handcrafted from heavy gauge solid virgin brass',
+        'Antioxidant clear lacquer coat prevents tarnishing',
+        'Ideal luxury gift for weddings, housewarmings, and festive occasions',
+        'Authentic heirloom-grade decorative artefact',
+      ];
+    }
+    if (!Array.isArray(productData.reviewsList) || productData.reviewsList.length === 0) {
+      productData.reviewsList = [
+        {
+          name: 'Ananya Deshmukh',
+          email: 'ananya@example.com',
+          rating: 5,
+          comment: 'The craftsmanship on this piece is breathtaking! The weight and solid brass feel are top-notch. Arrived packed in solid shockproof box without a scratch.',
+          date: new Date(),
+        },
+      ];
+    }
+
     return res.status(200).json({
       success: true,
-      data: product,
+      data: productData,
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to retrieve product', error: error.message });
@@ -1248,6 +1327,54 @@ const bulkSaveProducts = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to bulk save products', error: error.message });
+  }
+};
+
+// 7b. Submit Product Review
+const addProductReview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, rating, comment } = req.body;
+    if (!name || !comment) {
+      return res.status(400).json({ success: false, message: 'Name and comment are required' });
+    }
+
+    let product;
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      product = await Product.findById(id);
+    }
+    if (!product) {
+      product = await Product.findOne({ sku: id });
+    }
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Product not found' });
+    }
+
+    const newReview = {
+      name: name.trim(),
+      email: (email || '').trim(),
+      rating: Number(rating) || 5,
+      comment: comment.trim(),
+      date: new Date(),
+    };
+
+    if (!Array.isArray(product.reviewsList)) {
+      product.reviewsList = [];
+    }
+    product.reviewsList.unshift(newReview);
+    product.reviews = product.reviewsList.length;
+    const totalScore = product.reviewsList.reduce((sum, r) => sum + (Number(r.rating) || 5), 0);
+    product.rating = Number((totalScore / product.reviewsList.length).toFixed(1));
+
+    await product.save();
+
+    return res.status(201).json({
+      success: true,
+      message: 'Review posted successfully',
+      data: product,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to submit review', error: err.message });
   }
 };
 
@@ -1453,6 +1580,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   bulkSaveProducts,
+  addProductReview,
   getOrders,
   createOrder,
   updateOrderStatus,

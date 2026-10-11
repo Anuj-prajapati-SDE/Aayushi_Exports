@@ -48,3 +48,654 @@
 .header-social-list li a:active {
   transform: translateY(0);
 }
+
+/* ===================================================
+   Desktop Brand Logo & Navigation (Screen >= 992px)
+   =================================================== */
+
+@media (min-width: 992px) {
+  .header-navigation .site-branding {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .header-navigation .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .header-navigation .brand-logo img {
+    height: 70px;
+    width: 220px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .header-navigation .brand-logo:hover img {
+    transform: scale(1.02);
+  }
+
+  .header-navigation.style-one .primary-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header-navigation.style-one .nav-inner-menu {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .header-navigation.style-one .pesco-nav-main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+    padding: 0 35px;
+  }
+
+  .header-navigation.style-one .pesco-nav-main::before,
+  .header-navigation.style-one .pesco-nav-main::after {
+    position: absolute;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 1px !important;
+    height: 22px !important;
+    background-color: rgba(19, 23, 43, 0.25) !important;
+    content: "" !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main::before {
+    left: 0 !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main::after {
+    right: 0 !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul > li {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin: 0 14px !important;
+    white-space: nowrap !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul > li > a {
+    padding: 24px 0 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    color: var(--heading-color, #13172B) !important;
+    text-decoration: none !important;
+    transition: color 0.25s ease !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul > li > a:hover,
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul > li > a.active {
+    color: var(--primary-color, #CC0D39) !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one ul li {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn:hover,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .header-navigation.style-one .pesco-nav-main {
+    margin-left: 20px;
+    padding: 0 20px;
+  }
+  .header-navigation.style-one .pesco-nav-main .desktop-main-menu > ul > li {
+    margin: 0 9px !important;
+  }
+}
+
+/* ===================================================
+   Mobile Header & Navigation Bar (Screen < 992px)
+   =================================================== */
+
+@media (max-width: 991px) {
+  .header-navigation.style-one {
+    padding: 10px 0 !important;
+    position: relative;
+    z-index: 100;
+  }
+
+  /* When mobile drawer is open, elevate header-navigation above backdrop overlay */
+  .header-navigation.style-one.mobile-drawer-open,
+  .header-navigation.style-one:has(.menu-on) {
+    z-index: 99995 !important;
+  }
+
+  /* Softly dim background header elements when mobile drawer is open */
+  .header-navigation.style-one.mobile-drawer-open .site-branding.d-lg-none,
+  .header-navigation.style-one.mobile-drawer-open .nav-right-item.style-one {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease !important;
+  }
+
+  .header-navigation.style-one .container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* Force clean flex layout without ghost middle elements */
+  .header-navigation.style-one .primary-menu {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  /* Prevent desktop menu wrapper from taking horizontal space on mobile */
+  .header-navigation.style-one .nav-inner-menu,
+  .header-navigation.style-one .pesco-nav-main {
+    display: contents !important;
+  }
+
+  .header-navigation.style-one .pesco-nav-main::before,
+  .header-navigation.style-one .pesco-nav-main::after {
+    display: none !important;
+  }
+
+  /* Mobile Brand Logo on Left */
+  .site-branding.d-lg-none {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+  }
+
+  .site-branding.d-lg-none .brand-logo {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .site-branding.d-lg-none .brand-logo img {
+    height: 36px !important;
+    max-height: 38px !important;
+    width: auto !important;
+    max-width: 140px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Right Action Buttons: Wishlist, Cart & Hamburger */
+  .header-navigation.style-one .nav-right-item.style-one {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one ul {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one ul li {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one ul li::after {
+    display: none !important;
+  }
+
+  /* Symmetrical circular luxury action buttons for Wishlist & Cart */
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    border: 1px solid rgba(19, 23, 43, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    position: relative !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn:hover,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button:hover {
+    background: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn .icon,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button .icon {
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    border-radius: 50% !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .wishlist-btn i,
+  .header-navigation.style-one .nav-right-item.style-one .cart-button i {
+    font-size: 15px !important;
+    color: #13172B !important;
+  }
+
+  .header-navigation.style-one .nav-right-item.style-one .pro-count {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important;
+    top: -4px !important;
+    right: -4px !important;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background-color: #CC0D39 !important;
+    color: #FFFFFF !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(204, 13, 57, 0.3) !important;
+    line-height: 1 !important;
+  }
+
+  /* Hamburger Toggle Button: Matching 38px Circular Button */
+  .header-navigation.style-one .navbar-toggler {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    border: 1px solid rgba(19, 23, 43, 0.12) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    margin: 0 !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+  }
+
+  .header-navigation.style-one .navbar-toggler:hover {
+    background: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .header-navigation.style-one .navbar-toggler span {
+    width: 16px !important;
+    height: 2px !important;
+    background-color: #13172B !important;
+    border-radius: 2px !important;
+    margin: 0 !important;
+    transition: all 0.25s ease !important;
+    display: block !important;
+  }
+
+  .header-navigation.style-one .navbar-toggler.active span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg) !important;
+  }
+  .header-navigation.style-one .navbar-toggler.active span:nth-child(2) {
+    opacity: 0 !important;
+  }
+  .header-navigation.style-one .navbar-toggler.active span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg) !important;
+  }
+
+  /* ===================================================
+     Mobile Slide-out Drawer
+     =================================================== */
+  .header-navigation .pesco-nav-menu {
+    width: 310px !important;
+    max-width: 85vw !important;
+    padding: 20px 18px 40px !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.22) !important;
+    z-index: 99999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: -320px !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    transition: left 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    color: #13172B !important;
+  }
+
+  .header-navigation .pesco-nav-menu.menu-on {
+    left: 0 !important;
+  }
+
+  .mobile-drawer-header {
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #F1F5F9;
+  }
+
+  .mobile-drawer-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-drawer-close:hover {
+    background: #CC0D39;
+    color: #FFFFFF;
+    border-color: #CC0D39;
+  }
+
+  .header-navigation .nav-search {
+    margin-bottom: 18px !important;
+  }
+
+  .header-navigation .nav-search .form-group {
+    position: relative;
+    margin: 0;
+  }
+
+  .header-navigation .nav-search .form_control {
+    width: 100%;
+    height: 42px;
+    padding: 0 42px 0 14px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1E293B;
+  }
+
+  .header-navigation .nav-search .form_control:focus {
+    border-color: #CC0D39;
+    background: #FFFFFF;
+    outline: none;
+  }
+
+  .header-navigation .nav-search .search-btn {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #64748B;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /* Mobile Drawer Tabs */
+  .pesco-tabs.style-three .nav-tabs {
+    display: flex !important;
+    gap: 8px !important;
+    border-bottom: none !important;
+    margin-bottom: 18px !important;
+  }
+
+  .pesco-tabs.style-three .nav-tabs li {
+    flex: 1 !important;
+    margin: 0 !important;
+  }
+
+  .pesco-tabs.style-three .nav-tabs li .nav-link {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 9px 12px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    background: #F8FAFC !important;
+    color: #475569 !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+  }
+
+  .pesco-tabs.style-three .nav-tabs li .nav-link.active {
+    background: #CC0D39 !important;
+    color: #FFFFFF !important;
+    border-color: #CC0D39 !important;
+    box-shadow: 0 4px 12px rgba(204, 13, 57, 0.25) !important;
+  }
+
+  /* Mobile Links Vertical List */
+  .mobile-main-menu ul {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .mobile-main-menu ul li {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #F1F5F9 !important;
+  }
+
+  .mobile-main-menu ul li:last-child {
+    border-bottom: none !important;
+  }
+
+  .mobile-main-menu ul li a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 13px 10px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+    line-height: 1.2 !important;
+  }
+
+  .mobile-main-menu ul li a i {
+    font-size: 12px !important;
+    color: #94A3B8 !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
+  }
+
+  .mobile-main-menu ul li a:hover,
+  .mobile-main-menu ul li a.active {
+    color: #CC0D39 !important;
+    background-color: #FFF1F3 !important;
+    padding-left: 14px !important;
+  }
+
+  .mobile-main-menu ul li a:hover i,
+  .mobile-main-menu ul li a.active i {
+    color: #CC0D39 !important;
+    transform: translateX(3px) !important;
+  }
+
+  /* Category List in Mobile Drawer */
+  .mobile-category-list ul {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .mobile-category-list ul li {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #F1F5F9 !important;
+  }
+
+  .mobile-category-list ul li:last-child {
+    border-bottom: none !important;
+  }
+
+  .mobile-category-list ul li a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 10px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .mobile-category-list ul li a i {
+    font-size: 12px !important;
+    color: #94A3B8 !important;
+  }
+
+  .mobile-category-list ul li a:hover {
+    color: #CC0D39 !important;
+    background: #FFF1F3 !important;
+    padding-left: 14px !important;
+  }
+
+  .mobile-category-list ul li a:hover i {
+    color: #CC0D39 !important;
+  }
+}
+
+/* ===================================================
+   Page Banner Mobile Polish (Prevents overflow & clipping)
+   =================================================== */
+
+.page-banner,
+.page-banner-wrapper {
+  overflow: hidden !important;
+  max-width: 100vw !important;
+  position: relative !important;
+}
+
+.page-banner-wrapper .lineanm,
+.page-banner-wrapper .page-svg {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 767px) {
+  .page-banner-wrapper {
+    padding: 50px 0 65px !important;
+  }
+
+  .page-banner-content h1 {
+    font-size: 28px !important;
+    line-height: 36px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .page-banner-content .breadcrumb-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-wrap: wrap !important;
+  }
+
+  .page-banner-content .breadcrumb-link li {
+    font-size: 14px !important;
+  }
+}
+
+/* ===================================================
+   Mobile Offcanvas Backdrop Overlay
+   =================================================== */
+.offcanvas__overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+  z-index: 99990 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
+}
+
+.offcanvas__overlay.overlay-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

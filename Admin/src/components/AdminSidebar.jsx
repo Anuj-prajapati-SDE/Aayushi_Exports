@@ -69,7 +69,7 @@ const AdminSidebar = ({ isOpen, onClose, onOpenLogout }) => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 800, color: '#13172B', letterSpacing: '-0.3px', fontFamily: "'Outfit', sans-serif" }}>
-                  Pesco
+                  Aayushi Export
                 </span>
                 <span
                   style={{
